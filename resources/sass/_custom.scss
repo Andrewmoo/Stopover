@@ -1,0 +1,98 @@
+.J-margin{
+  margin-top: 80px;
+}
+.ml-notAuto{
+  margin-left: 40px;
+}
+.noPadding{
+  padding:0px;
+}
+.cardMargin{
+  margin-bottom: 20px;
+}
+.primaryColor{
+  background-color: #393E46;
+}
+.secondaryColor{
+  background-color: #232831;
+}
+.tertiaryColor{
+  background-color: #00ADB5;
+}
+h1{
+  color: #636b6f;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 200;
+  margin-bottom: 40px;
+}
+.cPost{
+  color: white;
+}
+.heroImage{
+    background-image: url("/Images/heroImage.jpg");
+
+    /* Set a specific height */
+    height: 200px;
+
+    /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+}
+.paris{
+    background-image: url("/Images/paris.jpg");
+
+    /* Set a specific height */
+    width: 340px;
+
+    /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+}
+.paris::after{
+  display: block;
+position: relative;
+margin-top: -63px;
+height: 332px;
+width: 100%;
+content: '';
+}
+.madrid{
+    background-image: url("/Images/madrid.jpg");
+
+    /* Set a specific height */
+    height: 340px;
+
+    /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+}
+
+.zagreb{
+    background-image: url("/Images/zagreb.jpg");
+
+    /* Set a specific height */
+    height: 340px;
+
+    /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+}
+
+.white{
+  color: white;
+}
+.borderLeft{
+  border-left: 2px solid #636b6f;
+}
