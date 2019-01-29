@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-  protected $primaryKey = 'user_id';
+  protected $primaryKey = 'id';
     use Notifiable;
 
     /**
@@ -18,13 +18,13 @@ class User extends Authenticatable
      */
 
      const ADMIN_TYPE = 'admin';
-     const DEFAULT_TYPE = 'default';
-     public function isAdmin()    {
-       return $this->type === self::ADMIN_TYPE;
-     }
+     const GUEST_TYPE = 'guest';
+     const HOTEL_TYPE = 'hotel';
+
+    public function isAdmin() { return $this->type === self::ADMIN_TYPE; }
      
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'email', 'password', 'type', 'completeReg'
     ];
 
     /**
@@ -36,16 +36,22 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function posts(){
-      return $this->hasMany('App\Post');
-    }
-
     public function roles()
     {
       return $this->belongsToMany(Role::class);
     }
 
-    /**
+    public function hotel()
+    {
+      return $this->hasOne('App\Hotel');
+    }
+
+    public function student()
+    {
+      return $this->hasOne('App\Student');
+    }
+
+/**
 * @param string|array $roles
 */
 public function authorizeRoles($roles)
@@ -71,6 +77,6 @@ public function hasAnyRole($roles)
 */
 public function hasRole($role)
 {
-  return null !== $this->roles()->where(‘name’, $role)->first();
+  return null !== $this->roles()->where(type, $role)->first();
 }
 }

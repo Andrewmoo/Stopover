@@ -10,6 +10,10 @@ class AdminController extends Controller
       $this->middleware('auth');
     }
     public function index(){
+      if(auth()->user()->type !== 'admin')
+      {
+        return redirect('/');
+      }
       return view('admin.index');
     }
 }

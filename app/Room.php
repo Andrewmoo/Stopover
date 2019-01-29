@@ -7,13 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     //Table name
-    protected $table = 'room';
+    protected $table = 'rooms';
     //Primary key
-    public $primaryKey = 'room_id';
+    public $primaryKey = 'id';
     //Timestamps
     public $timestamps = true;
 
-    public function user(){
-      return $this->belongsTo('App\User');
+    public function hotel() {
+      return $this->belongsTo('App\Hotel');
+    }
+
+    public function booking() {
+      return $this->hasOne('App\Booking');
     }
 }

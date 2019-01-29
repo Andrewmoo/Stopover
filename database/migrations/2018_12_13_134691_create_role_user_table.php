@@ -17,6 +17,10 @@ class CreateRoleUserTable extends Migration
      $table->increments('id');
      $table->integer('role_id')->unsigned();
      $table->integer('user_id')->unsigned();
+
+     // Foreign Key Contraints
+     $table->foreign('role_id')->references('id')->on('roles')->onDelete('restrict');
+     $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
    });
  }
  public function down()

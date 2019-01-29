@@ -50,9 +50,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'name'      => 'required|string|max:191',
+            'username'  => 'required|string|max:20|unique:users',
+            'email'     => 'required|string|email|max:255|unique:users',
+            'password'  => 'required|string|min:6|confirmed',
+            'role_id'   => 'numeric|min:1|max:3',
         ]);
     }
 
@@ -64,15 +66,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-      $user = User::create([
-    'name'     => $data['name'],
-    'email'    => $data['email'],
-    'password' => bcrypt($data['password']),
-    'type' => User::DEFAULT_TYPE,  
-  ]);
-  $user
-     ->roles()
-     ->attach(Role::where('name', 'employee')->first());
-  return $user;
+        $user = User::create([
+            'name'     => $data['name'],
+            'username' => $data['username'],
+            'email'    => $data['email'],
+            'password' => bcrypt($data['password']),
+            'type' => ($data['role_id'] == '1' ? User::GUEST_TYPE : User::HOTEL_TYPE),
+        ]);
+        
+        if($user['type'] == User::GUEST_TYPE) {
+            $user->roles()->attach(Role::where('type', 'guest')->first());
+        }
+        else {
+            $user->roles()->attach(Role::where('type', 'hotel')->first());
+        }
+            
+        return $user;
+    }
+    
+    protected function redirectTo()
+    {
+        if(auth()->user()->type == 'guest') {
+            return '/students/create';
+        }
+        return '/hotels/create';
     }
 }

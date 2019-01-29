@@ -1,23 +1,66 @@
 @extends('layouts.app')
 @section('content')
-  <a href="/rooms" class="btn btn-light" role="button">Go Back</a>
-  <h1>Room number {{$room->room_id}}</h1>
-  <div class="cPost">
-    Description: {!!$room->description!!}
-  </div>
-  <div class="cPost">
-    Facilities: {!!$room->facilities!!}
-  </div>
-  <div class="cPost">
-    Number of beds: {!!$room->beds!!}
-  </div>
-  <hr>
-  <small class="cPost">Listed on {{$room->created_at}}</small>
-  <hr>
-      <a href="/rooms/{{$room->room_id}}/edit" class="btn btn-default">Edit</a>
+    <div class="card mt-3 mb-3">
+        <h5 class="card-header">Listing {{$room->id}}</h5>
+        <div class="card-body">
+            <!-- Single beds -->
+            @if($room->singleBeds > 0)
+                <p>
+                    {{$room->singleBeds}} single bed(s)
+                </p>
+            @endif
 
-      {!!Form::open(['action' => ['RoomsController@destroy', $room->room_id], 'method' => 'POST', 'class'=> 'float-right'])!!}
-          {{Form::hidden('_method', 'DELETE')}}
-          {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-      {!!Form::close()!!}
+            <!-- Double beds -->
+            @if($room->doubleBeds > 0)
+                <p>
+                    {{$room->doubleBeds}} double bed(s)
+                </p>
+            @endif
+
+            <!-- Bathroom/en-suite -->
+            <p>
+                @if($room->bathroom == 0)
+                    No bathroom in room.
+                @else
+                    En-suite.
+                @endif
+            </p>
+
+            <!-- Wi-Fi -->
+            <p>
+                @if($room->wifi == 0)
+                    No free Wi-Fi.
+                @else
+                    Free Wi-Fi.
+                @endif
+            </p>
+
+            <!-- Wi-Fi -->
+            <p>
+                @if($room->parking == 0)
+                    No free parking.
+                @else
+                    Free parking.
+                @endif
+            </p>
+
+            <!-- Wi-Fi -->
+            <p>
+                @if($room->breakfast == 0)
+                    Breakfast not included.
+                @else
+                    Breakfast included.
+                @endif
+            </p>
+            @if(auth()->user()->type == 'admin' || auth()->user()->type == 'hotel')
+                {!!Form::open(['action' => ['RoomsController@destroy', $room->room_id], 'method' => 'POST', 'class'=> 'float-right'])!!}
+                {{Form::hidden('_method', 'DELETE')}}
+                <a href="/rooms/{{$room->id}}/edit" class="btn btn-primary">Edit</a>
+                {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                {!!Form::close()!!}
+            @else
+                <!-- booking form here -->
+            @endif
+        </div>
+    </div>
 @endsection

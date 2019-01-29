@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Room;
+use App\Hotel;
 
 class RoomsController extends Controller
 {
@@ -24,7 +25,6 @@ class RoomsController extends Controller
      */
     public function index()
     {
-        // $posts = Post::all();
         $rooms = Room::orderBy('created_at','desc')->paginate(10);
         return view('rooms.index')->with('rooms', $rooms);
     }
@@ -36,7 +36,12 @@ class RoomsController extends Controller
      */
     public function create()
     {
-        return view('rooms.create');
+        if(auth()->user()->completeReg == '0')
+        {
+            return redirect('/hotels/create');
+        }
+        $hotel_id = Hotel::where('user_id', auth()->user()->id)->first()->id;
+        return view('rooms.create')->with('hotel_id', $hotel_id);
     }
 
     /**
@@ -48,15 +53,27 @@ class RoomsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-          'description' => 'required',
-          'facilities' => 'required',
-          'noBeds' => 'required'
+          'singleBeds' => 'numeric',
+          'doubleBeds' => 'numeric',
+          'bathroom' => 'required|numeric|min:0|max:1',
+          'wifi' => 'required|numeric|min:0|max:1',
+          'parking' => 'required|numeric|min:0|max:1',
+          'breakfast' => 'required|numeric|min:0|max:1',
+          'price' => 'required|numeric',
+          'hotel_id' => 'required|numeric|exists:hotels,id',
         ]);
 
         //create room
         $room = new Room;
-        $room->description = $request->input('description');
-        $room->facilities = $request->input('facilities');
+        $room->singleBeds = $request->input('singleBeds');
+        $room->doubleBeds = $request->input('doubleBeds');
+        $room->bathroom = $request->input('bathroom');
+        $room->wifi = $request->input('wifi');
+        $room->parking = $request->input('parking');
+        $room->breakfast = $request->input('breakfast');
+        $room->price = $request->input('price');
+        $room->hotel_id = $request->input('hotel_id');
+        $room->booked = '0';
         $room->save();
 
         return redirect('/rooms')->with('success', 'Room Listed');
@@ -68,9 +85,9 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($room_id)
+    public function show($id)
     {
-        $room = Room::find($room_id);
+        $room = Room::find($id);
         return view('rooms.show')->with('room', $room);
     }
 
@@ -80,9 +97,9 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($room_id)
+    public function edit($id)
     {
-      $room = Room::find($room_id);
+      $room = Room::find($id);
 
     //   Check for correct user_id
     //   if(auth()->user()->id !==$post->user_id){
@@ -98,7 +115,7 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $room_id)
+    public function update(Request $request, $id)
     {
       $this->validate($request,[
         'description' => 'required',
@@ -107,7 +124,7 @@ class RoomsController extends Controller
       ]);
 
       //create Room
-      $room = Room::find($room_id);
+      $room = Room::find($id);
       $room->description = $request->input('description');
       $room->facilities = $request->input('facilities');
       $room->save();
@@ -121,9 +138,9 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($room_id)
+    public function destroy($id)
     {
-        $room = Room::find($room_id);
+        $room = Room::find($id);
         //Check for correct user_id
         // if(auth()->user()->id !==$post->user_id){
         //     return redirect('/posts')->with('error', 'Unauthorised Page');

@@ -13,20 +13,36 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-    $role_user = Role::where('name', 'user')->first();
-    $role_admin  = Role::where('name', 'admin')->first();
-    $user = new User();
-    $user->name = 'user Name';
-    $user->email = 'user@example.com';
-    $user->password = bcrypt('secret');
-    $user->save();
-    $user->roles()->attach($role_user);
+      $role_guest = Role::where('type', 'guest')->first();
+      $role_admin = Role::where('type', 'admin')->first();
+      $role_hotel = Role::where('type', 'hotel')->first();
 
-    $admin = new User();
-    $admin->name = 'admin Name';
-    $admin->email = 'admin@example.com';
-    $admin->password = bcrypt('secret');
-    $admin->save();
-    $admin->roles()->attach($role_admin);
-  }
+      $guest = new User();
+      $guest->name = 'guest Name';
+      $guest->username = 'guest';
+      $guest->email = 'guest@example.com';
+      $guest->password = bcrypt('secret');
+      $guest->type = User::GUEST_TYPE;
+      $guest->save();
+      $guest->roles()->attach($role_guest);
+
+      $admin = new User();
+      $admin->name = 'admin Name';
+      $admin->username = 'admin';
+      $admin->email = 'admin@example.com';
+      $admin->password = bcrypt('secret');
+      $admin->type = User::ADMIN_TYPE;
+      $admin->completeReg = '1';
+      $admin->save();
+      $admin->roles()->attach($role_admin);
+
+      $hotel = new User();
+      $hotel->name = 'Hotel One';
+      $hotel->username = 'hotelone';
+      $hotel->email = 'hotel@one.com';
+      $hotel->password = bcrypt('secret');
+      $hotel->type = User::HOTEL_TYPE;
+      $hotel->save();
+      $hotel->roles()->attach($role_hotel);
+    }
 }

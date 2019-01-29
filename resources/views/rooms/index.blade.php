@@ -6,7 +6,7 @@
     @foreach($rooms as $room)
       <div class="card cardMargin">
         <div class="card-body">
-          <h2><a href="/rooms/{{$room->room_id}}">Room {{$room->room_id}}</a></h2>
+          <h2><a href="/rooms/{{$room->id}}">Room {{$room->id}}</a></h2>
           <small>Listed on {{$room->created_at}}</small>
         </div>
       </div>

@@ -16,7 +16,11 @@ Route::get('/home', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
-Route::resource('rooms', 'RoomsController');
+Route::resources([
+   'rooms' => 'RoomsController',
+   'hotels' => 'HotelsController',
+   'students' => 'StudentsController',
+]);
 
 Route::get('about', function(){
    return view('pages.about');

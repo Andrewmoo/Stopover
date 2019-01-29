@@ -12,6 +12,22 @@
                         @csrf
 
                         <div class="form-group row">
+                            <label for="role_id" class="col-md-4 col-form-label text-md-right">{{ __('Account type') }}</label>
+                            <div class="col-md-6">
+                                <select class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }}" name="role_id" id="role_id" required autofocus>
+                                    <option value="1" selected>Guest</option>
+                                    <option value="3">Hotel</option>
+                                </select>
+
+                                @if ($errors->has('role_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('role_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
@@ -24,6 +40,20 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                                <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+    
+                                <div class="col-md-6">
+                                    <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required>
+    
+                                    @if ($errors->has('username'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('username') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
