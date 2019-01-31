@@ -30,6 +30,9 @@
       {{Form::label('breakfast', 'Breakfast included:')}}
       {{Form::radio('breakfast', '1')}} Yes
       {{Form::radio('breakfast', '0', true)}} No
+    </div><div class="form-group cPost">
+      {{Form::label('price', 'Price:')}}
+      {{Form::text('price', old('price'), ['class' => 'form-control', 'placeholder' => 'e.g. 56.99'])}}
     </div>
     {{Form::hidden('hotel_id', $hotel_id)}}
     {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
