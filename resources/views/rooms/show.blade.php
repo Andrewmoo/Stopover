@@ -3,6 +3,9 @@
     <div class="card mt-3 mb-3">
         <h5 class="card-header">Listing {{$room->id}}</h5>
         <div class="card-body">
+            @if($room->booked == 1)
+                <del>
+            @endif
             <!-- Single beds -->
             @if($room->singleBeds > 0)
                 <p>
@@ -52,14 +55,25 @@
                     Breakfast included.
                 @endif
             </p>
+
+            <!-- Price -->
+            <p>
+                Price: €{{$room->price}}
+            </p>
             @if(auth()->user()->type == 'admin' || auth()->user()->type == 'hotel')
-                {!!Form::open(['action' => ['RoomsController@destroy', $room->room_id], 'method' => 'POST', 'class'=> 'float-right'])!!}
+                {!!Form::open(['action' => ['RoomsController@destroy', $room->id], 'method' => 'POST', 'class'=> 'float-right'])!!}
                 {{Form::hidden('_method', 'DELETE')}}
                 <a href="/rooms/{{$room->id}}/edit" class="btn btn-primary">Edit</a>
                 {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
                 {!!Form::close()!!}
             @else
-                <!-- booking form here -->
+                <!-- booking link -->
+                @if($room->booked == 0)
+                    <a class="btn btn-primary" href="{{url('/bookings/create/'.$room->id)}}">Book</a>
+                @endif
+            @endif
+            @if($room->booked == 1)
+                </del> <p class="text-danger">Apologies. This room is already booked.</p>
             @endif
         </div>
     </div>

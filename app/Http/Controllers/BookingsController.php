@@ -20,20 +20,29 @@ class BookingsController extends Controller
         //
     }
 
+    public function getRoom($id) {
+        $room_id = $id;
+        return redirect()->action('BookingsController@create', ['room_id' => $room_id]);
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         if(auth()->user()->type != 'guest' || auth()->user()->completeReg == '0')
         {
             return redirect('/students/create');
         }
 
+        $student_id = Student::where('user_id', auth()->user()->id)->first()->id;
+        $room_id = $id;
         
-        return view('bookings.create');
+        return view('bookings.create')->with([
+            'student_id' => $student_id,
+            'room_id' => $room_id
+        ]);
     }
 
     /**
@@ -58,6 +67,8 @@ class BookingsController extends Controller
         $booking->from = $request->input('from');
         $booking->to = $request->input('to');
         $booking->save();
+
+        Room::where('id', $booking->room_id)->update(array('booked' => '1'));
 
         return redirect('/');
     }

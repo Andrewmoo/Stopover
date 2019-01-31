@@ -55,7 +55,10 @@
             @endif
         </div>
     </div>
+
+    <!-- Room listings -->
     @foreach ($rooms as $room)
+        @if($room->booked == 0)
         <div class="card mt-3 mb-3">
             <h5 class="card-header"><a href="/rooms/{{$room->id}}">Listing {{$room->id}}</a></h5>
             <div class="card-body">
@@ -110,5 +113,6 @@
                 </p>
             </div>
         </div>
+        @endif
     @endforeach
 @endsection
