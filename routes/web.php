@@ -16,10 +16,15 @@ Route::get('/home', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
+Route::get('/bookings/create/{id}', [
+   'as' => 'bookings.create', 'uses' => 'BookingsController@create'
+]);
+
 Route::resources([
    'rooms' => 'RoomsController',
    'hotels' => 'HotelsController',
    'students' => 'StudentsController',
+   'bookings' => 'BookingsController'
 ]);
 
 Route::get('about', function(){
