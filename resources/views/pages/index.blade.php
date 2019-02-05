@@ -8,9 +8,7 @@
 
           {!! Form::open([
             'action' => [
-              'RoomsController@search',
-              date('Y-m-d', strtotime(Request::input('from'))),
-              date('Y-m-d', strtotime(Request::input('to')))
+              'RoomsController@search'
             ], 
             'method' => 'GET'
           ]) !!}
