@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Student;
+use App\Guest;
 use App\User;
 
-class StudentsController extends Controller
+class GuestsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,7 +32,7 @@ class StudentsController extends Controller
         }
 
         $user_id = auth()->user()->id;
-        return view('students.create')->with('user_id', $user_id);
+        return view('guests.create')->with('user_id', $user_id);
     }
 
     /**
@@ -53,18 +53,18 @@ class StudentsController extends Controller
             'user_id' => 'required|numeric|exists:users,id'
         ]);
   
-        //create student
-        $student = new Student;
-        $student->firstName = $request->input('firstName');
-        $student->lastName = $request->input('lastName');
-        $student->email = $request->input('email');
-        $student->address = $request->input('address');
-        $student->phone = $request->input('phone');
-        $student->institution = $request->input('firstName');
-        $student->user_id = $request->input('user_id');
-        $student->save();
+        //create guest
+        $guest = new GUest;
+        $guest->firstName = $request->input('firstName');
+        $guest->lastName = $request->input('lastName');
+        $guest->email = $request->input('email');
+        $guest->address = $request->input('address');
+        $guest->phone = $request->input('phone');
+        $guest->institution = $request->input('firstName');
+        $guest->user_id = $request->input('user_id');
+        $guest->save();
 
-        User::where('id', $student->user_id)->update(array('completeReg' => '1'));
+        User::where('id', $guest->user_id)->update(array('completeReg' => '1'));
 
         return redirect('/');
     }
