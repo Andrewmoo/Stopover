@@ -19,7 +19,6 @@ class GuestTableSeeder extends Seeder
         $guest->address = '15 Sesh Lane';
         $guest->institution = 'IADT';
         $guest->phone = "0838756646";
-        $guest->user_id = 1;
         $guest->save();
     }
 }
