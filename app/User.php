@@ -22,7 +22,7 @@ class User extends Authenticatable
      const HOTEL_TYPE = 'hotel';
 
     public function isAdmin() { return $this->type === self::ADMIN_TYPE; }
-     
+
     protected $fillable = [
         'name', 'username', 'email', 'password', 'type', 'completeReg'
     ];
@@ -77,6 +77,6 @@ public function hasAnyRole($roles)
 */
 public function hasRole($role)
 {
-  return null !== $this->roles()->where(type, $role)->first();
+  return null !== $this->roles()->where('type', $role)->first();
 }
 }
