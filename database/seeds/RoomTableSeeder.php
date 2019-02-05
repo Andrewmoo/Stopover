@@ -47,5 +47,17 @@ class RoomTableSeeder extends Seeder
         $room->hotel_id = '1';
         $room->booked = '0';
         $room->save();
+
+        $room = new Room;
+        $room->singleBeds = '0';
+        $room->doubleBeds = '1';
+        $room->wifi = '1';
+        $room->parking = '0';
+        $room->breakfast = '0';
+        $room->bathroom = '1';
+        $room->price = '250';
+        $room->hotel_id = '1';
+        $room->booked = '0';
+        $room->save();
     }
 }
