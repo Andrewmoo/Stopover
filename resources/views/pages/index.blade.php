@@ -8,7 +8,9 @@
 
           {!! Form::open([
             'action' => [
-              'RoomsController@search'
+              'RoomsController@search',
+              0000-00-00,
+              0000-00-00,
             ], 
             'method' => 'GET'
           ]) !!}
