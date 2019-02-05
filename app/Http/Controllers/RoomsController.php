@@ -151,7 +151,7 @@ class RoomsController extends Controller
         return redirect('/rooms')->with('success', 'Room Removed');
     }
 
-    public function search(Request $request)
+    public function search(Request $request, $from, $to)
     {
         $to = $request->input('to');
         $from = $request->input('from');
