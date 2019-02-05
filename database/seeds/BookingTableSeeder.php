@@ -11,6 +11,11 @@ class BookingTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $booking = new Booking();
+        $booking->guest_id = 1;
+        $booking->room_id = 3;
+        $booking->from = date('Y-m-d', strtotime('04/05/2019'));
+        $booking->to = date('Y-m-d', strtotime('11/05/2019'));
+        $booking->save();
     }
 }
