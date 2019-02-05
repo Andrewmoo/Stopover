@@ -24,7 +24,7 @@
                 {{Form::label('from', 'From:')}}
               </div>
               <div class="col-sm-6">
-                {{Form::date('from', '', ['class' => 'form-control'])}}
+                {{Form::date('from', (isset($from) ? $from : ''), ['class' => 'form-control'])}}
               </div>
             </div>
             <div class="row form-group cPost">
@@ -32,7 +32,7 @@
                   {{Form::label('to', 'To:')}}
                 </div>
                 <div class="col-sm-6">
-                  {{Form::date('to', '', ['class' => 'form-control'])}}
+                  {{Form::date('to',  (isset($to) ? $to : ''), ['class' => 'form-control'])}}
                 </div>
             </div>
             {{-- <div class="row">
@@ -53,6 +53,18 @@
           {!! Form::close() !!}
 
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12" style="color=white">
+    @if (count($rooms)  == 0)
+    <p>There are no results</p>
+    @else
+    <p>Here are the rooms</p>
+      @foreach ($rooms as $room)
+        <p>{{ $room->id }}</p>
+      @endforeach
+    @endif
   </div>
 </div>
 

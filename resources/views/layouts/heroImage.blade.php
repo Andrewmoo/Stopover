@@ -23,7 +23,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="primaryColor heroImage">
+<body class="primaryColor">
   @include('inc.navbar')
   <div class="container J-margin">
       @include('inc.messages')

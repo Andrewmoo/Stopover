@@ -157,21 +157,40 @@ class RoomsController extends Controller
         $from = $request->input('from');
 
         try{
-        $rooms = DB::statement('
-            SELECT *
-            FROM rooms as r
-            WHERE r.id NOT IN(
-                SELECT b.room_id
-                FROM bookings as b
-                WHERE b.from <= '.$from.'
-                AND b.to >= '.$to.');
-                ');
+        // $rooms = DB::statement('
+        //     SELECT *
+        //     FROM rooms as r
+        //     WHERE r.id NOT IN(
+        //         SELECT b.room_id
+        //         FROM bookings as b
+        //         WHERE b.from <= '.$from.'
+        //           AND b.to >= '.$to.');
+        //
+        $sql =
+          'SELECT r.*
+          FROM bookings b
+          LEFT JOIN rooms r ON r.id = b.room_id
+          WHERE NOT((b.from < :to1 AND b.to > :to2)
+          OR (b.from < :from1 AND b.to > :from2)
+          OR (b.from > :from3 AND b.to < :to3)
+          OR (b.from < :from4 AND b.to > :to4))';
+        $rooms = DB::select($sql, [
+          'from1' => $from,
+          'from2' => $from,
+          'from3' => $from,
+          'from4' => $from,
+          'to1' => $to,
+          'to2' => $to,
+          'to3' => $to,
+          'to4' => $to
+        ]);
+        //dd($results);
             }
             catch(Illuminate\Database\QueryException $ex){
                 return 'WHOOP';
             }
 
-        return redirect('/rooms/search/'.$from.'&'.$to)->with([
+        return view('rooms.results')->with([
             'rooms' => $rooms,
             'from' => $from,
             'to' => $to
