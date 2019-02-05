@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Booking;
 use App\Room;
-use App\Student;
+use App\Guest;
 
 class BookingsController extends Controller
 {
@@ -33,14 +33,14 @@ class BookingsController extends Controller
     {
         if(auth()->user()->type != 'guest' || auth()->user()->completeReg == '0')
         {
-            return redirect('/students/create');
+            return redirect('/guests/create');
         }
 
-        $student_id = Student::where('user_id', auth()->user()->id)->first()->id;
+        $guest_id = Guest::where('user_id', auth()->user()->id)->first()->id;
         $room_id = $id;
         
         return view('bookings.create')->with([
-            'student_id' => $student_id,
+            'guest_id' => $guest_id,
             'room_id' => $room_id
         ]);
     }
@@ -54,7 +54,7 @@ class BookingsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'student_id' => 'required|numeric',
+            'guest_id' => 'required|numeric',
             'room_id' => 'required|numeric',
             'from' => 'required|date',
             'to' => 'required|date'
@@ -62,13 +62,11 @@ class BookingsController extends Controller
   
         //create booking
         $booking = new Booking;
-        $booking->student_id = $request->input('student_id');
+        $booking->guest_id = $request->input('guest_id');
         $booking->room_id = $request->input('room_id');
         $booking->from = $request->input('from');
         $booking->to = $request->input('to');
         $booking->save();
-
-        Room::where('id', $booking->room_id)->update(array('booked' => '1'));
 
         return redirect('/');
     }

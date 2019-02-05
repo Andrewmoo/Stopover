@@ -15,14 +15,14 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('student_id');
+            $table->unsignedInteger('guest_id');
             $table->unsignedInteger('room_id');
             $table->date('from');
             $table->date('to');
             $table->timestamps();
 
             // Foreign Key Contraints
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('guest_id')->references('id')->on('guests')->onDelete('cascade');
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('restrict');
         });
     }

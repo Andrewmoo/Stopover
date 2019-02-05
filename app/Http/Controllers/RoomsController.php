@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Room;
 use App\Hotel;
+use DB;
 
 class RoomsController extends Controller
 {
@@ -148,5 +149,32 @@ class RoomsController extends Controller
 
         $room->delete();
         return redirect('/rooms')->with('success', 'Room Removed');
+    }
+
+    public function search(Request $request)
+    {
+        $to = $request->input('to');
+        $from = $request->input('from');
+
+        try{
+        $rooms = DB::statement('
+            SELECT *
+            FROM rooms as r
+            WHERE r.id NOT IN(
+                SELECT b.room_id
+                FROM bookings as b
+                WHERE b.from <= '.$from.'
+                AND b.to >= '.$to.');
+                ');
+            }
+            catch(Illuminate\Database\QueryException $ex){
+                return 'WHOOP';
+            }
+
+        return redirect('/rooms/search/'.$from.'&'.$to)->with([
+            'rooms' => $rooms,
+            'from' => $from,
+            'to' => $to
+        ]);
     }
 }

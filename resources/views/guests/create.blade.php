@@ -2,7 +2,7 @@
 @section('content')
 <div class="container J-margin">
   <h1>Complete your information</h1>
-  {!! Form::open(['action' => 'StudentsController@store', 'method' => 'POST']) !!}
+  {!! Form::open(['action' => 'GuestsController@store', 'method' => 'POST']) !!}
     <div class="form-group cPost">
       {{Form::label('firstName', 'First name:')}}
       {{Form::text('firstName', old('firstName'), ['class' => 'form-control', 'placeholder' => 'Your first name'])}}

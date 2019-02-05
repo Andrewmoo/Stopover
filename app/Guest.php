@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Guest extends Model
 {
     //Table name
-    protected $table = 'students';
+    protected $table = 'guests';
     //Primary key
     public $primaryKey = 'id';
     //Timestamps

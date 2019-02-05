@@ -11,7 +11,7 @@
       {{Form::label('to', 'Date of check-out:')}}
       {{Form::date('to', '', ['class' => 'form-control'])}}
     </div>
-    {{Form::hidden('student_id', $student_id)}}
+    {{Form::hidden('guest_id', $guest_id)}}
     {{Form::hidden('room_id', $room_id)}}
     {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
   {!! Form::close() !!}

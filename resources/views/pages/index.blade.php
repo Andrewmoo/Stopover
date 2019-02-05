@@ -6,29 +6,34 @@
         <div class="jumbotron secondaryColor J-margin text-center">
           <h1>Stopover</h1>
 
-          {!! Form::open([ 'method' => 'POST']) !!}
-            <div class="row">
+          {!! Form::open([
+            'action' => [
+              'RoomsController@search'
+            ], 
+            'method' => 'GET'
+          ]) !!}
+            {{-- <div class="row">
               <div class="form-group col-12">
                 {{Form::text('destination', '', ['class' => 'form-control', 'placeholder' => 'Your destination'])}}
               </div>
-            </div>
+            </div> --}}
             <div class="row form-group cPost">
               <div class="col-sm-1">
-                {{Form::label('checkIn', 'From:')}}
+                {{Form::label('from', 'From:')}}
               </div>
               <div class="col-sm-6">
-                {{Form::date('checkIn', '', ['class' => 'form-control', 'placeholder' => 'Check In'])}}
+                {{Form::date('from', '', ['class' => 'form-control'])}}
               </div>
             </div>
             <div class="row form-group cPost">
                 <div class="col-sm-1">
-                  {{Form::label('checkOut', 'To:')}}
+                  {{Form::label('to', 'To:')}}
                 </div>
                 <div class="col-sm-6">
-                  {{Form::date('checkOut', '', ['class' => 'form-control', 'placeholder' => 'Check Out'])}}
+                  {{Form::date('to', '', ['class' => 'form-control'])}}
                 </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
               <div class="col-sm-3">
                 <div class = "form-group cPost">
                   {{Form::label('adults', 'Adults:')}}
@@ -41,7 +46,7 @@
                   {{Form::selectRange('kids', 0, 4)}}
                 </div>
               </div>
-            </div>
+            </div> --}}
             {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
           {!! Form::close() !!}
 
