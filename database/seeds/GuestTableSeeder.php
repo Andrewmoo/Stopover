@@ -18,6 +18,7 @@ class GuestTableSeeder extends Seeder
         $guest->email = 'guest@guest.com';
         $guest->address = '15 Sesh Lane';
         $guest->institution = 'IADT';
+        $guest->phone = "0838756646";
         $guest->save();
     }
 }
