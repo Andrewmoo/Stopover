@@ -69,7 +69,7 @@
             @else
                 <!-- booking link -->
                 @if($room->booked == 0)
-                    <a class="btn btn-primary" href="{{url('/bookings/create/'.$room->id)}}">Book</a>
+                    <a class="btn btn-primary" href="/bookings/create/{{$room->id}}">Book</a>
                 @endif
             @endif
             @if($room->booked == 1)

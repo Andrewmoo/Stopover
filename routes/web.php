@@ -27,7 +27,7 @@ Route::any('/rooms/search/{from}&{to}', [
 Route::resources([
    'rooms' => 'RoomsController',
    'hotels' => 'HotelsController',
-   'students' => 'StudentsController',
+   'guests' => 'GuestsController',
    'bookings' => 'BookingsController'
 ]);
 
