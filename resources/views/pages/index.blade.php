@@ -7,11 +7,7 @@
           <h1>Stopover</h1>
 
           {!! Form::open([
-            'action' => [
-              'RoomsController@search',
-              0000-00-00,
-              0000-00-00,
-            ],
+            'action' => 'RoomsController@search',
             'method' => 'GET'
           ]) !!}
             {{-- <div class="row">

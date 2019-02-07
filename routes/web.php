@@ -19,7 +19,7 @@ Route::get('/bookings/create/{id}', [
    'as' => 'bookings.create', 'uses' => 'BookingsController@create'
 ]);
 
-Route::any('/rooms/result/', [
+Route::any('/rooms/results/', [
    'as' => 'rooms.results', 'uses' => 'RoomsController@search'
 ]);
 

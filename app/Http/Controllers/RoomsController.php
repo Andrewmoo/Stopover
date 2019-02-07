@@ -167,9 +167,10 @@ class RoomsController extends Controller
         //           AND b.to >= '.$to.');
         //
         $sql =
-          'SELECT r.*
+          'SELECT DISTINCT r.*, h.name as hotel_name
           FROM bookings b
           LEFT JOIN rooms r ON r.id = b.room_id
+          LEFT JOIN hotels h ON h.id = r.hotel_id
           WHERE NOT((b.from < :to1 AND b.to > :to2)
           OR (b.from < :from1 AND b.to > :from2)
           OR (b.from > :from3 AND b.to < :to3)
@@ -184,7 +185,7 @@ class RoomsController extends Controller
           'to3' => $to,
           'to4' => $to
         ]);
-        //dd($results);
+        //dd($rooms);
             }
             catch(Illuminate\Database\QueryException $ex){
                 return 'WHOOP';
