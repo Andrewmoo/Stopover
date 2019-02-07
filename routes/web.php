@@ -21,7 +21,7 @@ Route::get('/bookings/create/{id}', [
 ]);
 
 Route::any('/rooms/result/{from}&{to}', [
-   'as' => 'rooms.search', 'uses' => 'RoomsController@search'
+   'as' => 'rooms.results', 'uses' => 'RoomsController@search'
 ]);
 
 Route::resources([
