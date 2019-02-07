@@ -26,10 +26,14 @@
                         <tr>
                           <td>{{$room->room_id}}</td>
                           <td><a href="/rooms/{{$room->room_id}}/edit" class="btn btn-default">Edit</a></td>
-                          <td>  {!!Form::open(['action' => ['RoomsController@destroy', $room->room_id], 'method' => 'POST', 'class'=> 'float-right'])!!}
-                                {{Form::hidden('_method', 'DELETE')}}
-                                {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-                            {!!Form::close()!!}</td>
+                          <td>
+                                {!!Form::open(['action' => ['RoomsController@destroy', $room->room_id], 'method' => 'POST', 'class'=> 'float-right'])!!}
+                                    
+                                    {{Form::hidden('_method', 'DELETE')}}
+                                    {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+
+                                {!!Form::close()!!}
+                            </td>
                         </tr>
                       @endforeach
                     </table>

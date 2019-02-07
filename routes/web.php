@@ -12,7 +12,6 @@
 */
 
 Route::get('/', 'PagesController@index');
-Route::get('/home', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
@@ -20,7 +19,7 @@ Route::get('/bookings/create/{id}', [
    'as' => 'bookings.create', 'uses' => 'BookingsController@create'
 ]);
 
-Route::any('/rooms/result/{from}&{to}', [
+Route::any('/rooms/result/', [
    'as' => 'rooms.results', 'uses' => 'RoomsController@search'
 ]);
 
