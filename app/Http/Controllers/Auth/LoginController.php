@@ -60,7 +60,7 @@ class LoginController extends Controller
     {
         if(auth()->user()->completeReg == '0') {
             if(auth()->user()->type == 'guest') {
-                return '/students/create';
+                return '/guests/create';
             }
             else {
                 return '/hotels/create';
