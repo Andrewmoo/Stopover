@@ -45,7 +45,7 @@
                 </div>
               </div>
             </div> --}}
-            {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
+            {{Form::submit('Search', ['class'=>'btn btn-primary'])}}
           {!! Form::close() !!}
 
     </div>
