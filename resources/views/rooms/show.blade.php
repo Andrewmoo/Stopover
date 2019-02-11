@@ -63,7 +63,7 @@
                 <p>
                     Price: €{{$room->price}}
                 </p>
-                @if(auth()->user()->type == 'admin' || auth()->user()->type == 'hotel')
+                @if((!Auth::guest() && auth()->user()->type == 'admin') || (!Auth::guest() && auth()->user()->type == 'hotel'))
                     {!!Form::open(['action' => ['RoomsController@destroy', $room->id], 'method' => 'POST', 'class'=> 'float-right'])!!}
                     {{Form::hidden('_method', 'DELETE')}}
                     <a href="/rooms/{{$room->id}}/edit" class="btn btn-primary">Edit</a>
