@@ -43,7 +43,7 @@
                 @foreach ($rooms as $room)
                   <div class="mb-3 card card-light flex-row flex-wrap secondaryColor h-100" style="background-color: rgba(255, 255, 255, 0.3) !important">
                     <div class="card-header border-0">
-                        <img src="//placehold.it/200" alt="">
+                      <img src="/storage/images/room_images/{{$room->room_image}}">
                     </div>
                     <div class="card-body text-white px-3">
                         <!-- Single beds -->
@@ -121,7 +121,7 @@
                     </div>
                   </div>
                 @endforeach
-                
+
             @endif
             </div>
         </div>

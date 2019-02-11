@@ -62,8 +62,26 @@ class RoomsController extends Controller
           'breakfast' => 'required|numeric|min:0|max:1',
           'price' => 'required|numeric',
           'hotel_id' => 'required|numeric|exists:hotels,id',
+          'room_image' => 'image|nullable|max:1999'
         ]);
 
+
+        //Handle file upload
+        if($request->hasFile('room_image')){
+          //get file name with extension
+          $fileNameWithExt = $request->file('room_image')->getClientOriginalName();
+          //get just file name
+          $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+          //get just extension
+          $extension = $request->file('room_image')->getClientOriginalExtension();
+          //filename to store
+            //doing .'_'.time() makes all file names unique even if two uploads have the same name
+          $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+          //upload image
+          $path = $request->file('room_image')->storeAs('public/images/room_images', $fileNameToStore);
+        }else{
+          $fileNameToStore = 'noimage.jpg';
+        }
         //create room
         $room = new Room;
         $room->singleBeds = $request->input('singleBeds');
@@ -75,6 +93,7 @@ class RoomsController extends Controller
         $room->price = $request->input('price');
         $room->hotel_id = $request->input('hotel_id');
         $room->booked = '0';
+        $room->room_image = $fileNameToStore;
         $room->save();
 
         return redirect('/rooms')->with('success', 'Room Listed');

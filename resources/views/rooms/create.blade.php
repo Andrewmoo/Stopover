@@ -2,7 +2,7 @@
 @section('content')
 <div class="container J-margin">
   <h1>Create listing</h1>
-  {!! Form::open(['action' => 'RoomsController@store', 'method' => 'POST']) !!}
+  {!! Form::open(['action' => 'RoomsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     <div class="form-group cPost">
       {{Form::label('singleBeds', 'Number of single beds:')}}
       {{Form::selectRange('singleBeds', 0, 6)}}
@@ -33,6 +33,9 @@
     </div><div class="form-group cPost">
       {{Form::label('price', 'Price:')}}
       {{Form::text('price', old('price'), ['class' => 'form-control', 'placeholder' => 'e.g. 56.99'])}}
+    </div>
+    <div class="form-group">
+      {{Form::file('room_image')}}
     </div>
     {{Form::hidden('hotel_id', $hotel_id)}}
     {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}

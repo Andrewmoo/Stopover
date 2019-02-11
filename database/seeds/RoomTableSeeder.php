@@ -22,6 +22,7 @@ class RoomTableSeeder extends Seeder
         $room->price = '100';
         $room->hotel_id = '1';
         $room->booked = '0';
+        $room->room_image = 'noimage.jpg';
         $room->save();
 
         $room = new Room;
@@ -34,6 +35,7 @@ class RoomTableSeeder extends Seeder
         $room->price = '200';
         $room->hotel_id = '1';
         $room->booked = '0';
+        $room->room_image = 'noimage.jpg';
         $room->save();
 
         $room = new Room;
@@ -46,6 +48,7 @@ class RoomTableSeeder extends Seeder
         $room->price = '150';
         $room->hotel_id = '1';
         $room->booked = '0';
+        $room->room_image = 'noimage.jpg';
         $room->save();
     }
 }
