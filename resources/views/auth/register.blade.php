@@ -11,13 +11,23 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
+                        <div class="card-title">
+                            <h3>Account Information</h3>
+                        </div>
                         <div class="form-group row">
                             <label for="role_id" class="col-md-4 col-form-label text-md-right">{{ __('Account type') }}</label>
                             <div class="col-md-6">
-                                <select class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }}" name="role_id" id="role_id" required autofocus>
+                                {{-- <select class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }}" name="role_id" id="role_id" required autofocus>
                                     <option value="1" selected>Guest</option>
                                     <option value="3">Hotel</option>
-                                </select>
+                                </select> --}}
+                                <a id="role_guest" class="text-white btn btn-primary">Guest</a>
+                                <a id="role_hotel" class="text-white btn btn-secondary">Hotel</a>
+                                @if(empty(old('role_id')))
+                                    {{Form::hidden('role_id', '1')}}
+                                @else
+                                    {{Form::hidden('role_id', old('role_id'))}}
+                                @endif
 
                                 @if ($errors->has('role_id'))
                                     <span class="invalid-feedback" role="alert">
@@ -91,6 +101,15 @@
                             </div>
                         </div>
 
+                        
+                        <div id="guestInfo" class="card-title">
+                            <h3>Guest Information</h3>
+                        </div>
+
+                        <div id="hotelInfo" class="card-title">
+                            <h3>Hotel Information</h3>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -104,4 +123,44 @@
         </div>
     </div>
 </div>
+<script>
+    $( document ).ready(function () {
+        // hide hotel specific portion of the form initially
+        $('#hotelInfo').hide();
+
+        // click event for Guest button
+        $( '#role_guest' ).click(function () {
+            if($('#role_guest').hasClass('btn-secondary')) {
+
+                // swap classes on buttons
+                $(this).removeClass('btn-secondary').addClass('btn-primary');
+                $('#role_hotel').removeClass('btn-primary').addClass('btn-secondary');
+
+                // change hidden role_id field value
+                $("input[name=role_id]").val('1');
+
+                // change visibility of relevant form portions
+                $('#guestInfo').show();
+                $('#hotelInfo').hide();
+            }
+        });
+
+        // click event for Hotel button
+        $( '#role_hotel' ).click(function () {
+            if($('#role_hotel').hasClass('btn-secondary')) {
+
+                // swap classes on buttons
+                $(this).removeClass('btn-secondary').addClass('btn-primary');
+                $('#role_guest').removeClass('btn-primary').addClass('btn-secondary');
+
+                // change hidden role_id field value
+                $("input[name=role_id]").val('3');
+
+                // change visibility of relevant form portions
+                $('#guestInfo').hide();
+                $('#hotelInfo').show();
+            }
+        });
+    })
+</script>
 @endsection
