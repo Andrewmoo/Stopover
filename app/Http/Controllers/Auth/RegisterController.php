@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\User;
 use App\Role;
+use App\Guest;
+use App\Hotel;
 
 class RegisterController extends Controller
 {
@@ -50,11 +52,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'      => 'required|string|max:191',
-            'username'  => 'required|string|max:20|unique:users',
-            'email'     => 'required|string|email|max:255|unique:users',
-            'password'  => 'required|string|min:6|confirmed',
-            'role_id'   => 'numeric|min:1|max:3',
+            'username'     => 'required|string|max:20|unique:users',
+            'email'        => 'required|string|email|max:255|unique:users',
+            'password'     => 'required|string|min:6|confirmed',
+            'role_id'      => 'numeric|min:1|max:3',
+            'firstName'    => 'required|string|max:191',
+            'lastName'     => 'required|string|max:191',
+            'email'        => 'required|string|email|max:191',
+            'address'      => 'required|string|max:191',
+            'phone'        => 'required|string|max:50',
+            'institution'  => 'required|string|max:191',
+            'user_id'      => 'required|numeric|exists:users,id'
         ]);
     }
 
@@ -67,7 +75,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            'name'     => $data['name'],
+            'name'     => $data['firstName'] . ' ' . $data['lastName'],
             'username' => $data['username'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
@@ -76,6 +84,8 @@ class RegisterController extends Controller
         
         if($user['type'] == User::GUEST_TYPE) {
             $user->roles()->attach(Role::where('type', 'guest')->first());
+
+            
         }
         else {
             $user->roles()->attach(Role::where('type', 'hotel')->first());

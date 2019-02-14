@@ -10,16 +10,6 @@ use App\User;
 class GuestsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -54,7 +44,7 @@ class GuestsController extends Controller
         ]);
   
         //create guest
-        $guest = new GUest;
+        $guest = new Guest;
         $guest->firstName = $request->input('firstName');
         $guest->lastName = $request->input('lastName');
         $guest->email = $request->input('email');
