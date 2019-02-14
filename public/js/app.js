@@ -13895,7 +13895,7 @@ module.exports = __webpack_require__(43);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(13);
+__webpack_require__(13);'\nimport $ from \'jquery\';';
 
 window.Vue = __webpack_require__(36);
 
