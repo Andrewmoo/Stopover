@@ -56,13 +56,7 @@ class RegisterController extends Controller
             'email'        => 'required|string|email|max:255|unique:users',
             'password'     => 'required|string|min:6|confirmed',
             'role_id'      => 'numeric|min:1|max:3',
-            'firstName'    => 'required|string|max:191',
-            'lastName'     => 'required|string|max:191',
             'email'        => 'required|string|email|max:191',
-            'address'      => 'required|string|max:191',
-            'phone'        => 'required|string|max:50',
-            'institution'  => 'required|string|max:191',
-            'user_id'      => 'required|numeric|exists:users,id'
         ]);
     }
 
@@ -84,7 +78,14 @@ class RegisterController extends Controller
         
         if($user['type'] == User::GUEST_TYPE) {
             $user->roles()->attach(Role::where('type', 'guest')->first());
-
+            $user->guest()->create([
+                'firstName' => $data['firstName'],
+                'lastName' => $data['lastName'],
+                'email' => $data['email'],
+                'address' => $data['address'],
+                'phone' => $data['phone'],
+                'institution' => $data['institution'],
+            ]);
             
         }
         else {
@@ -96,9 +97,6 @@ class RegisterController extends Controller
     
     protected function redirectTo()
     {
-        if(auth()->user()->type == 'guest') {
-            return '/students/create';
-        }
-        return '/hotels/create';
+        return '/';
     }
 }

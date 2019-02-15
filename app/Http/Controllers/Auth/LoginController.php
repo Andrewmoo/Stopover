@@ -56,16 +56,15 @@ class LoginController extends Controller
         ];
     }
 
-    protected function redirectTo()
+    public function showLoginForm()
     {
-        if(auth()->user()->completeReg == '0') {
-            if(auth()->user()->type == 'guest') {
-                return '/guests/create';
-            }
-            else {
-                return '/hotels/create';
-            }
-        }
-        return '/';
+        session(['link' => url()->previous()]);
+        return view('auth.login');
+    }
+
+
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect(session('link'));
     }
 }

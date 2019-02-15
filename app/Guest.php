@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Guest extends Model
 {
+    protected $fillable = [
+        'firstName', 'lastName', 'phone', 'email', 'address', 'institution', 'user_id'
+    ];
     //Table name
     protected $table = 'guests';
     //Primary key

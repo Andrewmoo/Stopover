@@ -24,7 +24,7 @@ class User extends Authenticatable
     public function isAdmin() { return $this->type === self::ADMIN_TYPE; }
 
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'type', 'completeReg'
+        'name', 'username', 'email', 'password', 'type', 'completeReg', 'firstName', 'lastName', 'phone', 'address', 'institution', 'user_id'
     ];
 
     /**
@@ -46,9 +46,9 @@ class User extends Authenticatable
       return $this->hasOne('App\Hotel');
     }
 
-    public function student()
+    public function guest()
     {
-      return $this->hasOne('App\Student');
+      return $this->hasOne('App\Guest');
     }
 
 /**
