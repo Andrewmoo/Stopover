@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -25,13 +26,6 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -94,9 +88,15 @@ class RegisterController extends Controller
             
         return $user;
     }
-    
-    protected function redirectTo()
+
+    public function showRegistrationForm()
     {
-        return '/';
+        session(['link' => url()->previous()]);
+        return view('auth.register');
+    }
+    
+    protected function registered(Request $request, $user)
+    {
+        return redirect(session('link'));
     }
 }
