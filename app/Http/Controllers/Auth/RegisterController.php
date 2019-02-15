@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -45,13 +46,44 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'username'     => 'required|string|max:20|unique:users',
-            'email'        => 'required|string|email|max:255|unique:users',
-            'password'     => 'required|string|min:6|confirmed',
-            'role_id'      => 'numeric|min:1|max:3',
-            'email'        => 'required|string|email|max:191',
-        ]);
+        if($data['role_id'] == 1)
+        {
+            return Validator::make($data, [
+                'username'     => 'required|string|min:3|max:20|unique:users',
+                'email'        => 'required|string|email|max:255|unique:users',
+                'password'     => 'required|string|min:6|confirmed',
+                'role_id'      => [
+                    'required', 
+                    'numeric',
+                    Rule::in(['1', '3']),
+                ],
+                'email'        => 'required|string|email|max:191',
+
+                'firstName' => 'required|string|max:191',
+                'lastName' => 'required|string|max:191',
+                'guest_address' => 'required|string|max:191',
+                'guest_phone' => 'required|string|max:50',
+                'institution' => 'required|string|max:191',
+            ]);
+        }
+        else{
+            return Validator::make($data, [
+                'username'     => 'required|string|min:3|max:20|unique:users',
+                'email'        => 'required|string|email|max:255|unique:users',
+                'password'     => 'required|string|min:6|confirmed',
+                'role_id'      => [
+                    'required',
+                    'numeric',
+                    Rule::in(['1', '3']),
+                ],
+                'email'        => 'required|string|email|max:191',
+
+                'name' => 'required|string|max:191',
+                'hotel_address' => 'required|string|max:191',
+                'country' => 'required|string|max:50',
+                'hotel_phone' => 'required|numeric',
+            ]);
+        }
     }
 
     /**
@@ -76,14 +108,20 @@ class RegisterController extends Controller
                 'firstName' => $data['firstName'],
                 'lastName' => $data['lastName'],
                 'email' => $data['email'],
-                'address' => $data['address'],
-                'phone' => $data['phone'],
+                'address' => $data['guest_address'],
+                'phone' => $data['guest_phone'],
                 'institution' => $data['institution'],
             ]);
-            
         }
         else {
             $user->roles()->attach(Role::where('type', 'hotel')->first());
+            $user->hotel()->create([
+                'name' => $data['name'],
+                'country' => $data['country'],
+                'email' => $data['email'],
+                'address' => $data['hotel_address'],
+                'phone' => $data['hotel_phone'],
+            ]);
         }
             
         return $user;

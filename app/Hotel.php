@@ -7,6 +7,9 @@ use App\Hotel;
 
 class Hotel extends Model
 {
+    protected $fillable = [
+        'name', 'address', 'country', 'phone', 'email', 'user_id'
+    ];
     //Table name
     protected $table = 'hotels';
     //Primary key
