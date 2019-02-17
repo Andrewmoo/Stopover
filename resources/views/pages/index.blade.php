@@ -4,7 +4,7 @@
   <div class="row">
   <div class="col-6">
           <div class="jumbotron SCO J-margin text-center">
-            <h1>Stopover</h1>
+            <h1><span class="SOColour">S</span>topover</h1>
 
             {!! Form::open([
               'action' => 'RoomsController@search',
