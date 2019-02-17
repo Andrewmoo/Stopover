@@ -1,4 +1,4 @@
-    <nav class="navbar navbar-expand-md navbar-dark tertiaryColor fixed-top nav-margin">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top nav-margin">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Stopover') }}
             </a>

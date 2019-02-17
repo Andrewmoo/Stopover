@@ -13,11 +13,21 @@
 .primaryColor{
   background-color: #393E46;
 }
+.PCO{
+  background-color: rgba(57,62,70, 0.5);
+}
 .secondaryColor{
   background-color: #232831;
 }
+.SCO{
+  background-color: rgba(0,0,0, 0.7);
+}
 .tertiaryColor{
   background-color: #00ADB5;
+}
+.TCO{
+  background-color: rgba(0,173,181, 0.5);
+
 }
 h1{
   color: #636b6f;
@@ -95,4 +105,13 @@ content: '';
 }
 .borderLeft{
   border-left: 2px solid #636b6f;
+}
+.bg-image{
+  background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url("/storage/images/bg-images/bg.jpg");
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  height: 150%;
+  width: 100%;
+  background-attachment: fixed;
 }
