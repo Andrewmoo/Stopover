@@ -6,6 +6,7 @@ use Countable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Translation\Loader;
 use Illuminate\Support\NamespacedItemResolver;
@@ -94,7 +95,7 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
      * @param  string  $key
      * @param  array   $replace
      * @param  string  $locale
-     * @return string|array
+     * @return string|array|null
      */
     public function trans($key, array $replace = [], $locale = null)
     {
@@ -108,7 +109,7 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
      * @param  array   $replace
      * @param  string|null  $locale
      * @param  bool  $fallback
-     * @return string|array
+     * @return string|array|null
      */
     public function get($key, array $replace = [], $locale = null, $fallback = true)
     {
@@ -144,7 +145,7 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
      * @param  string  $key
      * @param  array  $replace
      * @param  string  $locale
-     * @return string|array
+     * @return string|array|null
      */
     public function getFromJson($key, array $replace = [], $locale = null)
     {
@@ -244,10 +245,6 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
         if (is_string($line)) {
             return $this->makeReplacements($line, $replace);
         } elseif (is_array($line) && count($line) > 0) {
-            foreach ($line as $key => $value) {
-                $line[$key] = $this->makeReplacements($value, $replace);
-            }
-
             return $line;
         }
     }
@@ -268,6 +265,8 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
         $replace = $this->sortReplacements($replace);
 
         foreach ($replace as $key => $value) {
+            // $value = $value instanceof HtmlString ? $value->toHtml() : e($value);
+
             $line = str_replace(
                 [':'.$key, ':'.Str::upper($key), ':'.Str::ucfirst($key)],
                 [$value, Str::upper($value), Str::ucfirst($value)],

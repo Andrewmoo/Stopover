@@ -332,7 +332,6 @@ class SerializableClosure implements Serializable
     /**
      * Wrap closures
      *
-     * @internal
      * @param $data
      * @param ClosureScope|SplObjectStorage|null $storage
      */
@@ -406,7 +405,6 @@ class SerializableClosure implements Serializable
     /**
      * Unwrap closures
      *
-     * @internal
      * @param $data
      * @param SplObjectStorage|null $storage
      */
@@ -466,7 +464,6 @@ class SerializableClosure implements Serializable
 
     /**
      * Internal method used to map closure pointers
-     * @internal
      * @param $data
      */
     protected function mapPointers(&$data)
@@ -540,7 +537,6 @@ class SerializableClosure implements Serializable
     /**
      * Internal method used to map closures by reference
      *
-     * @internal
      * @param   mixed &$data
      */
     protected function mapByReference(&$data)

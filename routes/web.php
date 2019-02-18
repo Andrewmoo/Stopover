@@ -12,10 +12,7 @@
 */
 
 Route::get('/', 'PagesController@index');
-Route::get('/about', [
-   'as' => 'pages.about',
-   'uses' => 'PagesController@about'
-]);
+Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
 Route::get('/bookings/create/{id}', [
@@ -33,21 +30,9 @@ Route::resources([
    'bookings' => 'BookingsController'
 ]);
 
-// Route::get('/map', function () {
-//    Mapper::map(
-//       53.3,
-//       -1.4,
-//       [
-//          'zoom' => 16,
-//          'draggable' => true,
-//          'marker' => false,
-//          'eventAfterLoad' => 'circleListener(maps[0].shapes[0].circle_0);'
-//       ]
-//    );
-//    print '<div style="height: 400px; width:400px;">';
-//    print Mapper::render();
-//    print '</div>';
-// });
+Route::get('about', function(){
+   return view('pages.about');
+});
 
 Auth::routes();
 

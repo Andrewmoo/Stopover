@@ -3,14 +3,13 @@
 namespace Illuminate\Cookie;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\InteractsWithTime;
 use Symfony\Component\HttpFoundation\Cookie;
 use Illuminate\Contracts\Cookie\QueueingFactory as JarContract;
 
 class CookieJar implements JarContract
 {
-    use InteractsWithTime, Macroable;
+    use InteractsWithTime;
 
     /**
      * The default path (if specified).

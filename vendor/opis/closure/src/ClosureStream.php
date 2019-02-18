@@ -7,9 +7,6 @@
 
 namespace Opis\Closure;
 
-/**
- * @internal
- */
 class ClosureStream
 {
     const STREAM_PROTO = 'closure';

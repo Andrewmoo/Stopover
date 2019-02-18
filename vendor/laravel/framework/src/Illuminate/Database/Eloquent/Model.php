@@ -394,8 +394,6 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
             $this->getConnectionName()
         );
 
-        $model->setTable($this->getTable());
-
         return $model;
     }
 
@@ -427,9 +425,9 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
      */
     public static function on($connection = null)
     {
-        // First we will just create a fresh instance of this model, and then we can set the
-        // connection on the model so that it is used for the queries we execute, as well
-        // as being set on every relation we retrieve without a custom connection name.
+        // First we will just create a fresh instance of this model, and then we can
+        // set the connection on the model so that it is be used for the queries
+        // we execute, as well as being set on each relationship we retrieve.
         $instance = new static;
 
         $instance->setConnection($connection);
@@ -544,7 +542,7 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
      */
     protected function incrementOrDecrement($column, $amount, $extra, $method)
     {
-        $query = $this->newQueryWithoutRelationships();
+        $query = $this->newQuery();
 
         if (! $this->exists) {
             return $query->{$method}($column, $amount, $extra);
@@ -568,7 +566,7 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
      */
     protected function incrementOrDecrementAttributeValue($column, $amount, $extra, $method)
     {
-        $this->{$column} = $this->{$column} + ($method === 'increment' ? $amount : $amount * -1);
+        $this->{$column} = $this->{$column} + ($method == 'increment' ? $amount : $amount * -1);
 
         $this->forceFill($extra);
 
@@ -960,7 +958,9 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
      */
     public function newQueryWithoutRelationships()
     {
-        return $this->registerGlobalScopes($this->newModelQuery());
+        return $this->registerGlobalScopes(
+            $this->newEloquentBuilder($this->newBaseQueryBuilder())->setModel($this)
+        );
     }
 
     /**
@@ -1408,11 +1408,9 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
         $relations = [];
 
         foreach ($this->getRelations() as $key => $relation) {
-            if (! method_exists($this, $key)) {
-                continue;
+            if (method_exists($this, $key)) {
+                $relations[] = $key;
             }
-
-            $relations[] = $key;
 
             if ($relation instanceof QueueableCollection) {
                 foreach ($relation->getQueueableRelations() as $collectionValue) {
