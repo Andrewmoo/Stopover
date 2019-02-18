@@ -118,3 +118,31 @@ content: '';
 .SOColour{
   color: #00ADB5;
 }
+.StopoverHeading{
+  font-size: 60px;
+}
+.DSN{
+    font-size: 60px;
+    color: white;
+    margin-bottom: 40px !important;
+    margin-left: 10px;
+}
+.hpMargin{
+    margin-top: 200px;
+}
+.inner-form{
+  background: rgba(0,0,0,.5);
+  padding: 50px 47px;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.homeLabels{
+  font-size: 30px;
+  line-height: 1;
+  margin-right: 15px;
+}
