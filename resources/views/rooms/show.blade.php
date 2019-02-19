@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="row">
-<div class="col-md-8">
+<div @if($from != null && $to != null && !Auth::guest() && auth()->user()->hasRole('guest')) class='col-md-8' @else class="col-md-12" @endif>
     <div class="card mt-3 mb-3">
         <h5 class="card-header">Listing {{$room->id}}</h5>
         <div class="card-body">
@@ -37,7 +37,7 @@
                         {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
                         {!!Form::close()!!}
                     @else
-                        <a class="btn btn-primary" href="/bookings/create/{{$room->id}}">Book</a>
+                        {{-- <a class="btn btn-primary" href="/bookings/create/{{$room->id}}">Book</a> --}}
                     @endif
                 </div>
                 <div class="col-4 col-sm-4">
@@ -47,25 +47,27 @@
         </div>
     </div>
 </div><div class="clear-fix"></div>
+@if($from != null && $to != null && !Auth::guest() && auth()->user()->hasRole('guest'))
 <div class="col-md-4">
     <div class="card mt-3 mb-3">
         <div class="card-body">
             <h1>Book </h1>
             {!! Form::open(['action' => 'BookingsController@store', 'method' => 'POST']) !!}
-                <div class="form-group cPost">
+                <div class="form-group">
                     {{Form::label('from', 'Date of check-in:')}}
                     {{Form::date('from', $from, ['class' => 'form-control'])}}
                 </div>
-                <div class="form-group cPost">
+                <div class="form-group">
                     {{Form::label('to', 'Date of check-out:')}}
                     {{Form::date('to', $to, ['class' => 'form-control'])}}
                 </div>
                 {{Form::hidden('guest_id', $guest_id)}}
                 {{Form::hidden('room_id', $room->id)}}
-                {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
+                {{Form::submit('Book Room', ['class'=>'btn btn-primary'])}}
             {!! Form::close() !!}
         </div>
     </div>
 </div>
+@endif
 </div>
 @endsection

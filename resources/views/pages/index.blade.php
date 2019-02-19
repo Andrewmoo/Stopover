@@ -13,26 +13,24 @@
               'action' => 'RoomsController@search',
               'method' => 'GET'
             ]) !!}
-              <div class="form-row form-group cPost">
-
-                <div class="col-sm-2">
-                  {{Form::label('from', 'From:',  ['class' => 'homeLabels'])}}
-                </div>
-                <div class="col-sm-3">
+              <div class="form-row form-group text-white">
+                <div class="col-sm-6">
+                  {{Form::label('from', 'Arrival:',  ['class' => 'homeLabels'])}}
                   {{Form::date('from', '', ['class' => 'form-control'])}}
                 </div>
-                  <div class="col-sm-2 ">
-                    {{Form::label('to', 'To:',  ['class' => 'homeLabels'])}}
-                  </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-6">
+                    {{Form::label('to', 'Departure:',  ['class' => 'homeLabels'])}}
                     {{Form::date('to', '', ['class' => 'form-control'])}}
                   </div>
-                  {{Form::submit('Search', ['class'=>'btn btn-primary'])}}
-                {!! Form::close() !!}
               </div>
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  {{Form::submit('Search', ['class'=>'btn btn-lg btn-outline-light'])}}
+                </div>
+              </div>
+              {!! Form::close() !!}
             </div>
-
-            </div>
+          </div>
 </div>
 
 

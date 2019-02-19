@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Room;
 use App\Hotel;
 use DB;
+use App\Guest;
 
 class RoomsController extends Controller
 {
@@ -110,7 +111,7 @@ class RoomsController extends Controller
         $guest_id = 0;
         if(!auth()->guest()) 
         {
-          $guest_id = auth()->user()->id;
+          $guest_id = Guest::where('user_id', auth()->user()->id)->first()->id;
         }
         $room = Room::find($id);
         return view('rooms.show')->with([
