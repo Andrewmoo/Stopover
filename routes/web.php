@@ -19,6 +19,12 @@ Route::get('/bookings/create/{id}', [
    'as' => 'bookings.create', 'uses' => 'BookingsController@create'
 ]);
 
+Route::post('/bookings/edit/', [
+   'as' => 'bookings.edit',
+   'uses' => 'BookingsController@edit'
+]);
+
+
 Route::any('/rooms/results/', [
    'as' => 'rooms.results', 'uses' => 'RoomsController@search'
 ]);
@@ -32,7 +38,10 @@ Route::resources([
    'rooms' => 'RoomsController',
    'hotels' => 'HotelsController',
    'guests' => 'GuestsController',
-   'bookings' => 'BookingsController'
+]);
+
+Route::resource('bookings', 'BookingsController')->except([
+   'edit', 'create', 'show'
 ]);
 
 Route::get('about', function(){

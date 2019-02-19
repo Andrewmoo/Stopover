@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Booking;
 use App\Room;
 use App\Guest;
+use Auth;
 
 class BookingsController extends Controller
 {
@@ -88,8 +89,18 @@ class BookingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
+        $id = $request->input('id');
+        $guest_id = $request->input('guest_id');
+
+        $guest = Guest::where('id', $guest_id)->first();
+        $guser_id = $guest->user_id;
+
+        if(Auth::user()->id != $guser_id) {
+            return redirect('dashboard')->with('error', 'Illegal booking request.');
+        }
+
         $booking = Booking::find($id);
         return view('bookings.edit')->with('booking', $booking);
     }
