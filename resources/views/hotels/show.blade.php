@@ -13,10 +13,10 @@
             </div>
             <div class="row">
                 <div class="col-2 border-right border-top">
-                    Country:
+                    County:
                 </div>
                 <div class="col-6 border-top">
-                    {{$hotel->country}}
+                    {{$hotel->county}}
                 </div>
             </div>
             <div class="row">
