@@ -3,9 +3,9 @@
 @section('content')
 <div class="container J-margin">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12 ">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">{{auth()->user()->type}} Dashboard</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,34 +13,42 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <a href="/rooms/create" class="btn btn-default noPadding">Create Listing</a>
-                    <h3>Your Bookings</h3>
-                    @if(count($rooms) > 0)
-                    <table class="table table-striped">
-                      <tr>
-                        <th>Room</th>
-                        <th></th>
-                        <th></th>
-                      </tr>
-                      @foreach($rooms as $room)
-                        <tr>
-                          <td>{{$room->room_id}}</td>
-                          <td><a href="/rooms/{{$room->room_id}}/edit" class="btn btn-default">Edit</a></td>
-                          <td>
-                                {!!Form::open(['action' => ['RoomsController@destroy', $room->room_id], 'method' => 'POST', 'class'=> 'float-right'])!!}
-                                    
-                                    {{Form::hidden('_method', 'DELETE')}}
-                                    {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                    @if(auth()->user()->hasRole('hotel'))
+                      <a href="/rooms/create" class="btn btn-default noPadding">Create Listing</a>
+                    @else 
+                      @if(auth()->user()->hasRole('guest'))
+                        <h3>Your Bookings</h3>
+                      @if(count($bookings) > 0)
+                        <table class="table table-striped">
+                          <tr>
+                            <th>Room</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th></th>
+                          </tr>
+                          @foreach($bookings as $booking)
+                            <tr>
+                              <td><a href="/rooms/{{$booking->room_id}}">{{$booking->name}}, room {{$booking->room_id}}</a></td>
+                              <td>{{date('d/m/Y', strtotime($booking->from))}}</td>
+                              <td>{{date('d/m/Y', strtotime($booking->to))}}</td>
+                              <td>
+                                    {!!Form::open(['action' => ['BookingsController@destroy', $booking->id], 'method' => 'POST', 'class'=> 'float-right'])!!}
+                                        
+                                        {{Form::hidden('_method', 'DELETE')}}
+                                        <a href="/bookings/{{$booking->id}}/edit" class="btn btn-success">Edit</a>
+                                        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
 
-                                {!!Form::close()!!}
-                            </td>
-                        </tr>
-                      @endforeach
-                    </table>
-                  @else
-                    <p>You have no rooms</p>
-                  @endif
+                                    {!!Form::close()!!}
+                                </td>
+                            </tr>
+                          @endforeach
+                        </table>
+                      @else
+                      <p>You have no rooms</p>
+                      @endif
+                    @endif
                 </div>
+                @endif
             </div>
         </div>
     </div>

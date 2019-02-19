@@ -68,7 +68,7 @@ class BookingsController extends Controller
         $booking->to = $request->input('to');
         $booking->save();
 
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
     /**
@@ -90,7 +90,8 @@ class BookingsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $booking = Booking::find($id);
+        return view('bookings.edit')->with('booking', $booking);
     }
 
     /**
@@ -102,7 +103,22 @@ class BookingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'guest_id' => 'required|numeric',
+            'room_id' => 'required|numeric',
+            'from' => 'required|date',
+            'to' => 'required|date'
+        ]);
+  
+        //create booking
+        $booking = new Booking;
+        $booking->guest_id = $request->input('guest_id');
+        $booking->room_id = $request->input('room_id');
+        $booking->from = $request->input('from');
+        $booking->to = $request->input('to');
+        $booking->save();
+
+        return redirect('/dashboard')->with('success', 'Booking Updated');;
     }
 
     /**
@@ -113,6 +129,13 @@ class BookingsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $booking = Booking::find($id);
+        //Check for correct user_id
+        // if(auth()->user()->id !==$post->user_id){
+        //     return redirect('/posts')->with('error', 'Unauthorised Page');
+        // }
+
+        $booking->delete();
+        return redirect('/dashboard')->with('success', 'Booking Removed');
     }
 }
