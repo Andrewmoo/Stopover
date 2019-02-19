@@ -23,16 +23,16 @@ Route::any('/rooms/results/', [
    'as' => 'rooms.results', 'uses' => 'RoomsController@search'
 ]);
 
-Route::any('/rooms/{id}/{from?}/{to?}', [
-   'as' => 'rooms.show',
-   'uses' => 'RoomsController@show'
-]);
-
 Route::resources([
    'rooms' => 'RoomsController',
    'hotels' => 'HotelsController',
    'guests' => 'GuestsController',
    'bookings' => 'BookingsController'
+]);
+
+Route::get('/rooms/{id}/{from?}/{to?}', [
+   'as' => 'rooms.show',
+   'uses' => 'RoomsController@show'
 ]);
 
 Route::get('about', function(){

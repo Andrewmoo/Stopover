@@ -47,6 +47,7 @@
                                 @if(!Auth::guest() && auth()->user()->type == 'hotel' && auth()->user()->completeReg == 1)
                                 <a class="dropdown-item" href="/hotels/{{App\Hotel::getHotelId(auth()->user()->id)}}">Profile</a>
                                 @endif
+                                <a class="dropdown-item" href="/dashboard">Dashboard</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">

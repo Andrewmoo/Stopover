@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="row">
-<div @if($from != null && $to != null && !Auth::guest() && auth()->user()->hasRole('guest')) class='col-md-8' @else class="col-md-12" @endif>
+<div @if(!Auth::guest() && auth()->user()->hasRole('guest')) @if($from != null && $to != null) class='col-md-8' @endif @else class="col-md-12" @endif>
     <div class="card mt-3 mb-3">
         <h5 class="card-header">Listing {{$room->id}}</h5>
         <div class="card-body">
@@ -27,7 +27,6 @@
 
                     <!-- Price -->
                     <p>Price: €{{$room->price}}</p>
-                    <p>{{$from}} {{$to}}</p>
 
                     @if((!Auth::guest() && auth()->user()->type == 'admin') ||
                         (!Auth::guest() && auth()->user()->hasRole('hotel')))
@@ -47,7 +46,7 @@
         </div>
     </div>
 </div><div class="clear-fix"></div>
-@if($from != null && $to != null && !Auth::guest() && auth()->user()->hasRole('guest'))
+@if(!Auth::guest() && auth()->user()->hasRole('guest')) @if($from != null && $to != null)
 <div class="col-md-4">
     <div class="card mt-3 mb-3">
         <div class="card-body">
@@ -68,6 +67,7 @@
         </div>
     </div>
 </div>
+@endif
 @endif
 </div>
 @endsection
