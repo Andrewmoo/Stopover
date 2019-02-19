@@ -11,6 +11,11 @@ use Auth;
 
 class BookingsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -32,11 +37,6 @@ class BookingsController extends Controller
      */
     public function create($id)
     {
-        if(auth()->user()->type != 'guest' || auth()->user()->completeReg == '0')
-        {
-            return redirect('/guests/create');
-        }
-
         $guest_id = Guest::where('user_id', auth()->user()->id)->first()->id;
         $room_id = $id;
         

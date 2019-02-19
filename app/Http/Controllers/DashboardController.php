@@ -30,7 +30,7 @@ class DashboardController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        if(auth()->user()->type == 'hotel'){
+        if(auth()->user()->hasRole('hotel')){
           $hotel_id = Hotel::where('user_id', $user_id)->first()->id;
 
           $sql =

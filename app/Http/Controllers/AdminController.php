@@ -10,7 +10,7 @@ class AdminController extends Controller
       $this->middleware('auth');
     }
     public function index(){
-      if(auth()->user()->type !== 'admin')
+      if(!auth()->user()->hasRole('admin'))
       {
         return redirect('/');
       }

@@ -28,7 +28,7 @@ class HotelsController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->type != 'hotel' || auth()->user()->completeReg == '1')
+        if(!auth()->user()->hasRole('hotel'))
         {
             return redirect('/');
         }
@@ -63,8 +63,6 @@ class HotelsController extends Controller
         $hotel->email = $request->input('email');
         $hotel->user_id = $request->input('user_id');
         $hotel->save();
-
-        User::where('id', $hotel->user_id)->update(array('completeReg' => '1'));
 
         return redirect('/');
     }

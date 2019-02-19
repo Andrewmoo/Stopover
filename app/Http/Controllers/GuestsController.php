@@ -16,7 +16,7 @@ class GuestsController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->type != 'guest' || auth()->user()->completeReg == '1')
+        if(!auth()->user()->hasRole('guest'))
         {
             return redirect('/');
         }
@@ -53,8 +53,6 @@ class GuestsController extends Controller
         $guest->institution = $request->input('firstName');
         $guest->user_id = $request->input('user_id');
         $guest->save();
-
-        User::where('id', $guest->user_id)->update(array('completeReg' => '1'));
 
         return redirect('/');
     }

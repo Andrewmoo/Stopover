@@ -20,7 +20,7 @@ class HotelTableSeeder extends Seeder
         $hotel->phone = '01232456';
         $hotel->email = 'hotel@one.com';
         $hotel->user_id = '3';
+        $hotel->county = 'Dublin';
         $hotel->save();
-        User::where('id', $hotel->user_id)->update(array('completeReg' => '1'));
     }
 }

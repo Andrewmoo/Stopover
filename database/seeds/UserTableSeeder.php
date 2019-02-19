@@ -22,7 +22,6 @@ class UserTableSeeder extends Seeder
       $guest->username = 'guest';
       $guest->email = 'guest@example.com';
       $guest->password = bcrypt('secret');
-      $guest->type = User::GUEST_TYPE;
       $guest->save();
       $guest->roles()->attach($role_guest);
 
@@ -31,8 +30,6 @@ class UserTableSeeder extends Seeder
       $admin->username = 'admin';
       $admin->email = 'admin@example.com';
       $admin->password = bcrypt('secret');
-      $admin->type = User::ADMIN_TYPE;
-      $admin->completeReg = '1';
       $admin->save();
       $admin->roles()->attach($role_admin);
 
@@ -41,7 +38,6 @@ class UserTableSeeder extends Seeder
       $hotel->username = 'hotelone';
       $hotel->email = 'hotel@one.com';
       $hotel->password = bcrypt('secret');
-      $hotel->type = User::HOTEL_TYPE;
       $hotel->save();
       $hotel->roles()->attach($role_hotel);
     }

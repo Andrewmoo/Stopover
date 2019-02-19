@@ -35,7 +35,7 @@
                             @endif
                         </li>
                     @else
-                    @if(auth()->user()->type == 'admin' || Auth::user()->type == 'hotel')
+                    @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('hotel'))
                       <li class="nav-link"><a href="/rooms/create" class="cPost">Create listing</a></li>
                     @endif
                         <li class="nav-item dropdown ml-notAuto">
@@ -44,7 +44,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @if(!Auth::guest() && auth()->user()->type == 'hotel' && auth()->user()->completeReg == 1)
+                                @if(!Auth::guest() && Auth::user()->hasRole('hotel'))
                                 <a class="dropdown-item" href="/hotels/{{App\Hotel::getHotelId(auth()->user()->id)}}">Profile</a>
                                 @endif
                                 <a class="dropdown-item" href="/dashboard">Dashboard</a>

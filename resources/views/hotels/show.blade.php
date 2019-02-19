@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            @if(!Auth::guest() && auth()->user()->type != 'guest')
+            @if(!Auth::guest() && !Auth::user()->hasRole('guest'))
                 <div class="row col-12">
                 {!!Form::open(['action' => ['HotelsController@destroy', $hotel->id], 'method' => 'POST'])!!}
                     {{Form::hidden('_method', 'DELETE')}}
