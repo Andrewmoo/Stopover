@@ -15,8 +15,8 @@
                     @endif
                     @if(auth()->user()->hasRole('hotel'))
                       <a href="/rooms/create" class="btn btn-default noPadding">Create Listing</a>
-                    @else 
-                      @if(auth()->user()->hasRole('guest'))
+                    @endif
+
                         <h3>Your Bookings</h3>
                       @if(count($bookings) > 0)
                         <table class="table table-striped">
@@ -52,9 +52,8 @@
                       @else
                       <p>You have no rooms</p>
                       @endif
-                    @endif
+
                 </div>
-                @endif
             </div>
         </div>
     </div>

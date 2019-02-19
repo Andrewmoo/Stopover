@@ -38,9 +38,9 @@ class RoomsController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->completeReg == '0')
+        if(!auth()->guest() && !auth()->user()->hasRole('hotel'))
         {
-            return redirect('/hotels/create');
+            return redirect('/dashboard')->with('error', 'Invalid Request');
         }
         $hotel_id = Hotel::where('user_id', auth()->user()->id)->first()->id;
         return view('rooms.create')->with('hotel_id', $hotel_id);
@@ -109,11 +109,12 @@ class RoomsController extends Controller
     public function show($id, $from = null, $to = null)
     {
         $guest_id = 0;
-        if(!auth()->guest()) 
+        if(!auth()->guest() && auth()->user()->hasRole('guest'))
         {
           $guest_id = Guest::where('user_id', auth()->user()->id)->first()->id;
         }
         $room = Room::find($id);
+
         return view('rooms.show')->with([
           'room' => $room,
           'guest_id' => $guest_id,
@@ -176,7 +177,7 @@ class RoomsController extends Controller
         // if(auth()->user()->id !==$post->user_id){
         //     return redirect('/posts')->with('error', 'Unauthorised Page');
         // }
-        
+
         $room->delete();
         return redirect('/rooms')->with('success', 'Room Removed');
     }
