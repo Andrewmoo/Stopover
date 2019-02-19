@@ -176,7 +176,7 @@ class RoomsController extends Controller
         // if(auth()->user()->id !==$post->user_id){
         //     return redirect('/posts')->with('error', 'Unauthorised Page');
         // }
-
+        
         $room->delete();
         return redirect('/rooms')->with('success', 'Room Removed');
     }

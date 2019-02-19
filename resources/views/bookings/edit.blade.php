@@ -2,7 +2,7 @@
 @section('content')
 <div class="container J-margin">
   <h1>Book </h1>
-  {!! Form::open(['action' => 'BookingsController@update', 'method' => 'POST']) !!}
+  {!! Form::open(['action' => 'BookingsController@update, {{$booking->id}}', 'method' => 'POST']) !!}
     <div class="form-group cPost">
       {{Form::label('from', 'Date of check-in:')}}
       {{Form::date('from', '', ['class' => 'form-control'])}}

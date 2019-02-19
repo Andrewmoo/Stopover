@@ -129,12 +129,12 @@ class BookingsController extends Controller
      */
     public function destroy($id)
     {
-        $booking = Booking::find($id);
+        $booking = Booking::where('id', $id);
         //Check for correct user_id
         // if(auth()->user()->id !==$post->user_id){
         //     return redirect('/posts')->with('error', 'Unauthorised Page');
         // }
-
+        
         $booking->delete();
         return redirect('/dashboard')->with('success', 'Booking Removed');
     }
