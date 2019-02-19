@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Room;
+use App\Guest;
+use App\Booking;
 
 class DashboardController extends Controller
 {
@@ -26,7 +28,10 @@ class DashboardController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $user = User::find($user_id);
-        return view('dashboard');
+        $guest_id = Guest::find($user_id)->id;
+        $rooms = Booking::where('user_id', $guest_id)->get();
+        return view('dashboard')->with([
+            'rooms' => $rooms,
+        ]);
     }
 }

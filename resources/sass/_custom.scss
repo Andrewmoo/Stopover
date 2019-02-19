@@ -1,3 +1,7 @@
+* {
+  border-radius: 0 !important;
+}
+
 .J-margin{
   margin-top: 80px;
 }
@@ -37,67 +41,6 @@ h1{
 }
 .cPost{
   color: white;
-}
-.heroImage{
-    background-image: url("/Images/heroImage.jpg");
-
-    /* Set a specific height */
-    height: 200px;
-
-    /* Position and center the image to scale nicely on all screens */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-
-}
-.paris{
-    background-image: url("/Images/paris.jpg");
-
-    /* Set a specific height */
-    width: 340px;
-
-    /* Position and center the image to scale nicely on all screens */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-
-}
-.paris::after{
-  display: block;
-position: relative;
-margin-top: -63px;
-height: 332px;
-width: 100%;
-content: '';
-}
-.madrid{
-    background-image: url("/Images/madrid.jpg");
-
-    /* Set a specific height */
-    height: 340px;
-
-    /* Position and center the image to scale nicely on all screens */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-
-}
-
-.zagreb{
-    background-image: url("/Images/zagreb.jpg");
-
-    /* Set a specific height */
-    height: 340px;
-
-    /* Position and center the image to scale nicely on all screens */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-
 }
 
 .white{
