@@ -105,10 +105,20 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $from = null, $to = null)
     {
+        $guest_id = 0;
+        if(!auth()->guest()) 
+        {
+          $guest_id = auth()->user()->id;
+        }
         $room = Room::find($id);
-        return view('rooms.show')->with('room', $room);
+        return view('rooms.show')->with([
+          'room' => $room,
+          'guest_id' => $guest_id,
+          'from' => $from,
+          'to' => $to
+        ]);
     }
 
     /**
@@ -121,11 +131,11 @@ class RoomsController extends Controller
     {
       $room = Room::find($id);
 
-    //   Check for correct user_id
-    //   if(auth()->user()->id !==$post->user_id){
-    //       return redirect('/posts')->with('error', 'Unauthorised Page');
-    //   }
-       return view('rooms.edit')->with('room', $room);
+      //   Check for correct user_id
+      //   if(auth()->user()->id !==$post->user_id){
+      //       return redirect('/posts')->with('error', 'Unauthorised Page');
+      //   }
+      return view('rooms.edit')->with('room', $room);
      }
 
     /**

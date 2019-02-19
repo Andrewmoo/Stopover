@@ -23,6 +23,11 @@ Route::any('/rooms/results/', [
    'as' => 'rooms.results', 'uses' => 'RoomsController@search'
 ]);
 
+Route::any('/rooms/{id}/{from?}/{to?}', [
+   'as' => 'rooms.show',
+   'uses' => 'RoomsController@show'
+]);
+
 Route::resources([
    'rooms' => 'RoomsController',
    'hotels' => 'HotelsController',
