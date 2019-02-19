@@ -89,15 +89,10 @@ class BookingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id, $guest_id)
     {
-        $id = $request->input('id');
-        $guest_id = $request->input('guest_id');
 
-        $guest = Guest::where('id', $guest_id)->first();
-        $guser_id = $guest->user_id;
-
-        if(Auth::user()->id != $guser_id) {
+        if(Auth::user()->id != Guest::where('id', $guest_id)->first()->user_id) {
             return redirect('dashboard')->with('error', 'Illegal booking request.');
         }
 
@@ -122,7 +117,7 @@ class BookingsController extends Controller
         ]);
   
         //create booking
-        $booking = new Booking;
+        $booking = Booking::find($id);
         $booking->guest_id = $request->input('guest_id');
         $booking->room_id = $request->input('room_id');
         $booking->from = $request->input('from');

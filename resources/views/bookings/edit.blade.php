@@ -13,6 +13,7 @@
     </div>
     {{Form::hidden('guest_id', $booking->guest_id)}}
     {{Form::hidden('room_id', $booking->room_id)}}
+    {{Form::hidden('_method', 'PUT')}}
     {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
   {!! Form::close() !!}
 </div>

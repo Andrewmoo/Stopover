@@ -31,20 +31,14 @@
                               <td><a href="/rooms/{{$booking->room_id}}">{{$booking->name}}, room {{$booking->room_id}}</a></td>
                               <td>{{date('d/m/Y', strtotime($booking->from))}}</td>
                               <td>{{date('d/m/Y', strtotime($booking->to))}}</td>
-                              <td>  
-                                    {!!Form::open(['action' => 'BookingsController@edit', 'method' => 'POST'])!!}
-                                        {{Form::hidden('id', $booking->id)}}
-                                        {{Form::hidden('guest_id', $booking->guest_id)}}
-                                        {{Form::submit('Edit', ['class' => 'btn btn-success'])}}
+                              <td>
+                                  {!!Form::open(['action' => ['BookingsController@destroy', $booking->id], 'method' => 'POST'])!!}
+                                      
+                                      {{Form::hidden('_method', 'DELETE')}}
+                                      <a href="/bookings/edit/{{$booking->id}}/{{$booking->guest_id}}" class="btn btn-success">Edit</a> 
+                                      {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
 
-                                    {!!Form::close()!!}
-
-                                    {!!Form::open(['action' => ['BookingsController@destroy', $booking->id], 'method' => 'POST'])!!}
-                                        
-                                        {{Form::hidden('_method', 'DELETE')}}
-                                        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-
-                                    {!!Form::close()!!}
+                                  {!!Form::close()!!}
                               </td>
                             </tr>
                           @endforeach
