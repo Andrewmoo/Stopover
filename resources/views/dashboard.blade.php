@@ -15,8 +15,8 @@
                     @endif
                     @if(auth()->user()->hasRole('hotel'))
                       <a href="/rooms/create" class="btn btn-default noPadding">Create Listing</a>
-                    @else 
-                      @if(auth()->user()->hasRole('guest'))
+                    @endif
+
                         <h3>Your Bookings</h3>
                       @if(count($bookings) > 0)
                         <table class="table table-striped">
@@ -33,7 +33,7 @@
                               <td>{{date('d/m/Y', strtotime($booking->to))}}</td>
                               <td>
                                     {!!Form::open(['action' => ['BookingsController@destroy', $booking->id], 'method' => 'POST', 'class'=> 'float-right'])!!}
-                                        
+
                                         {{Form::hidden('_method', 'DELETE')}}
                                         <a href="/bookings/{{$booking->id}}/edit" class="btn btn-success">Edit</a>
                                         {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
@@ -46,9 +46,8 @@
                       @else
                       <p>You have no rooms</p>
                       @endif
-                    @endif
+
                 </div>
-                @endif
             </div>
         </div>
     </div>
