@@ -34,11 +34,11 @@ class DashboardController extends Controller
           $hotel_id = Hotel::where('user_id', $user_id)->first()->id;
 
           $sql =
-          "SELECT r.hotel_id, b.*, h.name
-          FROM rooms r
-          LEFT JOIN bookings b ON r.id = b.room_id
+          "SELECT r.singleBeds, r.doubleBeds, r.bathroom, r.wifi, r.parking, r.breakfast, r.price, r.hotel_id, r.room_image, b.*, h.name
+          FROM bookings b
+          LEFT JOIN rooms r ON b.room_id = r.id
           LEFT JOIN hotels h ON r.hotel_id = h.id
-          WHERE hotel_id = :hotel_id";
+          WHERE hotel_id = 1";
 
           $bookings = DB::select($sql, [
               'hotel_id' => $hotel_id,
