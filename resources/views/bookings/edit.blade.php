@@ -3,11 +3,11 @@
 <div class="container J-margin">
   <h1>Book </h1>
   {!! Form::open(['action' => ['BookingsController@update', $booking->id], 'method' => 'POST']) !!}
-    <div class="form-group cPost">
+    <div class="form-group text-white">
       {{Form::label('from', 'Date of check-in:')}}
       {{Form::date('from', $booking->from, ['class' => 'form-control'])}}
     </div>
-    <div class="form-group cPost">
+    <div class="form-group text-white">
       {{Form::label('to', 'Date of check-out:')}}
       {{Form::date('to', $booking->to, ['class' => 'form-control'])}}
     </div>

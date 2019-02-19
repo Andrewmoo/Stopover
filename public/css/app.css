@@ -12052,10 +12052,6 @@ h1 {
   margin-bottom: 40px;
 }
 
-.cPost {
-  color: white;
-}
-
 .white {
   color: white;
 }
@@ -12079,11 +12075,12 @@ h1 {
   color: #00ADB5;
 }
 
-.StopoverHeading {
+.DSN {
   font-size: 60px;
+  color: #cccccc;
 }
 
-.DSN {
+.StopoverHeading {
   font-size: 60px;
   color: white;
   margin-bottom: 40px !important;

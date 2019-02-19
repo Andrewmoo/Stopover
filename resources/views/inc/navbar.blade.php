@@ -36,7 +36,7 @@
                         </li>
                     @else
                     @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('hotel'))
-                      <li class="nav-link"><a href="/rooms/create" class="cPost">Create listing</a></li>
+                      <li class="nav-link"><a href="/rooms/create" class="text-white">Create listing</a></li>
                     @endif
                         <li class="nav-item dropdown ml-notAuto">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
