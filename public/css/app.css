@@ -12076,15 +12076,17 @@ h1 {
 }
 
 .DSN {
-  font-size: 60px;
+  font-size: 2rem;
   color: #cccccc;
+  display: inline-block;
 }
 
 .StopoverHeading {
-  font-size: 60px;
+  font-size: 3rem;
   color: white;
   margin-bottom: 40px !important;
   margin-left: 10px;
+  display: inline-block;
 }
 
 .hpMargin {
@@ -12107,7 +12109,7 @@ h1 {
 }
 
 .homeLabels {
-  font-size: 30px;
+  font-size: 1.1rem;
   line-height: 1;
   margin-right: 15px;
 }

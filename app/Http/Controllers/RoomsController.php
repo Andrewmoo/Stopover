@@ -70,14 +70,16 @@ class RoomsController extends Controller
         //Handle file upload
         if($request->hasFile('room_image')){
           //get file name with extension
-          $fileNameWithExt = $request->file('room_image')->getClientOriginalName();
+          // $fileNameWithExt = $request->file('room_image')->getClientOriginalName();
           //get just file name
-          $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+          // $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+          
           //get just extension
           $extension = $request->file('room_image')->getClientOriginalExtension();
           //filename to store
             //doing .'_'.time() makes all file names unique even if two uploads have the same name
-          $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+          // $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+          $fileNameToStore = 'rimg_hid'.$request->input('hotel_id').'_'.time().'.'.$extension;
           //upload image
           $path = $request->file('room_image')->storeAs('public/images/room_images', $fileNameToStore);
         }else{
@@ -97,7 +99,7 @@ class RoomsController extends Controller
         $room->room_image = $fileNameToStore;
         $room->save();
 
-        return redirect('/rooms')->with('success', 'Room Listed');
+        return redirect('/hotels/'.$request->input('hotel_id'))->with('success', 'Room Listed');
     }
 
     /**
@@ -114,9 +116,11 @@ class RoomsController extends Controller
           $guest_id = Guest::where('user_id', auth()->user()->id)->first()->id;
         }
         $room = Room::find($id);
+        $hotel = Hotel::find($room->hotel_id);
 
         return view('rooms.show')->with([
           'room' => $room,
+          'hotel' => $hotel,
           'guest_id' => $guest_id,
           'from' => $from,
           'to' => $to
@@ -208,7 +212,7 @@ class RoomsController extends Controller
           //   OR (b.from < :from4 AND b.to > :to4))';
 
           $sql =
-          'SELECT DISTINCT r.*, h.name as hotel_name
+          'SELECT DISTINCT r.*, h.name as hotel_name, h.address, h.county
           FROM rooms r
           LEFT JOIN bookings b ON r.id = b.room_id
           LEFT JOIN hotels h ON h.id = r.hotel_id

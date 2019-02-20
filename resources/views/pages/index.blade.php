@@ -2,25 +2,32 @@
 
 @section('content')
   <div class="row">
-    <div class="row col-12 hpMargin">
+    <div class="col-12 hpMargin">
       <h1 class="StopoverHeading">Stopover,</h1>
       <h1 class="DSN">&nbsp;discover somewhere new</h1>
     </div>
 
     <div class="inner-form">
       <div class="col-12">
+        <div class="form-row pl-1 mb-4">
+          <span class="text-white">Search for available rooms:</span>
+        </div>
       {!! Form::open([
         'action' => 'RoomsController@search',
         'method' => 'GET'
       ]) !!}
         <div class="form-row form-group text-white">
-          <div class="col-sm-4">
+          <div class="col-md-4">
             {{Form::label('from', 'Check-in:',  ['class' => 'homeLabels'])}}
             {{Form::date('from', '', ['class' => 'form-control'])}}
           </div>
-            <div class="col-sm-4">
-              {{Form::label('to', 'Check-out:',  ['class' => 'homeLabels'])}}
-              {{Form::date('to', '', ['class' => 'form-control'])}}
+          <div class="col-md-4">
+            {{Form::label('to', 'Check-out:',  ['class' => 'homeLabels'])}}
+            {{Form::date('to', '', ['class' => 'form-control'])}}
+          </div>
+          <div class="col-md-4">
+              {{Form::label('county', 'County:',  ['class' => 'homeLabels'])}}
+              {{Form::text('county', '', ['class' => 'form-control', 'placeholder' => 'e.g. Antrim'])}}
             </div>
         </div>
         <div class="form-row">

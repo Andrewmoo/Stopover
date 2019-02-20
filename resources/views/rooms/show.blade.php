@@ -3,7 +3,7 @@
 <div class="row">
 <div @if(!Auth::guest() && auth()->user()->hasRole('guest')) @if($from != null && $to != null) class='col-md-8' @endif @else class="col-md-12" @endif>
     <div class="card mt-3 mb-3">
-        <h5 class="card-header">Listing {{$room->id}}</h5>
+        <h5 class="card-header">{{$hotel->name}}</h5>
         <div class="card-body">
             <div class="row">
                 <div class="col-8 col-sm-8">
@@ -40,7 +40,7 @@
                     @endif
                 </div>
                 <div class="col-4 col-sm-4">
-                    <img src="/storage/images/room_images/{{$room->room_image}}">
+                    <img class="img-fluid" src="/storage/images/room_images/{{$room->room_image}}">
                 </div>
             </div>
         </div>
