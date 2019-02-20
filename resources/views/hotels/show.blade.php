@@ -50,7 +50,6 @@
                     {{Form::hidden('_method', 'DELETE')}}
                     <a class="btn btn-primary" href="{{$hotel->id}}/edit">Edit</a>
                     {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-                    {{Form::file('hotel-image')}}
                 {!!Form::close()!!}
                 </div>
             @endif
