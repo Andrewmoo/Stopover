@@ -84,7 +84,7 @@ class RoomsController extends Controller
         }else{
           $fileNameToStore = 'noimage.jpg';
         }
-        
+
         // create room
         $room = new Room;
         $room->singleBeds = $request->input('singleBeds');
@@ -95,12 +95,11 @@ class RoomsController extends Controller
         $room->breakfast = $request->input('breakfast');
         $room->price = $request->input('price');
         $room->hotel_id = $request->input('hotel_id');
-        $room->booked = '0';
+        $room->room_image = $fileNameToStore;
         $room->save();
 
         return redirect('/rooms')->with('success', 'Room Listed');
     }
-
     /**
      * Display the specified resource.
      *
@@ -115,12 +114,14 @@ class RoomsController extends Controller
           $guest_id = Guest::where('user_id', auth()->user()->id)->first()->id;
         }
         $room = Room::find($id);
+        $hotel = Hotel::where('id', $room->hotel_id)->first();
 
         return view('rooms.show')->with([
           'room' => $room,
           'guest_id' => $guest_id,
           'from' => $from,
-          'to' => $to
+          'to' => $to,
+          'hotel' => $hotel
         ]);
     }
 
@@ -187,6 +188,7 @@ class RoomsController extends Controller
     {
         $to = $request->input('to');
         $from = $request->input('from');
+        $county = $request->input('county');
 
         try{
           // $rooms = DB::statement('
@@ -209,11 +211,11 @@ class RoomsController extends Controller
           //   OR (b.from < :from4 AND b.to > :to4))';
 
           $sql =
-          'SELECT DISTINCT r.*, h.name as hotel_name
+          'SELECT DISTINCT r.*, h.name as hotel_name, h.county
           FROM rooms r
           LEFT JOIN bookings b ON r.id = b.room_id
           LEFT JOIN hotels h ON h.id = r.hotel_id
-          WHERE r.id NOT IN(
+          WHERE h.county = :county AND r.id NOT IN(
             SELECT b.room_id
             FROM bookings as b
             WHERE((b.from < :to1 AND b.to > :to2)
@@ -230,7 +232,8 @@ class RoomsController extends Controller
             'to1' => $to,
             'to2' => $to,
             'to3' => $to,
-            'to4' => $to
+            'to4' => $to,
+            'county' => $county
           ]);
           //dd($rooms);
         }

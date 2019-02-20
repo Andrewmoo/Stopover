@@ -23,7 +23,6 @@ class CreateRoomsTable extends Migration
             $table->boolean('breakfast');
             $table->double('price');
             $table->unsignedInteger('hotel_id');
-            $table->boolean('booked');
             $table->timestamps();
 
             // Foreign Key Contraints
