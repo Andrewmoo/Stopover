@@ -69,23 +69,23 @@ class RoomsController extends Controller
 
         //Handle file upload
         if($request->hasFile('room_image')){
-          //get file name with extension
+          // get file name with extension
           // $fileNameWithExt = $request->file('room_image')->getClientOriginalName();
-          //get just file name
+          // get just file name
           // $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
           
           //get just extension
           $extension = $request->file('room_image')->getClientOriginalExtension();
-          //filename to store
-            //doing .'_'.time() makes all file names unique even if two uploads have the same name
+          // filename to store
+          // doing .'_'.time() makes all file names unique even if two uploads have the same name
           // $fileNameToStore = $fileName.'_'.time().'.'.$extension;
           $fileNameToStore = 'rimg_hid'.$request->input('hotel_id').'_'.time().'.'.$extension;
-          //upload image
+          // upload image
           $path = $request->file('room_image')->storeAs('public/images/room_images', $fileNameToStore);
         }else{
           $fileNameToStore = 'noimage.jpg';
         }
-        //create room
+        // create room
         $room = new Room;
         $room->singleBeds = $request->input('singleBeds');
         $room->doubleBeds = $request->input('doubleBeds');
