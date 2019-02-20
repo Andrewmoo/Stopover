@@ -28,6 +28,17 @@ Route::any('/rooms/results/', [
    'as' => 'rooms.results', 'uses' => 'RoomsController@search'
 ]);
 
+// Route::get('/hotels/{id}/images/create', [
+//   'as' => 'images.create',
+//   'uses' => 'ImagesController@create'
+// ]);
+
+Route::get('/hotels/{id}/images/create', 'ImagesController@create');
+
+Route::resource('images', 'ImagesController')->except([
+   'create', 'show'
+]);
+
 Route::resources([
    'rooms' => 'RoomsController',
    'hotels' => 'HotelsController',

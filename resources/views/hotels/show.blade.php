@@ -49,6 +49,7 @@
                 {!!Form::open(['action' => ['HotelsController@destroy', $hotel->id], 'method' => 'POST'])!!}
                     {{Form::hidden('_method', 'DELETE')}}
                     <a class="btn btn-primary" href="{{$hotel->id}}/edit">Edit</a>
+                    <a class="btn btn-primary" href="{{$hotel->id}}/images/create">Upload Images</a>
                     {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
                 {!!Form::close()!!}
                 </div>
