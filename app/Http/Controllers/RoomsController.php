@@ -63,29 +63,29 @@ class RoomsController extends Controller
           'breakfast' => 'required|numeric|min:0|max:1',
           'price' => 'required|numeric',
           'hotel_id' => 'required|numeric|exists:hotels,id',
-          'room_image' => 'image|nullable|max:1999'
         ]);
 
 
         //Handle file upload
         if($request->hasFile('room_image')){
-          //get file name with extension
+          // get file name with extension
           // $fileNameWithExt = $request->file('room_image')->getClientOriginalName();
-          //get just file name
+          // get just file name
           // $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
           
           //get just extension
           $extension = $request->file('room_image')->getClientOriginalExtension();
-          //filename to store
-            //doing .'_'.time() makes all file names unique even if two uploads have the same name
+          // filename to store
+          // doing .'_'.time() makes all file names unique even if two uploads have the same name
           // $fileNameToStore = $fileName.'_'.time().'.'.$extension;
           $fileNameToStore = 'rimg_hid'.$request->input('hotel_id').'_'.time().'.'.$extension;
-          //upload image
+          // upload image
           $path = $request->file('room_image')->storeAs('public/images/room_images', $fileNameToStore);
         }else{
           $fileNameToStore = 'noimage.jpg';
         }
-        //create room
+        
+        // create room
         $room = new Room;
         $room->singleBeds = $request->input('singleBeds');
         $room->doubleBeds = $request->input('doubleBeds');
@@ -96,10 +96,9 @@ class RoomsController extends Controller
         $room->price = $request->input('price');
         $room->hotel_id = $request->input('hotel_id');
         $room->booked = '0';
-        $room->room_image = $fileNameToStore;
         $room->save();
 
-        return redirect('/hotels/'.$request->input('hotel_id'))->with('success', 'Room Listed');
+        return redirect('/rooms')->with('success', 'Room Listed');
     }
 
     /**
@@ -116,11 +115,9 @@ class RoomsController extends Controller
           $guest_id = Guest::where('user_id', auth()->user()->id)->first()->id;
         }
         $room = Room::find($id);
-        $hotel = Hotel::find($room->hotel_id);
 
         return view('rooms.show')->with([
           'room' => $room,
-          'hotel' => $hotel,
           'guest_id' => $guest_id,
           'from' => $from,
           'to' => $to
@@ -190,7 +187,6 @@ class RoomsController extends Controller
     {
         $to = $request->input('to');
         $from = $request->input('from');
-        $county = $request->input('county');
 
         try{
           // $rooms = DB::statement('
@@ -213,22 +209,17 @@ class RoomsController extends Controller
           //   OR (b.from < :from4 AND b.to > :to4))';
 
           $sql =
-          'SELECT DISTINCT r.*, h.name as hotel_name, h.address, h.county
+          'SELECT DISTINCT r.*, h.name as hotel_name
           FROM rooms r
           LEFT JOIN bookings b ON r.id = b.room_id
           LEFT JOIN hotels h ON h.id = r.hotel_id
           WHERE r.id NOT IN(
             SELECT b.room_id
             FROM bookings as b
-            WHERE(
-              h.county = :county 
-              AND (
-                (b.from < :to1 AND b.to > :to2)
-                OR (b.from < :from1 AND b.to > :from2)
-                OR (b.from > :from3 AND b.to < :to3)
-                OR (b.from < :from4 AND b.to > :to4)
-              )
-            )
+            WHERE((b.from < :to1 AND b.to > :to2)
+            OR (b.from < :from1 AND b.to > :from2)
+            OR (b.from > :from3 AND b.to < :to3)
+            OR (b.from < :from4 AND b.to > :to4))
           )';
 
           $rooms = DB::select($sql, [
@@ -239,19 +230,18 @@ class RoomsController extends Controller
             'to1' => $to,
             'to2' => $to,
             'to3' => $to,
-            'to4' => $to,
-            'county' => $county
+            'to4' => $to
           ]);
+          //dd($rooms);
         }
         catch(Illuminate\Database\QueryException $ex){
-          return $ex;
+          return 'WHOOP';
         }
 
         return view('rooms.results')->with([
           'rooms' => $rooms,
           'from' => $from,
-          'to' => $to,
-          'county' => $county
+          'to' => $to
         ]);
     }
 }
