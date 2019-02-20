@@ -190,6 +190,7 @@ class RoomsController extends Controller
     {
         $to = $request->input('to');
         $from = $request->input('from');
+        $county = $request->input('county');
 
         try{
           // $rooms = DB::statement('
@@ -219,10 +220,15 @@ class RoomsController extends Controller
           WHERE r.id NOT IN(
             SELECT b.room_id
             FROM bookings as b
-            WHERE((b.from < :to1 AND b.to > :to2)
-            OR (b.from < :from1 AND b.to > :from2)
-            OR (b.from > :from3 AND b.to < :to3)
-            OR (b.from < :from4 AND b.to > :to4))
+            WHERE(
+              h.county = :county 
+              AND (
+                (b.from < :to1 AND b.to > :to2)
+                OR (b.from < :from1 AND b.to > :from2)
+                OR (b.from > :from3 AND b.to < :to3)
+                OR (b.from < :from4 AND b.to > :to4)
+              )
+            )
           )';
 
           $rooms = DB::select($sql, [
@@ -233,18 +239,19 @@ class RoomsController extends Controller
             'to1' => $to,
             'to2' => $to,
             'to3' => $to,
-            'to4' => $to
+            'to4' => $to,
+            'county' => $county
           ]);
-          //dd($rooms);
         }
         catch(Illuminate\Database\QueryException $ex){
-          return 'WHOOP';
+          return $ex;
         }
 
         return view('rooms.results')->with([
           'rooms' => $rooms,
           'from' => $from,
-          'to' => $to
+          'to' => $to,
+          'county' => $county
         ]);
     }
 }

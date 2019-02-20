@@ -35,6 +35,17 @@
                         {{Form::date('to', (isset($to) ? $to : ''), ['class' => 'form-control form-control-sm'])}}
                       </div>
                     </div>
+                    <div class="col-auto text-white">
+                      {{Form::label('county', ' in ', ['class' => 'form-label'])}}
+                    </div>
+                    <div class="col-auto">
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
+                        </div>
+                        {{Form::text('county', (isset($county) ? ucfirst($county) : ''), ['class' => 'form-control form-control-sm'])}}
+                      </div>
+                    </div>
                     <div class="col-auto">
                       {{Form::submit('Search', ['class'=>'btn btn-primary btn-sm mb-2'])}}
                     </div>
