@@ -39,6 +39,8 @@ Route::resource('images', 'ImagesController')->except([
    'create', 'show'
 ]);
 
+Route::resource('hotel_reviews', 'HotelReviewsController');
+
 Route::resources([
    'rooms' => 'RoomsController',
    'hotels' => 'HotelsController',
@@ -52,6 +54,11 @@ Route::resource('bookings', 'BookingsController')->except([
 Route::get('/rooms/{id}/{from?}/{to?}', [
    'as' => 'rooms.show',
    'uses' => 'RoomsController@show'
+]);
+
+Route::get('/hotels/{id}/review', [
+   'as' => 'hotels.review',
+   'uses' => 'HotelReviewsController@create'
 ]);
 
 Route::get('about', function(){

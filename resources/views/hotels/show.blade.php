@@ -54,6 +54,11 @@
                 {!!Form::close()!!}
                 </div>
             @endif
+            @if(!Auth::guest() && Auth::user()->hasRole('guest'))
+                <div class="row col-12">
+                    <a class="btn btn-primary" href="{{$hotel->id}}/review">Write a review</a>
+                </div>
+            @endif
         </div>
     </div>
 

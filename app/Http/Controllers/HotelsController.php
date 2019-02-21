@@ -53,7 +53,7 @@ class HotelsController extends Controller
             'email' => 'required|string|email|max:191',
             'user_id' => 'required|numeric|exists:users,id'
         ]);
-  
+
         //create hotel
         $hotel = new Hotel;
         $hotel->name = $request->input('name');

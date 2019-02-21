@@ -15,7 +15,7 @@ class BookingsController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +39,7 @@ class BookingsController extends Controller
     {
         $guest_id = Guest::where('user_id', auth()->user()->id)->first()->id;
         $room_id = $id;
-        
+
         return view('bookings.create')->with([
             'guest_id' => $guest_id,
             'room_id' => $room_id
@@ -60,7 +60,7 @@ class BookingsController extends Controller
             'from' => 'required|date',
             'to' => 'required|date'
         ]);
-  
+
         //create booking
         $booking = new Booking;
         $booking->guest_id = $request->input('guest_id');
@@ -115,7 +115,7 @@ class BookingsController extends Controller
             'from' => 'required|date',
             'to' => 'required|date'
         ]);
-  
+
         //create booking
         $booking = Booking::find($id);
         $booking->guest_id = $request->input('guest_id');
@@ -140,7 +140,7 @@ class BookingsController extends Controller
         // if(auth()->user()->id !==$post->user_id){
         //     return redirect('/posts')->with('error', 'Unauthorised Page');
         // }
-        
+
         $booking->delete();
         return redirect('/dashboard')->with('success', 'Booking Removed');
     }

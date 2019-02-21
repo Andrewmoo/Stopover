@@ -23,4 +23,8 @@ class Guest extends Model
     public function bookings() {
         return $this->hasMany('App\Booking');
     }
+
+    public function reviews(){
+      return $this->hasMany('App\HotelReview');
+    }
 }
