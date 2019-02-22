@@ -33,11 +33,11 @@ Route::any('/rooms/results/', [
 //   'uses' => 'ImagesController@create'
 // ]);
 
-Route::get('/hotels/{id}/images/create', 'ImagesController@create');
+// Route::get('/hotels/{id}/images/create', 'ImagesController@create');
 
-Route::resource('images', 'ImagesController')->except([
-   'create', 'show'
-]);
+// Route::resource('images', 'ImagesController')->except([
+//    'create', 'show'
+// ]);
 
 Route::resource('hotel_reviews', 'HotelReviewsController');
 
