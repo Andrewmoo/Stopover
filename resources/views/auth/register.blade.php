@@ -88,8 +88,7 @@
                         </div>
 
                         
-                        <div id="guestInfo" class="card-title text-dark">
-                            <h3 class="text-info">Guest Information</h3>
+                        <div id="guestInfo">
                             <div class="form-group row">
                                 {{Form::label('firstName', 'First name*:', ['class' => 'col-md-4 col-form-label text-md-right'])}}
                                 <div class="col-md-6">
@@ -138,8 +137,7 @@
                             </div>
                         </div>
 
-                        <div id="hotelInfo" class="card-title">
-                            <h3 class="text-info">Hotel Information</h3>
+                        <div id="hotelInfo">
                             <div class="form-group row">
                                 {{Form::label('name', 'Name*:', ['class' => 'col-md-4 col-form-label text-md-right'])}}
                                 <div class="col-md-6">

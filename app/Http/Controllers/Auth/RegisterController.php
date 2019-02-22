@@ -66,7 +66,7 @@ class RegisterController extends Controller
                 'guest_phone' => 'required|string|max:50',
             ]);
         }
-        else{
+        else if($data['role_id'] == '3'){
             return Validator::make($data, [
                 'username'     => 'required|string|min:3|max:20|unique:users',
                 'email'        => 'required|string|email|max:255|unique:users',
@@ -83,6 +83,11 @@ class RegisterController extends Controller
                 'county' => 'required|string|max:50',
                 'hotel_phone' => 'required|numeric',
                 'eircode' => 'string|min:7|max:7'
+            ]);
+        }
+        else {
+            return Validator::make($data, [
+                'role_id'      => ['required', 'numeric', Rule::in(['1','3'])]
             ]);
         }
     }
