@@ -19,6 +19,10 @@ Route::get('/bookings/create/{id}', [
    'as' => 'bookings.create', 'uses' => 'BookingsController@create'
 ]);
 
+Route::get('/hotels/review/{id}', [
+   'as' => 'reviews.create', 'uses' => 'HotelReviewsController@create'
+]);
+
 Route::get('/bookings/edit/{guest_id}/{id}', [
    'as' => 'bookings.edit',
    'uses' => 'BookingsController@edit'
@@ -33,18 +37,18 @@ Route::any('/rooms/results/', [
 //   'uses' => 'ImagesController@create'
 // ]);
 
-// Route::get('/hotels/{id}/images/create', 'ImagesController@create');
+Route::get('/hotels/{id}/images/create', 'ImagesController@create');
 
-// Route::resource('images', 'ImagesController')->except([
-//    'create', 'show'
-// ]);
+Route::resource('images', 'ImagesController')->except([
+   'create', 'show'
+]);
 
-Route::resource('hotel_reviews', 'HotelReviewsController');
 
 Route::resources([
    'rooms' => 'RoomsController',
    'hotels' => 'HotelsController',
    'guests' => 'GuestsController',
+   'hotel_reviews' => 'HotelReviewsController'
 ]);
 
 Route::resource('bookings', 'BookingsController')->except([

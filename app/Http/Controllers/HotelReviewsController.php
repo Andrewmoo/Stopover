@@ -18,7 +18,10 @@ class HotelReviewsController extends Controller
     {
         //
     }
-
+    public function getHotel($id) {
+        $hotel_id= $id;
+        return redirect()->action('HotelReviewsController@create', ['hotel_id' => $hotel_id]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -26,10 +29,9 @@ class HotelReviewsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($id){
-      $hotel = Hotel::find($id);
 
+      $hotel_id= $id;
       $guest_id = auth()->user()->id;
-      $hotel_id = $hotel;
       return view('hotels.review')->with('guest_id', $guest_id, 'hotel_id', $hotel_id);
     }
 
