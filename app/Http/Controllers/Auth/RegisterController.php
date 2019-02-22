@@ -46,7 +46,8 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        if($data['role_id'] == 1)
+        
+        if($data['role_id'] == '1')
         {
             return Validator::make($data, [
                 'username'     => 'required|string|min:3|max:20|unique:users',
@@ -55,9 +56,10 @@ class RegisterController extends Controller
                 'role_id'      => [
                     'required', 
                     'numeric',
-                    Rule::in(['1', '3']),
+                    Rule::in(['1']),
                 ],
                 'email'        => 'required|string|email|max:191',
+
                 'firstName' => 'required|string|max:191',
                 'lastName' => 'required|string|max:191',
                 'guest_address' => 'required|string|max:191',
@@ -72,14 +74,15 @@ class RegisterController extends Controller
                 'role_id'      => [
                     'required',
                     'numeric',
-                    Rule::in(['1', '3']),
+                    Rule::in(['3']),
                 ],
                 'email'        => 'required|string|email|max:191',
+
                 'name' => 'required|string|max:191',
                 'hotel_address' => 'required|string|max:191',
                 'county' => 'required|string|max:50',
-                'eircode' => 'string|min:7|max:7',
                 'hotel_phone' => 'required|numeric',
+                'eircode' => 'string|min:7|max:7'
             ]);
         }
     }
@@ -99,7 +102,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
         
-        if($data['role_id'] == 1) {
+        if($data['role_id'] == '1') {
             $user->roles()->attach(Role::where('type', 'guest')->first());
             $user->guest()->create([
                 'firstName' => $data['firstName'],
@@ -117,8 +120,7 @@ class RegisterController extends Controller
                 'address' => $data['hotel_address'],
                 'phone' => $data['hotel_phone'],
                 'county' => $data['county'],
-                'eircode' => $data['eircode'],
-                'images' => ''
+                'eircode' => $data['eircode']
             ]);
         }
             

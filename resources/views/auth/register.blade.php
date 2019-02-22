@@ -143,7 +143,7 @@
                             <div class="form-group row">
                                 {{Form::label('name', 'Name*:', ['class' => 'col-md-4 col-form-label text-md-right'])}}
                                 <div class="col-md-6">
-                                {{Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => 'Name of hotel'])}}
+                                <input type="text" name="name" value="{{old('name')}}" class="form-control {{ $errors->has('lastName') ? ' is-invalid' : '' }}" placeholder="Name of hotel">
                                 @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('name') }}</strong>

@@ -14,7 +14,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- <script src="/jquery-ui-1.12.1.custom/external/jquery/jquery.js" defer></script> --}}
-    <script src="/jquery-ui-1.12.1.custom/jquery-ui.js" defer></script>
+    {{-- <script src="/jquery-ui-1.12.1.custom/jquery-ui.js" defer></script> --}}
 
     {{-- Fonts --}}
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -22,7 +22,7 @@
 
     {{-- Styles --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+    {{-- <link href="/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet"> --}}
 </head>
 <body class="primaryColor">
   @include('inc.navbar')
