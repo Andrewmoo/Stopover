@@ -14,5 +14,9 @@ class HotelReview extends Model
 
   public function user(){
   return $this->belongsTo('App\Guest');
-}
+  }
+
+  public function hotel(){
+  return $this->belongsTo('App\Hotel');
+  }
 }

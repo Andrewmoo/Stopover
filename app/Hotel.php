@@ -29,4 +29,9 @@ class Hotel extends Model
         $hotel = Hotel::where('user_id', $user_id)->first();
         return $hotel->id;
     }
+
+    public function reviews()
+      {
+      return $this->hasMany('HotelReview');
+      }
 }

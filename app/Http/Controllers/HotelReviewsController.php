@@ -19,32 +19,17 @@ class HotelReviewsController extends Controller
         //
     }
 
-    public function getIDfromURL(){
-
-      //Grab the path from your URL. In your case /writers/1/books/
-      $path = window.location.pathname;
-
-      //Break the path into segments
-      $segments = $path.split("/");
-
-      //Return the segment that has the ID
-      return $segments[2];
-    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-      if(!auth()->user()->hasRole('guest'))
-      {
-          return redirect('/');
-      }
+    public function create($id){
+      $hotel = Hotel::find($id);
 
       $guest_id = auth()->user()->id;
-      $hotel_id = $this->getIDfromURL();
+      $hotel_id = $hotel;
       return view('hotels.review')->with('guest_id', $guest_id, 'hotel_id', $hotel_id);
     }
 
