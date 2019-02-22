@@ -93,7 +93,7 @@
                             <div class="form-group row">
                                 {{Form::label('firstName', 'First name*:', ['class' => 'col-md-4 col-form-label text-md-right'])}}
                                 <div class="col-md-6">
-                                    <input id="firstName" name="firstName" value="{{old('firstName')}}" type="text" class="form-control {{ $errors->has('firstName') ? ' is-invalid' : '' }}" required>
+                                    <input id="firstName" name="firstName" value="{{old('firstName')}}" type="text" class="form-control {{ $errors->has('firstName') ? ' is-invalid' : '' }}">
                                     @if ($errors->has('firstName'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('firstName') }}</strong>
@@ -104,7 +104,7 @@
                             <div class="form-group row">
                                 {{Form::label('lastName', 'Last name*:', ['class' => 'col-md-4 col-form-label text-md-right'])}}
                                 <div class="col-md-6">
-                                    <input id="lastName" name="lastName" value="{{old('lastName')}}" type="text" class="form-control {{ $errors->has('lastName') ? ' is-invalid' : '' }}" required>
+                                    <input id="lastName" name="lastName" value="{{old('lastName')}}" type="text" class="form-control {{ $errors->has('lastName') ? ' is-invalid' : '' }}">
                                     @if ($errors->has('lastName'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('lastName') }}</strong>
@@ -116,7 +116,7 @@
                             <div class="form-group row">
                                 {{Form::label('guest_address', 'Address*:', ['class' => 'col-md-4 col-form-label text-md-right'])}}
                                 <div class="col-md-6">
-                                    <input id="guest_address" name="guest_address" value="{{old('guest_address')}}" type="text" class="form-control {{ $errors->has('guest_address') ? ' is-invalid' : '' }}" required>
+                                    <input id="guest_address" name="guest_address" value="{{old('guest_address')}}" type="text" class="form-control {{ $errors->has('guest_address') ? ' is-invalid' : '' }}">
                                     @if ($errors->has('guest_address'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('guest_address') }}</strong>
@@ -128,7 +128,7 @@
                             <div class="form-group row">
                                 {{Form::label('guest_phone', 'Phone*:', ['class' => 'col-md-4 col-form-label text-md-right'])}}
                                 <div class="col-md-6">
-                                    <input id="guest_phone" name="guest_phone" value="{{old('guest_phone')}}" type="text" class="form-control {{ $errors->has('guest_phone') ? ' is-invalid' : '' }}" required>
+                                    <input id="guest_phone" name="guest_phone" value="{{old('guest_phone')}}" type="text" class="form-control {{ $errors->has('guest_phone') ? ' is-invalid' : '' }}">
                                     @if ($errors->has('guest_phone'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('guest_phone') }}</strong>
