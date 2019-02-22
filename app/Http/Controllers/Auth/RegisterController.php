@@ -58,12 +58,10 @@ class RegisterController extends Controller
                     Rule::in(['1', '3']),
                 ],
                 'email'        => 'required|string|email|max:191',
-
                 'firstName' => 'required|string|max:191',
                 'lastName' => 'required|string|max:191',
                 'guest_address' => 'required|string|max:191',
                 'guest_phone' => 'required|string|max:50',
-                'institution' => 'required|string|max:191',
             ]);
         }
         else{
@@ -77,10 +75,10 @@ class RegisterController extends Controller
                     Rule::in(['1', '3']),
                 ],
                 'email'        => 'required|string|email|max:191',
-
                 'name' => 'required|string|max:191',
                 'hotel_address' => 'required|string|max:191',
-                'country' => 'required|string|max:50',
+                'county' => 'required|string|max:50',
+                'eircode' => 'string|min:7|max:7',
                 'hotel_phone' => 'required|numeric',
             ]);
         }
@@ -99,10 +97,9 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
-            'type' => ($data['role_id'] == '1' ? User::GUEST_TYPE : User::HOTEL_TYPE),
         ]);
         
-        if($user['type'] == User::GUEST_TYPE) {
+        if($data['role_id'] == 1) {
             $user->roles()->attach(Role::where('type', 'guest')->first());
             $user->guest()->create([
                 'firstName' => $data['firstName'],
@@ -110,17 +107,18 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'address' => $data['guest_address'],
                 'phone' => $data['guest_phone'],
-                'institution' => $data['institution'],
             ]);
         }
         else {
             $user->roles()->attach(Role::where('type', 'hotel')->first());
             $user->hotel()->create([
                 'name' => $data['name'],
-                'country' => $data['country'],
                 'email' => $data['email'],
                 'address' => $data['hotel_address'],
                 'phone' => $data['hotel_phone'],
+                'county' => $data['county'],
+                'eircode' => $data['eircode'],
+                'images' => ''
             ]);
         }
             

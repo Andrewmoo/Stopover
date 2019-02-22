@@ -20,9 +20,16 @@ class CreateHotelsTable extends Migration
             $table->string('phone');
             $table->string('email');
             $table->enum('county', [
-                'Antrim','Armagh','Carlow','Cavan','Clare','Cork','Derry','Donegal','Down','Dublin','Fermanagh','Galway','Kerry','Kildare','Kilkenny','Laois','Leitrim','Limerick','Longford','Louth','Mayo','Meath','Monaghan','Offaly','Roscommon','Sligo','Tipperary','Tyrone','Waterford','Westmeath','Wexford','Wicklow'
+                'Antrim','Armagh','Carlow','Cavan','Clare','Cork',
+                'Derry','Donegal','Down','Dublin','Fermanagh','Galway',
+                'Kerry','Kildare','Kilkenny','Laois','Leitrim','Limerick',
+                'Longford','Louth','Mayo','Meath','Monaghan','Offaly',
+                'Roscommon','Sligo','Tipperary','Tyrone','Waterford',
+                'Westmeath','Wexford','Wicklow'
             ]);
+            $table->string('eircode', 7)->nullable();
             $table->unsignedInteger('user_id');
+            $table->string('images')->nullable();
             $table->timestamps();
 
             // Foreign Key Contraints

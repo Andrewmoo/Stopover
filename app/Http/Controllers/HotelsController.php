@@ -48,17 +48,19 @@ class HotelsController extends Controller
         $this->validate($request,[
             'name' => 'required|string|max:191',
             'address' => 'required|string|max:191',
-            'country' => 'required|string|max:50',
+            'county' => 'required|string|max:50',
+            'eircode' => 'string|min:7|max:7',
             'phone' => 'required|string|max:50',
             'email' => 'required|string|email|max:191',
             'user_id' => 'required|numeric|exists:users,id'
         ]);
-
+  
         //create hotel
         $hotel = new Hotel;
         $hotel->name = $request->input('name');
         $hotel->address = $request->input('address');
-        $hotel->country = $request->input('country');
+        $hotel->county = $request->input('county');
+        $hotel->eircode = $request->input('eircode');
         $hotel->phone = $request->input('phone');
         $hotel->email = $request->input('email');
         $hotel->user_id = $request->input('user_id');

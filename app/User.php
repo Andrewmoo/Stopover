@@ -24,7 +24,7 @@ class User extends Authenticatable
     public function isAdmin() { return $this->type === self::ADMIN_TYPE; }
 
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'type', 'firstName', 'lastName', 'phone', 'address', 'institution', 'user_id'
+        'name', 'username', 'email', 'password', 'type', 'firstName', 'lastName', 'phone', 'address', 'county', 'eircode', 'institution', 'user_id'
     ];
 
     /**
