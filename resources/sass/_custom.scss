@@ -107,3 +107,10 @@ h1{
   line-height: 1;
   margin-right: 15px;
 }
+.dropdown-item:hover{
+  background-color: rgba(0,173,181, 0.5);
+  color: black;
+}
+.dropdown-item{
+  color: white;
+}
