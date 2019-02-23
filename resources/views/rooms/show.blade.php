@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="row">
-<div @if(!Auth::guest() && auth()->user()->hasRole('guest')) @if($from != null && $to != null) class='col-md-8' @endif @else class="col-md-12" @endif>
+<div class='col-md-8'>
     <div class="card mt-3 mb-3">
         <h5 class="card-header">{{$hotel->name}}</h5>
         <div class="card-body">
@@ -46,7 +46,6 @@
         </div>
     </div>
 </div><div class="clear-fix"></div>
-@if(!Auth::guest() && auth()->user()->hasRole('guest')) @if($from != null && $to != null)
 <div class="col-md-4">
     <div class="card mt-3 mb-3">
         <div class="card-body">
@@ -62,12 +61,10 @@
                 </div>
                 {{Form::hidden('guest_id', $guest_id)}}
                 {{Form::hidden('room_id', $room->id)}}
-                {{Form::submit('Book Room', ['class'=>'btn btn-primary'])}}
+                {{Form::submit('Book Room', ['class'=>'btn btn-primary tertiaryColor'])}}
             {!! Form::close() !!}
         </div>
     </div>
 </div>
-@endif
-@endif
 </div>
 @endsection

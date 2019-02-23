@@ -244,7 +244,8 @@ class RoomsController extends Controller
         return view('rooms.results')->with([
           'rooms' => $rooms,
           'from' => $from,
-          'to' => $to
+          'to' => $to,
+          'county' => $county
         ]);
     }
 }

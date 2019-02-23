@@ -19,15 +19,15 @@
         <div class="form-row form-group text-white">
           <div class="col-md-4">
             {{Form::label('from', 'Check-in:',  ['class' => 'homeLabels'])}}
-            {{Form::date('from', '', ['class' => 'form-control'])}}
+            {{Form::date('from', '', ['class' => 'form-control text-white', 'style' => "background-color: rgba(0,0,0,0) !important"])}}
           </div>
           <div class="col-md-4">
             {{Form::label('to', 'Check-out:',  ['class' => 'homeLabels'])}}
-            {{Form::date('to', '', ['class' => 'form-control'])}}
+            {{Form::date('to', '', ['class' => 'form-control text-white', 'style' => "background-color: rgba(0,0,0,0) !important"])}}
           </div>
           <div class="col-md-4">
               {{Form::label('county', 'County:',  ['class' => 'homeLabels'])}}
-              {{Form::text('county', '', ['class' => 'form-control', 'placeholder' => 'e.g. Antrim'])}}
+              {{Form::text('county', '', ['class' => 'form-control text-white', 'placeholder' => 'e.g. Antrim', 'style' => "background-color: rgba(0,0,0,0) !important"])}}
             </div>
         </div>
         <div class="form-row">

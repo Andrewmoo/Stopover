@@ -50,6 +50,9 @@
                       {{Form::submit('Search', ['class'=>'btn btn-primary btn-sm mb-2'])}}
                     </div>
                   </div>
+                  <div class="form-row">
+                      <div id="date-error" class="offset-4 col-md-6 pt-0 pb-2 text-danger"></div>
+                    </div>
                 {!! Form::close() !!}
                 @foreach ($rooms as $room)
                   <div class="mb-3 card card-light flex-row flex-wrap secondaryColor h-100" style="background-color: rgba(255, 255, 255, 0.3) !important">
@@ -138,4 +141,26 @@
         </div>
     </div>
 </div>
+<script>
+    $( document ).ready(function () {
+      var from;
+      var to;
+      $('#from, #to').on('input', function () {
+        from = new Date($('#from').val()).getTime();
+        to = new Date($('#to').val()).getTime();
+        if (to <= from) {
+          $('#to').addClass('is-invalid');
+          $('#date-error').html('Check-out date must be after check-in date.');
+          $('form').submit(function (e) {
+            e.preventDefault();
+          });
+        }
+        else {
+          $('#to').removeClass('is-invalid');
+          $('#date-error').html('');
+          $('form').off( "submit" );
+        }
+      });
+    });
+    </script>
 @endsection
