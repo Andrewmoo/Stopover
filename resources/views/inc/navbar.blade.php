@@ -72,7 +72,7 @@
                         {{ Auth::user()->username }} <span class="caret"></span>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right SCO" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu-right tertiaryColor" aria-labelledby="navbarDropdown">
                         @if(!Auth::guest() && Auth::user()->hasRole('hotel'))
                         <a class="dropdown-item" href="/hotels/{{App\Hotel::getHotelId(auth()->user()->id)}}">Profile</a>
                         @endif
