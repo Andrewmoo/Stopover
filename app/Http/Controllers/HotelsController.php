@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Hotel;
 use App\Room;
+use Auth;
 
 class HotelsController extends Controller
 {
@@ -28,12 +29,12 @@ class HotelsController extends Controller
      */
     public function create()
     {
-        if(!auth()->user()->hasRole('hotel'))
+        if(Auth::user()->hasRole('hotel'))
         {
             return redirect('/');
         }
 
-        $user_id = auth()->user()->id;
+        $user_id = Auth::user()->id;
         return view('hotels.create')->with('user_id', $user_id);
     }
 
@@ -77,6 +78,11 @@ class HotelsController extends Controller
      */
     public function show($id)
     {
+        $uhotel_id = Hotel::where('user_id', Auth::user()->id)->first()->id;
+        if($id != $uhotel_id)
+        {
+            return redirect('/');
+        }
         $hotel = Hotel::find($id);
         $rooms = Room::where('hotel_id', $id)->orderBy('created_at','desc')->paginate(10);
         return view('hotels.show')->with([

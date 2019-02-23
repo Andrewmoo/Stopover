@@ -29,7 +29,6 @@ class CreateHotelsTable extends Migration
             ]);
             $table->string('eircode', 7)->nullable();
             $table->unsignedInteger('user_id');
-            $table->string('images')->nullable();
             $table->timestamps();
 
             // Foreign Key Contraints

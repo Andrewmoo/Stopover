@@ -31,7 +31,12 @@ class Hotel extends Model
     }
 
     public function reviews()
-      {
-      return $this->hasMany('HotelReview');
-      }
+    {
+        return $this->hasMany('HotelReview');
+    }
+
+    public function hotelImages()
+    {
+        return $this->hasMany('HotelImage');
+    }
 }

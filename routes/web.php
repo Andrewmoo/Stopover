@@ -32,15 +32,11 @@ Route::any('/rooms/results/', [
    'as' => 'rooms.results', 'uses' => 'RoomsController@search'
 ]);
 
-// Route::get('/hotels/{id}/images/create', [
-//   'as' => 'images.create',
-//   'uses' => 'ImagesController@create'
-// ]);
+Route::get('/hotels/{id}/gallery', 'HotelImagesController@index')->name('hotelimages');
+Route::post('hotels/{id}/gallery', 'HotelImagesController@uploadImage');
 
-Route::get('/hotels/{id}/images/create', 'ImagesController@create');
-
-Route::resource('images', 'ImagesController')->except([
-   'create', 'show'
+Route::resource('/hotels/{id}/gallery', 'HotelImagesController')->except([
+   'create', 'show', 'store', 'index'
 ]);
 
 
