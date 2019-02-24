@@ -216,7 +216,9 @@ class RoomsController extends Controller
           FROM rooms r
           LEFT JOIN bookings b ON r.id = b.room_id
           LEFT JOIN hotels h ON h.id = r.hotel_id
-          WHERE h.county = :county AND r.id NOT IN(
+          WHERE h.county = :county 
+          AND (r.singleBeds + r.doubleBeds*2) = :people 
+          AND r.id NOT IN(
             SELECT b.room_id
             FROM bookings as b
             WHERE(
@@ -236,7 +238,8 @@ class RoomsController extends Controller
             'to2' => $to,
             'to3' => $to,
             'to4' => $to,
-            'county' => $county
+            'county' => $county,
+            'people' => $people
           ]);
           //dd($rooms);
         }
@@ -248,7 +251,8 @@ class RoomsController extends Controller
           'rooms' => $rooms,
           'from' => $from,
           'to' => $to,
-          'county' => $county
+          'county' => $county,
+          'people' => $people
         ]);
     }
 }

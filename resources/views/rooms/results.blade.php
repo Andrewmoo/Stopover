@@ -10,8 +10,11 @@
                 'method' => 'GET'
               ]) !!}
                 <div class="form-row align-items-center mb-3">
+                  <div class="col-12 text-white mb-2">
+                      Showing results for time period
+                  </div>
                   <div class="col-auto text-white">
-                    {{Form::label('from', 'Showing results for time period from:', ['class' => 'form-label'])}}
+                    {{Form::label('from', ' from', ['class' => 'form-label'])}}
                   </div>
                   <div class="col-auto">
                     <div class="input-group mb-2">
@@ -41,6 +44,23 @@
                         <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
                       </div>
                       {{Form::text('county', (isset($county) ? ucfirst($county) : ''), ['class' => 'form-control form-control-sm'])}}
+                    </div>
+                  </div>
+                  <div class="col-auto text-white">
+                      {{Form::label('people', ' for ', ['class' => 'form-label'])}}
+                    </div>
+                  <div class="col-auto">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-user"></i></div>
+                      </div>
+                      <select class="form-control form-control-sm" name="people" id="people">
+                        <option value="1" @if(empty($people) || $people == '1') selected @endif>1 adult</option>
+                        <option value="2" @if($people == '2') selected @endif>2 adults</option>
+                        <option value="3" @if($people == '3') selected @endif>3 adults</option>
+                        <option value="4" @if($people == '4') selected @endif>4 adults</option>
+                        <option value="5" @if($people == '5') selected @endif>5 adults</option>
+                      </select>
                     </div>
                   </div>
                   <div class="col-auto">
