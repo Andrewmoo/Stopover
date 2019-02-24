@@ -212,7 +212,7 @@ class RoomsController extends Controller
           //   OR (b.from < :from4 AND b.to > :to4))';
 
           $sql =
-          'SELECT DISTINCT r.*, h.name as hotel_name, h.county
+          'SELECT DISTINCT r.*, h.id as hotel_id, h.name as hotel_name, h.county
           FROM rooms r
           LEFT JOIN bookings b ON r.id = b.room_id
           LEFT JOIN hotels h ON h.id = r.hotel_id

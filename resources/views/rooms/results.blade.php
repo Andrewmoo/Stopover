@@ -81,6 +81,9 @@
                     </div>
                     <div class="card-body text-white px-3">
                         <!-- Single beds -->
+                        <p>
+                          <a href="/hotels/{{$room->hotel_id}}" class="text-white">{{$room->hotel_name}}</a>
+                        </p>
                         @if($room->singleBeds > 0)
                               <p>
                                   <i class="fas fa-bed align-middle" style="font-size: 1.5rem; font-color: #">
