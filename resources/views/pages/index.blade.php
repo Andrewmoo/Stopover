@@ -14,7 +14,8 @@
         </div>
       {!! Form::open([
         'action' => 'RoomsController@search',
-        'method' => 'GET'
+        'method' => 'GET',
+        'id' => 'searchform'
       ]) !!}
         <div class="form-row form-group text-white">
           <div class="col-md-4">
@@ -43,25 +44,68 @@
     </div>
 </div>
 <script>
-$( document ).ready(function () {
-  var from;
-  var to;
-  $('#from, #to').on('input', function () {
-    from = new Date($('#from').val()).getTime();
-    to = new Date($('#to').val()).getTime();
-    if (to <= from) {
-      $('#to').addClass('is-invalid');
-      $('#date-error').html('Check-out date must be after check-in date.');
-      $('form').submit(function (e) {
+    $( document ).ready(function () {
+      $('#searchform').submit(function (e) {
         e.preventDefault();
       });
-    }
-    else {
-      $('#to').removeClass('is-invalid');
-      $('#date-error').html('');
-      $('form').off( "submit" );
-    }
-  });
-});
-</script>
+      var from;
+      var to;
+      var county = $('#county').val();
+      $('#from, #to, #county').on('input', function () {
+        from = new Date($('#from').val()).getTime();
+        to = new Date($('#to').val()).getTime();
+        county = $('#county').val();
+        if (to <= from) {
+          $('#to').addClass('is-invalid');
+          $('#date-error').html('');
+          $('#date-error').html('Check-out date must be after check-in date.');
+          $('#searchform').submit(function (e) {
+            e.preventDefault();
+          });
+        }
+        else {
+          $('#to').removeClass('is-invalid');
+          $('#date-error').html('');
+          $('#searchform').off( "submit" );
+        }
+
+        if(!from || !to) {
+          if(!from) {
+            $('#from').addClass('is-invalid');
+          }
+          else {
+            $('#from').removeClass('is-invalid');
+          }
+
+          if(!to) {
+            $('#to').addClass('is-invalid');
+          }
+          else {
+            $('#to').removeClass('is-invalid');
+          }
+
+          $('#date-error').html('');
+          $('#date-error').html('Dates cannot be empty');
+          $('#searchform').submit(function (e) {
+              e.preventDefault();
+          });
+        }
+        else {
+          $('#searchform').off( "submit" );
+        }
+
+        if(!county) {
+
+          $('#county').addClass('is-invalid');
+          $('#searchform').submit(function (e) {
+              e.preventDefault();
+            });
+        }
+        else {
+          $('#county').removeClass('is-invalid');
+          $('#searchform').off( "submit" );
+        }
+      });
+    });
+    </script>
 @endsection

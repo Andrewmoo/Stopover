@@ -2,7 +2,8 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
             <h4>Upload Multiple Images</h4>
             <form action="" id="formField" method="post" enctype="multipart/form-data" class="row no-gutters">
                 <div class="form-group col-md-4">
@@ -23,37 +24,47 @@
             <div class="row">
                 @forelse($photos as $photo)
                     <div class="col-md-3">
-                        <a href="/{{ $photo->image }}"><img src="/{{ $photo->thumbnail }}" class="img-fluid"></a>
+                        <img src="/{{ $photo->thumbnail }}" class="img-fluid" id="photoid_{{$photo->id}}" data-toggle = 'modal' data-target = '#enlarge-photo'>
 
                         {!!Form::open(['action' => ['HotelImagesController@destroy', $photo->id], 'method' => 'POST', 'id' => 'deleteformid_'.$photo->id])!!}
                             {{Form::hidden('_method', 'DELETE')}}
                             {{Form::hidden('photo_id', $photo->id)}}
-                            {{Form::button('Delete', ['class' => 'btn btn-danger', 'data-toggle'=> 'modal', 'data-target' => '#confirm-submit', 'id' => $photo->id])}}
+                            {{Form::button('Delete', ['class' => 'btn btn-danger', 'data-toggle'=> 'modal', 'data-target' => '#confirm-submit', 'id' => 'deletebuttonid_'.$photo->id])}}
                         {!!Form::close()!!}
 
                         <script>
 
                         $(document).ready(function() {
 
-                            $(document).on("click", "#{{ $photo->id }}", function() {
+                            $(document).on("click", "#deletebuttonid_{{ $photo->id }}", function() {
 
-                                console.log($(this).prop('id'));
                                 $('#imgConfirm').attr('src', '/{{ $photo->thumbnail }}');
                                 $('#submit').attr('data-id', '{{ $photo->id }}');
 
                             });
 
                             $(document).on("click", "[data-id='{{$photo->id}}']", function() {
-                                var id = $("[data-id='{{$photo->id}}'").data('id');
-                                console.log(id);
+
+                                var id = $(this).data('id');
                                 $('#deleteformid_' + id).submit();
+
+                            });
+
+                            $(document).on("click", "#photoid_{{$photo->id}}", function() {
+
+                                $('#enlImg').attr('src', '/{{$photo->image}}');
+
+                            });
+
+                            $('#photoid_{{$photo->id}}, #enlImg').hover(function() {
+                                $(this).css('cursor','pointer');
                             });
 
                         });
                         </script>
                     </div>
                 @empty
-                    No image found
+                    Your image gallery is empty.
                 @endforelse
             </div>
         </div>
@@ -61,26 +72,39 @@
 </div>
 
 <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    Confirm Submit
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center">
-                    <h4>Are you sure you want to delete this image?</h2>
+    <div class="modal-dialog modal-dialog-centered text-white">
+        <div class="modal-content" style="background-color: rgba(0,0,0, 0)">
+            <div class="modal-header" style="background-color: rgba(0,0,0, 0.7)">
+                Confirm Deletion
+            </div>
+            <div class="modal-body" style="background-color: rgba(0,173,181, 0.7)">
+                <div class="row justify-content-md-center">
+                    <h4 class="mb-4">Are you sure you want to delete this image?</h4>
 
                     <img src="" id="imgConfirm"/>
-                    </div>
                 </div>
-    
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <a href="#" id="submit" class="btn btn-success success">Submit</a>
+            </div>
+
+            <div class="modal-footer border-0" style="background-color: rgba(0,173,181, 0.7)">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancel</button>
+                <a href="#" id="submit" class="btn btn-danger danger">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="enlarge-photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered text-white">
+        <div class="modal-content" style="background-color: rgba(0,0,0, 0.7)">
+            <div class="modal-body">
+                <div class="row justify-content-md-center">
+
+                    <img data-dismiss="modal" src="/{{ $photos[0]->image }}" class="img-fluid" id="enlImg" style="height: auto">
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 <script>
 

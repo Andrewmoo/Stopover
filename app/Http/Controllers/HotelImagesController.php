@@ -51,7 +51,7 @@ class HotelImagesController extends Controller
         $request->validate([
             'hotel_id' => 'required',
             'image' => 'required',
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000'
         ]);
  
         // check if image exist
@@ -113,6 +113,6 @@ class HotelImagesController extends Controller
             File::delete($thumb_path);
         }
         $image->delete();
-        return redirect('/hotels/'.$image->hotel_id.'/gallery')->with('success','Image deleted.');
+        return redirect('/hotels/'.$image->hotel_id.'/gallery')->with('success','The image was successfully deleted.');
     }
 }

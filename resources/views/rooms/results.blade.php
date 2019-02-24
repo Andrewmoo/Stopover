@@ -5,55 +5,55 @@
     <div class="col-12">
         <div class="card card-dark secondaryColor">
             <div class="card-body">
-            @if (count($rooms)  == 0)
-                <p>There are no results</p>
-            @else
-                {!! Form::open([
-                  'action' => 'RoomsController@search',
-                  'method' => 'GET'
-                ]) !!}
-                  <div class="form-row align-items-center mb-3">
-                    <div class="col-auto text-white">
-                      {{Form::label('from', 'Showing results for time period from:', ['class' => 'form-label'])}}
-                    </div>
-                    <div class="col-auto">
-                      <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                        </div>
-                        {{Form::date('from', (isset($from) ? $from : ''), ['class' => 'form-control form-control-sm'])}}
+              {!! Form::open([
+                'action' => 'RoomsController@search',
+                'method' => 'GET'
+              ]) !!}
+                <div class="form-row align-items-center mb-3">
+                  <div class="col-auto text-white">
+                    {{Form::label('from', 'Showing results for time period from:', ['class' => 'form-label'])}}
+                  </div>
+                  <div class="col-auto">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
-                    </div>
-                    <div class="col-auto text-white">
-                      {{Form::label('to', ' to ', ['class' => 'form-label'])}}
-                    </div>
-                    <div class="col-auto">
-                      <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                        </div>
-                        {{Form::date('to', (isset($to) ? $to : ''), ['class' => 'form-control form-control-sm'])}}
-                      </div>
-                    </div>
-                    <div class="col-auto text-white">
-                      {{Form::label('county', ' in ', ['class' => 'form-label'])}}
-                    </div>
-                    <div class="col-auto">
-                      <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
-                        </div>
-                        {{Form::text('county', (isset($county) ? ucfirst($county) : ''), ['class' => 'form-control form-control-sm'])}}
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      {{Form::submit('Search', ['class'=>'btn btn-primary btn-sm mb-2'])}}
+                      {{Form::date('from', (isset($from) ? $from : ''), ['class' => 'form-control form-control-sm'])}}
                     </div>
                   </div>
-                  <div class="form-row">
-                      <div id="date-error" class="offset-4 col-md-6 pt-0 pb-2 text-danger"></div>
+                  <div class="col-auto text-white">
+                    {{Form::label('to', ' to ', ['class' => 'form-label'])}}
+                  </div>
+                  <div class="col-auto">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                      </div>
+                      {{Form::date('to', (isset($to) ? $to : ''), ['class' => 'form-control form-control-sm'])}}
                     </div>
-                {!! Form::close() !!}
+                  </div>
+                  <div class="col-auto text-white">
+                    {{Form::label('county', ' in ', ['class' => 'form-label'])}}
+                  </div>
+                  <div class="col-auto">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
+                      </div>
+                      {{Form::text('county', (isset($county) ? ucfirst($county) : ''), ['class' => 'form-control form-control-sm'])}}
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    {{Form::submit('Search', ['class'=>'btn btn-primary btn-sm mb-2'])}}
+                  </div>
+                </div>
+                <div class="form-row">
+                    <div id="date-error" class="offset-4 col-md-6 pt-0 pb-2 text-danger"></div>
+                  </div>
+              {!! Form::close() !!}
+              @if (count($rooms)  == 0)
+                  <p>There are no results</p>
+              @else
                 @foreach ($rooms as $room)
                   <div class="mb-3 card card-light flex-row flex-wrap secondaryColor h-100" style="background-color: rgba(255, 255, 255, 0.3) !important">
                     <div class="card-header border-0">
@@ -145,11 +145,14 @@
     $( document ).ready(function () {
       var from;
       var to;
-      $('#from, #to').on('input', function () {
+      var county = $('#county').val();
+      $('#from, #to, #county').on('input', function () {
         from = new Date($('#from').val()).getTime();
         to = new Date($('#to').val()).getTime();
+        county = $('#county').val();
         if (to <= from) {
           $('#to').addClass('is-invalid');
+          $('#date-error').html('');
           $('#date-error').html('Check-out date must be after check-in date.');
           $('form').submit(function (e) {
             e.preventDefault();
@@ -158,6 +161,42 @@
         else {
           $('#to').removeClass('is-invalid');
           $('#date-error').html('');
+          $('form').off( "submit" );
+        }
+
+        if(!from || !to) {
+          if(!from) {
+            $('#from').addClass('is-invalid');
+          }
+          else {
+            $('#from').removeClass('is-invalid');
+          }
+
+          if(!to) {
+            $('#to').addClass('is-invalid');
+          }
+          else {
+            $('#to').removeClass('is-invalid');
+          }
+
+          $('#date-error').html('');
+          $('#date-error').html('Dates cannot be empty');
+          $('form').submit(function (e) {
+              e.preventDefault();
+          });
+        }
+        else {
+          $('form').off( "submit" );
+        }
+
+        if(!county) {
+
+          $('#county').addClass('is-invalid');
+          $('form').submit(function (e) {
+              e.preventDefault();
+            });
+        }
+        else {
           $('form').off( "submit" );
         }
       });
