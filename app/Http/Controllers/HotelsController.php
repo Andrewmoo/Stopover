@@ -73,7 +73,7 @@ class HotelsController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user()->hasRole('hotel')) {
+        if (!Auth::guest() && Auth::user()->hasRole('hotel')) {
             $uhotel_id = Hotel::where('user_id', Auth::user()->id)->first()->id;
             if($id != $uhotel_id)
             {
