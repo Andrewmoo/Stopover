@@ -69,7 +69,7 @@ class BookingsController extends Controller
         $booking->to = $request->input('to');
         $booking->save();
 
-        return redirect('/dashboard');
+        return redirect('/dashboard')->with('success', "You're booked in enjoy your stay!");
     }
 
     /**
@@ -126,6 +126,7 @@ class BookingsController extends Controller
 
         return redirect('/dashboard')->with('success', 'Booking Updated');;
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -144,4 +145,5 @@ class BookingsController extends Controller
         $booking->delete();
         return redirect('/dashboard')->with('success', 'Booking Removed');
     }
+
 }
