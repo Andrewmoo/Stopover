@@ -189,6 +189,7 @@ class RoomsController extends Controller
         $to = $request->input('to');
         $from = $request->input('from');
         $county = $request->input('county');
+        $people = $request->input('people');
 
         try{
           // $rooms = DB::statement('
@@ -218,10 +219,12 @@ class RoomsController extends Controller
           WHERE h.county = :county AND r.id NOT IN(
             SELECT b.room_id
             FROM bookings as b
-            WHERE((b.from < :to1 AND b.to > :to2)
-            OR (b.from < :from1 AND b.to > :from2)
-            OR (b.from > :from3 AND b.to < :to3)
-            OR (b.from < :from4 AND b.to > :to4))
+            WHERE(
+              (b.from <= :to1 AND b.to >= :to2)
+              OR (b.from <= :from1 AND b.to > :from2)
+              OR (b.from >= :from3 AND b.to <= :to3)
+              OR (b.from <= :from4 AND b.to >= :to4)
+            )
           )';
 
           $rooms = DB::select($sql, [
