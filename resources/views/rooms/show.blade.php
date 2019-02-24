@@ -1,8 +1,14 @@
 @extends('layouts.app')
 @section('content')
 <div class="row">
-<div class='col-md-8'>
-    <div class="card mt-3 mb-3">
+<div 
+    @if(Auth::guest() || Auth::user()->hasRole('guest')) 
+        class="col-md-8" 
+    @else 
+        class="col-md-12" 
+    @endif
+>
+    <div class="card secondaryColor text-white mt-3 mb-3">
         <h5 class="card-header">{{$hotel->name}}</h5>
         <div class="card-body">
             <div class="row">
@@ -45,11 +51,12 @@
             </div>
         </div>
     </div>
-</div><div class="clear-fix"></div>
+</div>
+@if(Auth::guest() || Auth::user()->hasRole('guest'))
 <div class="col-md-4">
-    <div class="card mt-3 mb-3">
+    <div class="card secondaryColor text-white mt-3 mb-3">
+        <h5 class="card-header">Make a booking</h5>
         <div class="card-body">
-            <h1>Book </h1>
             {!! Form::open(['action' => 'BookingsController@store', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{Form::label('from', 'Date of check-in:')}}
@@ -61,10 +68,13 @@
                 </div>
                 {{Form::hidden('guest_id', $guest_id)}}
                 {{Form::hidden('room_id', $room->id)}}
-                {{Form::submit('Book Room', ['class'=>'btn btn-primary tertiaryColor'])}}
+                <div class="form-row justify-content-center">
+                {{Form::submit('BOOK ROOM', ['class'=>'btn btn-lg btn-primary tertiaryColor'])}}
+                </div>
             {!! Form::close() !!}
         </div>
     </div>
 </div>
+@endif
 </div>
 @endsection

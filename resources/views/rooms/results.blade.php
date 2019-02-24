@@ -52,10 +52,10 @@
                   </div>
               {!! Form::close() !!}
               @if (count($rooms)  == 0)
-                  <p>There are no results</p>
+                  <p class="text-white">There are no results</p>
               @else
                 @foreach ($rooms as $room)
-                  <div class="mb-3 card card-light flex-row flex-wrap secondaryColor h-100" style="background-color: rgba(255, 255, 255, 0.3) !important">
+                  <div class="mb-3 card card-light flex-row flex-wrap h-100" style="background-color: rgba(255, 255, 255, 0.3) !important">
                     <div class="card-header border-0">
                       <img src="/storage/images/room_images/{{$room->room_image}}">
                     </div>
@@ -142,64 +142,64 @@
     </div>
 </div>
 <script>
-    $( document ).ready(function () {
-      var from;
-      var to;
-      var county = $('#county').val();
-      $('#from, #to, #county').on('input', function () {
-        from = new Date($('#from').val()).getTime();
-        to = new Date($('#to').val()).getTime();
-        county = $('#county').val();
-        if (to <= from) {
-          $('#to').addClass('is-invalid');
-          $('#date-error').html('');
-          $('#date-error').html('Check-out date must be after check-in date.');
-          $('form').submit(function (e) {
-            e.preventDefault();
-          });
-        }
-        else {
-          $('#to').removeClass('is-invalid');
-          $('#date-error').html('');
-          $('form').off( "submit" );
-        }
-
-        if(!from || !to) {
-          if(!from) {
-            $('#from').addClass('is-invalid');
-          }
-          else {
-            $('#from').removeClass('is-invalid');
-          }
-
-          if(!to) {
-            $('#to').addClass('is-invalid');
-          }
-          else {
-            $('#to').removeClass('is-invalid');
-          }
-
-          $('#date-error').html('');
-          $('#date-error').html('Dates cannot be empty');
-          $('form').submit(function (e) {
-              e.preventDefault();
-          });
-        }
-        else {
-          $('form').off( "submit" );
-        }
-
-        if(!county) {
-
-          $('#county').addClass('is-invalid');
-          $('form').submit(function (e) {
-              e.preventDefault();
-            });
-        }
-        else {
-          $('form').off( "submit" );
-        }
+$( document ).ready(function () {
+  var from;
+  var to;
+  var county = $('#county').val();
+  $('#from, #to, #county').on('input', function () {
+    from = new Date($('#from').val()).getTime();
+    to = new Date($('#to').val()).getTime();
+    county = $('#county').val();
+    if (to <= from) {
+      $('#to').addClass('is-invalid');
+      $('#date-error').html('');
+      $('#date-error').html('Check-out date must be after check-in date.');
+      $('form').submit(function (e) {
+        e.preventDefault();
       });
-    });
-    </script>
+    }
+    else {
+      $('#to').removeClass('is-invalid');
+      $('#date-error').html('');
+      $('form').off( "submit" );
+    }
+
+    if(!from || !to) {
+      if(!from) {
+        $('#from').addClass('is-invalid');
+      }
+      else {
+        $('#from').removeClass('is-invalid');
+      }
+
+      if(!to) {
+        $('#to').addClass('is-invalid');
+      }
+      else {
+        $('#to').removeClass('is-invalid');
+      }
+
+      $('#date-error').html('');
+      $('#date-error').html('Dates cannot be empty');
+      $('form').submit(function (e) {
+          e.preventDefault();
+      });
+    }
+    else {
+      $('form').off( "submit" );
+    }
+
+    if(!county) {
+
+      $('#county').addClass('is-invalid');
+      $('form').submit(function (e) {
+          e.preventDefault();
+        });
+    }
+    else {
+      $('form').off( "submit" );
+    }
+  });
+});
+</script>
 @endsection
