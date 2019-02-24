@@ -34,10 +34,7 @@ Route::any('/rooms/results/', [
 
 Route::get('/hotels/{id}/gallery', 'HotelImagesController@index')->name('hotelimages');
 Route::post('hotels/{id}/gallery', 'HotelImagesController@uploadImage');
-
-Route::resource('/hotels/{id}/gallery', 'HotelImagesController')->except([
-   'create', 'show', 'store', 'index'
-]);
+Route::delete('hotels/{id}/gallery', 'HotelImagesController@destroy');
 
 
 Route::resources([

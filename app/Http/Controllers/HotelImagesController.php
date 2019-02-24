@@ -33,7 +33,7 @@ class HotelImagesController extends Controller
     {
         $id = Route::current()->parameter('id');
         $hotel = Hotel::find($id);
-        $photos = HotelImage::all();
+        $photos = HotelImage::where('hotel_id', $hotel->id)->get();
 
         if(!Auth::user()->hasRole('hotel') || $hotel->user_id != Auth::user()->id)
         {
@@ -54,11 +54,11 @@ class HotelImagesController extends Controller
             'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
  
-        //check if image exist
+        // check if image exist
         if ($request->hasFile('image')) {
             $images = $request->file('image');
  
-            //setting flag for condition
+            // setting flag for condition
             $org_img = $thm_img = true;
  
             // create new directory for uploading image if doesn't exist
@@ -71,18 +71,18 @@ class HotelImagesController extends Controller
  
             // loop through each image to save and upload
             foreach($images as $key => $image) {
-                //create new instance of Photo class
+                // create new instance of HotelImage class
                 $newPhoto = new $this->photo;
-                //get file name of image  and concatenate with 4 random integer for unique
+                // get file name of image and concatenate with 4 random integer for unique
                 $filename = rand(1111,9999).time().'.'.$image->getClientOriginalExtension();
-                //path of image for upload
+                // path of image for upload
                 $org_path = 'images/originals/' . $filename;
                 $thm_path = 'images/thumbnails/' . $filename;
                 $newPhoto->hotel_id  = $request->input('hotel_id');
                 $newPhoto->image     = 'images/originals/'.$filename;
                 $newPhoto->thumbnail = 'images/thumbnails/'.$filename;
  
-                //don't upload file when unable to save name to database
+                // don't upload file when unable to save name to database
                 if ( ! $newPhoto->save()) {
                     return false;
                 }
@@ -101,5 +101,18 @@ class HotelImagesController extends Controller
         return redirect('/hotels/'.$newPhoto->hotel_id.'/gallery');
     }
 
-    
+    public function destroy($id)
+    {
+        $image = HotelImage::findOrFail($id);
+        $image_path = public_path().'/'.$image->image;
+        $thumb_path = public_path().'/'.$image->thumbnail;
+        if (File::exists($image_path)) {
+            File::delete($image_path);
+        }
+        if (File::exists($thumb_path)) {
+            File::delete($thumb_path);
+        }
+        $image->delete();
+        return redirect('/hotels/'.$image->hotel_id.'/gallery')->with('success','Image deleted.');
+    }
 }
