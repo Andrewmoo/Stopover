@@ -4,35 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth;
+
 use App\User;
 use App\Hotel;
+use App\Guest;
 use App\Room;
-use Auth;
+use App\HotelReview;
 
 class HotelsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $hotels = Hotel::orderBy('created_at','desc')->paginate(10);
-        return view('hotels.index')->with('hotels', $hotels);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $user_id = Auth::user()->id;
-        return view('hotels.create')->with('user_id', $user_id);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -73,19 +54,35 @@ class HotelsController extends Controller
      */
     public function show($id)
     {
-        if (!Auth::guest() && Auth::user()->hasRole('hotel')) {
+        if(!Auth::guest() && Auth::user()->hasRole('hotel')) {
             $uhotel_id = Hotel::where('user_id', Auth::user()->id)->first()->id;
-            if($id != $uhotel_id)
-            {
-                return redirect('/');
-            }
         }
+        else if(!Auth::guest() && Auth::user()->hasRole('guest')) {
+            $guest = Guest::where('user_id', Auth::user()->id)->first();
+        }
+
         $hotel = Hotel::find($id);
+        $guests = Guest::all();
+        $reviews = HotelReview::where('hotel_id', $hotel->id)->orderby('created_at','desc')->limit(5)->get();
         $rooms = Room::where('hotel_id', $id)->orderBy('created_at','desc')->paginate(10);
-        return view('hotels.show')->with([
-            'hotel' => $hotel,
-            'rooms' => $rooms
-        ]);
+
+        if(!Auth::guest() && Auth::user()->hasRole('guest')) {
+            return view('hotels.show')->with([
+                'hotel' => $hotel,
+                'rooms' => $rooms,
+                'reviews' => $reviews,
+                'guests' => $guests,
+                'guest' => $guest
+            ]);
+        }
+        else {
+            return view('hotels.show')->with([
+                'hotel' => $hotel,
+                'rooms' => $rooms,
+                'reviews' => $reviews,
+                'guests' => $guests
+            ]);
+        }
     }
 
     /**
@@ -96,7 +93,11 @@ class HotelsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $hotel = Hotel::find($id);
+        if(Auth::guest() || !Auth::user()->hasRole('hotel') || $hotel->user_id != Auth::user()->id) {
+            return redirect()->back()->with('error', 'Invalid request.');
+        }
+        return view('hotels.edit')->with('hotel', $hotel);
     }
 
     /**
@@ -108,7 +109,26 @@ class HotelsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|string|max:191',
+            'address' => 'required|string|max:191',
+            'county' => 'required|string|max:50',
+            'eircode' => 'string|min:7|max:7|nullable',
+            'phone' => 'required|string|max:50',
+            'email' => 'required|string|email|max:191',
+        ]);
+  
+        //create hotel
+        $hotel = Hotel::find($id);
+        $hotel->name = $request->input('name');
+        $hotel->address = $request->input('address');
+        $hotel->county = $request->input('county');
+        $hotel->eircode = $request->input('eircode');
+        $hotel->phone = $request->input('phone');
+        $hotel->email = $request->input('email');
+        $hotel->save();
+
+        return redirect()->back()->with('success', 'Details updated successfully.');
     }
 
     /**

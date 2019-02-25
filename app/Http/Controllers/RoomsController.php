@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Auth;
+
 use App\Room;
 use App\Hotel;
-use DB;
 use App\Guest;
+use App\HotelImage;
 
 class RoomsController extends Controller
 {
@@ -38,12 +41,12 @@ class RoomsController extends Controller
      */
     public function create()
     {
-        if(!auth()->guest() && !auth()->user()->hasRole('hotel'))
+        if(Auth::guest() || !Auth::user()->hasRole('hotel'))
         {
-            return redirect('/dashboard')->with('error', 'Invalid Request');
+            return redirect()->back()->with('error', 'Invalid Request');
         }
-        $hotel_id = Hotel::where('user_id', auth()->user()->id)->first()->id;
-        return view('rooms.create')->with('hotel_id', $hotel_id);
+        $hotel = Hotel::where('user_id', auth()->user()->id)->first();
+        return view('rooms.create')->with('hotel', $hotel);
     }
 
     /**
@@ -65,26 +68,6 @@ class RoomsController extends Controller
           'hotel_id' => 'required|numeric|exists:hotels,id',
         ]);
 
-
-        //Handle file upload
-        if($request->hasFile('room_image')){
-          // get file name with extension
-          // $fileNameWithExt = $request->file('room_image')->getClientOriginalName();
-          // get just file name
-          // $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-          
-          //get just extension
-          $extension = $request->file('room_image')->getClientOriginalExtension();
-          // filename to store
-          // doing .'_'.time() makes all file names unique even if two uploads have the same name
-          // $fileNameToStore = $fileName.'_'.time().'.'.$extension;
-          $fileNameToStore = 'rimg_hid'.$request->input('hotel_id').'_'.time().'.'.$extension;
-          // upload image
-          $path = $request->file('room_image')->storeAs('public/images/room_images', $fileNameToStore);
-        }else{
-          $fileNameToStore = 'noimage.jpg';
-        }
-
         // create room
         $room = new Room;
         $room->singleBeds = $request->input('singleBeds');
@@ -98,7 +81,7 @@ class RoomsController extends Controller
         $room->room_image = $fileNameToStore;
         $room->save();
 
-        return redirect('/rooms')->with('success', 'Room Listed');
+        return redirect('/dashboard')->with('success', 'Room Listed');
     }
     /**
      * Display the specified resource.
@@ -109,19 +92,21 @@ class RoomsController extends Controller
     public function show($id, $from = null, $to = null)
     {
         $guest_id = 0;
-        if(!auth()->guest() && auth()->user()->hasRole('guest'))
+        if(!Auth::guest() && Auth::user()->hasRole('guest'))
         {
-          $guest_id = Guest::where('user_id', auth()->user()->id)->first()->id;
+          $guest_id = Guest::where('user_id', Auth::user()->id)->first()->id;
         }
         $room = Room::find($id);
         $hotel = Hotel::where('id', $room->hotel_id)->first();
+        $hotelimages = HotelImage::where('hotel_id', $hotel->id)->get();
 
         return view('rooms.show')->with([
           'room' => $room,
           'guest_id' => $guest_id,
           'from' => $from,
           'to' => $to,
-          'hotel' => $hotel
+          'hotel' => $hotel,
+          'hotelimages' => $hotelimages
         ]);
     }
 
@@ -134,11 +119,6 @@ class RoomsController extends Controller
     public function edit($id)
     {
       $room = Room::find($id);
-
-      //   Check for correct user_id
-      //   if(auth()->user()->id !==$post->user_id){
-      //       return redirect('/posts')->with('error', 'Unauthorised Page');
-      //   }
       return view('rooms.edit')->with('room', $room);
      }
 
@@ -157,7 +137,7 @@ class RoomsController extends Controller
         'noBeds' => 'required'
       ]);
 
-      //create Room
+      // update Room
       $room = Room::find($id);
       $room->description = $request->input('description');
       $room->facilities = $request->input('facilities');
@@ -175,10 +155,6 @@ class RoomsController extends Controller
     public function destroy($id)
     {
         $room = Room::find($id);
-        //Check for correct user_id
-        // if(auth()->user()->id !==$post->user_id){
-        //     return redirect('/posts')->with('error', 'Unauthorised Page');
-        // }
 
         $room->delete();
         return redirect('/rooms')->with('success', 'Room Removed');
@@ -186,33 +162,15 @@ class RoomsController extends Controller
 
     public function search(Request $request)
     {
+        $hotelimages = HotelImage::all();
         $to = $request->input('to');
         $from = $request->input('from');
         $county = $request->input('county');
         $people = $request->input('people');
 
         try{
-          // $rooms = DB::statement('
-          //     SELECT *
-          //     FROM rooms as r
-          //     WHERE r.id NOT IN(
-          //         SELECT b.room_id
-          //         FROM bookings as b
-          //         WHERE b.from <= '.$from.'
-          //           AND b.to >= '.$to.');
-          //
-          // $sql =
-          //   'SELECT DISTINCT r.*, h.name as hotel_name
-          //   FROM bookings b
-          //   LEFT JOIN rooms r ON r.id = b.room_id
-          //   LEFT JOIN hotels h ON h.id = r.hotel_id
-          //   WHERE NOT((b.from < :to1 AND b.to > :to2)
-          //   OR (b.from < :from1 AND b.to > :from2)
-          //   OR (b.from > :from3 AND b.to < :to3)
-          //   OR (b.from < :from4 AND b.to > :to4))';
-
           $sql =
-          'SELECT DISTINCT r.*, h.id as hotel_id, h.name as hotel_name, h.county
+          'SELECT DISTINCT r.*, h.id as hotel_id, h.name as hotel_name, h.address, h.county
           FROM rooms r
           LEFT JOIN bookings b ON r.id = b.room_id
           LEFT JOIN hotels h ON h.id = r.hotel_id
@@ -241,7 +199,6 @@ class RoomsController extends Controller
             'county' => $county,
             'people' => $people
           ]);
-          //dd($rooms);
         }
         catch(Illuminate\Database\QueryException $ex){
           return 'WHOOP';
@@ -252,7 +209,8 @@ class RoomsController extends Controller
           'from' => $from,
           'to' => $to,
           'county' => $county,
-          'people' => $people
+          'people' => $people,
+          'hotelimages' => $hotelimages,
         ]);
     }
 }

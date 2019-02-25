@@ -37,7 +37,7 @@ class HotelImagesController extends Controller
 
         if(!Auth::user()->hasRole('hotel') || $hotel->user_id != Auth::user()->id)
         {
-            return redirect('/');
+            return redirect()->back()->with('error', 'Invalid request.');
         }
 
         return view('hotelimages.index')->with([

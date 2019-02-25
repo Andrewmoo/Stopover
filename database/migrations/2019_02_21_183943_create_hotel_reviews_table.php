@@ -16,11 +16,16 @@ class CreateHotelReviewsTable extends Migration
         Schema::create('hotel_reviews', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('guest_id');
+            $table->unsignedInteger('hotel_id');
             $table->string('headline')->nullable();
             $table->text('body')->nullable();
-            $table->unsignedInteger('rating')->nullable();
+            $table->integer('rating')->nullable();
 
             $table->timestamps();
+
+            // Foreign Key Contraints
+            $table->foreign('guest_id')->references('id')->on('guests')->onDelete('cascade');
+            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
         });
     }
 

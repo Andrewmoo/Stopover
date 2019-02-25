@@ -18,10 +18,6 @@ class HotelReviewsController extends Controller
     {
         //
     }
-    public function getHotel($id) {
-        $hotel_id= $id;
-        return redirect()->action('HotelReviewsController@create', ['hotel_id' => $hotel_id]);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -44,23 +40,23 @@ class HotelReviewsController extends Controller
     public function store(Request $request)
     {
       $this->validate($request,[
-          'headline' => 'required|string|max:191',
+          'headline' => 'string|max:50|nullable',
           'body' => 'required|string|max:2000',
-          'rating' => 'required|string|max:50',
+          'rating' => 'required|numeric|min:1|max:5',
           'guest_id' => 'required|numeric',
           'hotel_id' => 'required|numeric',
       ]);
 
-      //create post
-      $hotel_review = new HotelReview;
-      $hotel_review->headline = $request->input('headline');
-      $hotel_review->body = $request->input('body');
-      $hotel_review->rating = $request->input('rating');
-      $hotel_review->guest_id = $request->input('guest_id');
-      $hotel_review->hotel_id = $request->input('hotel_id');
-      $hotel_review->save();
+      // create review
+      $review = new HotelReview;
+      $review->headline = $request->input('headline');
+      $review->body = $request->input('body');
+      $review->rating = $request->input('rating');
+      $review->guest_id = $request->input('guest_id');
+      $review->hotel_id = $request->input('hotel_id');
+      $review->save();
 
-      return redirect('/hotels')->with('success', 'Review Created');
+      return redirect('/hotels/'.$review->hotel_id)->with('success', 'Your review has been posted.');
     }
 
     /**
@@ -92,9 +88,29 @@ class HotelReviewsController extends Controller
      * @param  \App\HotelReview  $hotelReview
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HotelReview $hotelReview)
+    public function update(Request $request)
     {
-        //
+        $this->validate($request,[
+            'headline' => 'string|max:50|nullable',
+            'body' => 'required|string|max:2000',
+            'rating' => 'required|numeric|min:1|max:5',
+            'guest_id' => 'required|numeric',
+            'hotel_id' => 'required|numeric',
+        ]);
+  
+        // create review
+        $review = HotelReview::where([
+            'guest_id' => $request->input('guest_id'),
+            'hotel_id' => $request->input('hotel_id'),
+        ])->first();
+        $review->headline = $request->input('headline');
+        $review->body = $request->input('body');
+        $review->rating = $request->input('rating');
+        $review->guest_id = $request->input('guest_id');
+        $review->hotel_id = $request->input('hotel_id');
+        $review->save();
+  
+        return redirect('/hotels/'.$review->hotel_id)->with('success', 'Your review has been modified.');
     }
 
     /**

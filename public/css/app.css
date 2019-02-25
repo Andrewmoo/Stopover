@@ -12041,7 +12041,7 @@ input[type=date]::-webkit-inner-spin-button {
 }
 
 .secondaryColor {
-  background-color: #232831;
+  background-color: #2b2e35;
 }
 
 .SCO {
@@ -12051,6 +12051,19 @@ input[type=date]::-webkit-inner-spin-button {
 .tertiaryColor {
   background-color: #00ADB5;
   border-color: #00ADB5 !important;
+}
+
+a:not(.nav-link):not(.navbar-brand):not(.dropdown-item),
+.text-tertiary {
+  color: #00ADB5 !important;
+}
+
+a:hover:not(.nav-link):not(.navbar-brand):not(.dropdown-item) {
+  color: #019097 !important;
+}
+
+a:hover.text-white {
+  color: #fff !important;
 }
 
 .TCO {
@@ -12122,8 +12135,12 @@ h1 {
   margin-right: 15px;
 }
 
+.dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
 .dropdown-item:hover {
-  background-color: rgba(0, 173, 181, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   color: black;
 }
 

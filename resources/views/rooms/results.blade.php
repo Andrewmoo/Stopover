@@ -75,14 +75,20 @@
                   <p class="text-white">There are no results</p>
               @else
                 @foreach ($rooms as $room)
-                  <div class="mb-3 card card-light flex-row flex-wrap h-100" style="background-color: rgba(255, 255, 255, 0.3) !important">
+                  <div class="mb-3 card primaryColor flex-row flex-wrap h-100">
                     <div class="card-header border-0">
-                      <img src="/storage/images/room_images/{{$room->room_image}}">
+                      <a href="/hotels/{{$room->hotel_id}}">
+                        <img
+                        @if(!empty($hotelimages->where('hotel_id', $room->hotel_id)->first()->thumbnail))
+                          src="/{{$hotelimages->where('hotel_id', $room->hotel_id)->first()->thumbnail}}"
+                        @endif
+                        >
+                      </a>
                     </div>
                     <div class="card-body text-white px-3">
                         <!-- Single beds -->
                         <p>
-                          <a href="/hotels/{{$room->hotel_id}}" class="text-white">{{$room->hotel_name}}</a>
+                          <a href="/hotels/{{$room->hotel_id}}" class="text-white">{{$room->hotel_name}}, Co. {{$room->county}}</a>
                         </p>
                         @if($room->singleBeds > 0)
                               <p>
@@ -152,6 +158,7 @@
                                   </p>
                               @endif
                           </p>
+                          <p>€{{$room->price}}</p>
                     </div>
                     <div class="card-header text-white px-3 py-3 d-flex h-100">
                         <a class="btn btn-success btn-lg align-self-center" href="/rooms/{{$room->id}}/{{$from}}/{{$to}}">Select Room</a>

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Auth;
+
 use App\User;
 use App\Room;
 use App\Guest;
 use App\Hotel;
 use App\Booking;
-use DB;
 
 class DashboardController extends Controller
 {
@@ -29,27 +31,28 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $user_id = auth()->user()->id;
-        if(auth()->user()->hasRole('hotel')){
-          $hotel_id = Hotel::where('user_id', $user_id)->first()->id;
+        $user_id = Auth::user()->id;
+        if(!Auth::guest() && Auth::user()->hasRole('hotel')){
+          $hotel = Hotel::where('user_id', $user_id)->first();
 
           $sql =
           "SELECT r.singleBeds, r.doubleBeds, r.bathroom, r.wifi, r.parking, r.breakfast, r.price, r.hotel_id, r.room_image, b.*, h.name
           FROM bookings b
           LEFT JOIN rooms r ON b.room_id = r.id
           LEFT JOIN hotels h ON r.hotel_id = h.id
-          WHERE hotel_id = 1";
+          WHERE hotel_id = :hotel_id";
 
           $bookings = DB::select($sql, [
-              'hotel_id' => $hotel_id,
+              'hotel_id' => $hotel->id,
           ]);
 
           return view('dashboard')->with([
               'bookings' => $bookings,
+              'hotel' => $hotel
           ]);
         }
-        else{
-          $guest_id = Guest::where('user_id', $user_id)->first()->id;
+        else if(!Auth::guest() && Auth::user()->hasRole('guest')){
+          $guest = Guest::where('user_id', $user_id)->first();
 
           $sql =
           "SELECT r.singleBeds, r.doubleBeds, r.bathroom, r.wifi, r.parking, r.breakfast, r.price, r.hotel_id, r.room_image, b.*, h.name
@@ -59,17 +62,16 @@ class DashboardController extends Controller
           WHERE guest_id = :guest_id";
 
           $bookings = DB::select($sql, [
-              'guest_id' => $guest_id,
+              'guest_id' => $guest->id,
           ]);
 
           return view('dashboard')->with([
               'bookings' => $bookings,
+              'guest' => $guest
           ]);
         }
-
-
-        //$bookings = Booking::where('guest_id', $guest_id)->get();
-
-
+        else {
+            return redirect()->back();
+        }
     }
 }

@@ -12,7 +12,6 @@
 */
 
 Route::get('/', 'PagesController@index');
-Route::get('/about', 'PagesController@about');
 
 Route::get('/bookings/create/{id}', [
    'as' => 'bookings.create', 'uses' => 'BookingsController@create'
@@ -39,11 +38,16 @@ Route::delete('hotels/{id}/gallery', 'HotelImagesController@destroy');
 Route::resources([
    'rooms' => 'RoomsController',
    'guests' => 'GuestsController',
-   'hotel_reviews' => 'HotelReviewsController'
+]);
+
+Route::put('/hotels/review', 'HotelReviewsController@update');
+
+Route::resource('hotel_reviews', 'HotelReviewsController')->except([
+   'edit','update'
 ]);
 
 Route::resource('hotels', 'HotelsController')->except([
-   'index'
+   'index', 'create'
 ]);
 
 Route::resource('bookings', 'BookingsController')->except([
@@ -53,11 +57,6 @@ Route::resource('bookings', 'BookingsController')->except([
 Route::get('/rooms/{id}/{from?}/{to?}', [
    'as' => 'rooms.show',
    'uses' => 'RoomsController@show'
-]);
-
-Route::get('/hotels/{id}/review', [
-   'as' => 'hotels.review',
-   'uses' => 'HotelReviewsController@create'
 ]);
 
 Route::get('about', function(){

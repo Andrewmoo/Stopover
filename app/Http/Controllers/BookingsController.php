@@ -69,7 +69,7 @@ class BookingsController extends Controller
         $booking->to = $request->input('to');
         $booking->save();
 
-        return redirect('/dashboard')->with('success', "You're booked in enjoy your stay!");
+        return redirect('/dashboard')->with('success', "Your booking has been made!");
     }
 
     /**

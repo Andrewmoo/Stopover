@@ -9,7 +9,7 @@
     @endif
 >
     <div class="card secondaryColor text-white mt-3 mb-3">
-        <h5 class="card-header">{{$hotel->name}}</h5>
+        <h5 class="card-header"><a href="/hotels/{{$hotel->id}}">{{$hotel->name}}</a></h5>
         <div class="card-body">
             <div class="row">
                 <div class="col-8 col-sm-8">
@@ -46,7 +46,11 @@
                     @endif
                 </div>
                 <div class="col-4 col-sm-4">
-                    <img class="img-fluid" src="/storage/images/room_images/{{$room->room_image}}">
+                    <img class="img-fluid"
+                    @if(!empty($hotelimages->where('hotel_id', $room->hotel_id)->first()->thumbnail))
+                        src="/{{$hotelimages->first()->thumbnail}}"
+                    @endif
+                    >
                 </div>
             </div>
         </div>

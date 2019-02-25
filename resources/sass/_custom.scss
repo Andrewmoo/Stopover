@@ -32,14 +32,25 @@ input[type=date]::-webkit-inner-spin-button {
   background-color: rgba(57,62,70, 0.5);
 }
 .secondaryColor{
-  background-color: #232831;
+  background-color: #2b2e35;
 }
 .SCO{
   background-color: rgba(0,0,0, 0.7);
 }
 .tertiaryColor{
   background-color: #00ADB5;
-  border-color: #00ADB5 !important;}
+  border-color: #00ADB5 !important;
+}
+a:not(.nav-link, .navbar-brand, .dropdown-item), .text-tertiary {
+  color: #00ADB5 !important;
+}
+a:hover:not(.nav-link, .navbar-brand, .dropdown-item) {
+  color: rgb(1, 144, 151) !important;
+}
+
+a:hover.text-white {
+  color: #fff !important;
+}
 .TCO{
   background-color: rgba(0,173,181, 0.5);
 
@@ -97,8 +108,12 @@ h1{
   line-height: 1;
   margin-right: 15px;
 }
+
+.dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
 .dropdown-item:hover{
-  background-color: rgba(0,173,181, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   color: black;
 }
 .dropdown-item{

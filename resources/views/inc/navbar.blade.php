@@ -10,18 +10,16 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Left Side Of Navbar -->
+        {{-- Left Side Of Navbar --}}
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
+            <a class="nav-link" href="/"></a>
             </li>
         </ul>
 
-        <!-- Right Side Of Navbar -->
-
-
+        {{-- Right Side Of Navbar --}}
         <ul class="navbar-nav ml-notAuto">
-            <!-- Authentication Links -->
+            {{-- Authentication Links --}}
             @if(Auth::guest())
             {{session(['link' => url()->previous()])}}
                 {{-- <li class="nav-item">
@@ -58,17 +56,14 @@
                 </form>
                 @endif
             @else
-            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('hotel'))
-                <li class="nav-link"><a href="/rooms/create" class="text-white">Add room listing</a></li>
-            @endif
                 <li class="nav-item dropdown ml-notAuto">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->username }} <span class="caret"></span>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right tertiaryColor" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu-right mt-2" aria-labelledby="navbarDropdown">
                         @if(!Auth::guest() && Auth::user()->hasRole('hotel'))
-                        <a class="dropdown-item" href="/hotels/{{App\Hotel::getHotelId(auth()->user()->id)}}">Profile</a>
+                        <a class="dropdown-item" href="/hotels/{{App\Hotel::getHotelId(Auth::user()->id)}}">Profile</a>
                         @endif
                         <a class="dropdown-item" href="/dashboard">Dashboard</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
