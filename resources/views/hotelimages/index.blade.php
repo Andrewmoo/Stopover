@@ -62,7 +62,7 @@
                                 </script>
                             </div>
                         @empty
-                            Your image gallery is empty.
+                            <div class="col-md-12 text-white">Your image gallery is empty.</div>
                         @endforelse
                     </div>
                 </div>

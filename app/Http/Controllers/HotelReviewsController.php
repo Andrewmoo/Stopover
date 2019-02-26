@@ -60,28 +60,6 @@ class HotelReviewsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\HotelReview  $hotelReview
-     * @return \Illuminate\Http\Response
-     */
-    public function show(HotelReview $hotelReview)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\HotelReview  $hotelReview
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(HotelReview $hotelReview)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -119,8 +97,11 @@ class HotelReviewsController extends Controller
      * @param  \App\HotelReview  $hotelReview
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HotelReview $hotelReview)
+    public function destroy($id)
     {
-        //
+        $review = HotelReview::find($id);
+        $review->delete();
+
+        return redirect()->back()->with('success', 'Review successfully deleted.');
     }
 }

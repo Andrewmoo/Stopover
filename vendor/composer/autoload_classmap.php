@@ -770,6 +770,8 @@ return array(
     'Hamcrest\\Type\\IsString' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+    'HotelImageTableSeeder' => $baseDir . '/database/seeds/HotelImageTableSeeder.php',
+    'HotelReviewSeeder' => $baseDir . '/database/seeds/HotelReviewSeeder.php',
     'HotelTableSeeder' => $baseDir . '/database/seeds/HotelTableSeeder.php',
     'Http\\Adapter\\Guzzle6\\Client' => $vendorDir . '/php-http/guzzle6-adapter/src/Client.php',
     'Http\\Adapter\\Guzzle6\\Promise' => $vendorDir . '/php-http/guzzle6-adapter/src/Promise.php',

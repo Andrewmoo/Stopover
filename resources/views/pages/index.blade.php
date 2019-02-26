@@ -1,7 +1,7 @@
 @extends('layouts.indexLayout')
 
 @section('content')
-  <div class="row">
+  <div class="row align-middle">
     <div class="col-md-12 hpMargin align-items-center">
       <h1 class="DSN">Welcome to </h1>
       <h1 class="StopoverHeading">Stopover</h1>

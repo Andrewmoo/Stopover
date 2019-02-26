@@ -13,7 +13,16 @@ use App\Room;
 use App\HotelReview;
 
 class HotelsController extends Controller
-{
+{  
+    /**
+    * Create a new controller instance.
+    *
+    * @return void
+    */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['show']]);
+    }
     /**
      * Store a newly created resource in storage.
      *

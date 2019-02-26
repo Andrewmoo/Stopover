@@ -8,7 +8,49 @@
         <div class="card-header">Your details</div>
         <div class="card-body mx-3">
           @if(Auth::user()->hasRole('guest'))
-
+          <div class="row">
+            <div class="col-3 border-right py-2 text-tertiary font-weight-bold text-right">
+                First Name:
+            </div>
+            <div class="col-9 py-2">
+                {{$guest->firstName}}
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-3 border-right border-top py-2 text-tertiary font-weight-bold text-right">
+                  Last Name:
+              </div>
+              <div class="col-9 border-top py-2">
+                  {{$guest->lastName}}
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-3 border-right border-top py-2 text-tertiary font-weight-bold text-right">
+                  Address:
+              </div>
+              <div class="col-9 border-top py-2">
+                  {{$guest->address}}
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-3 border-right border-top py-2 text-tertiary font-weight-bold text-right">
+                  Phone number:
+              </div>
+              <div class="col-9 border-top py-2">
+                  {{$guest->phone}}
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-3 border-right border-top py-2 text-tertiary font-weight-bold text-right">
+                  Contact email:
+              </div>
+              <div class="col-9 border-top py-2">
+                  {{$guest->email}} (this is not your account email)
+              </div>
+          </div>
+          <div class="row mt-3 justify-content-center">
+            <a href="/guests/{{$guest->id}}/edit" class="btn btn-lg btn-outline-light text-white">MODIFY DETAILS</a>
+          </div>
           @endif
 
           @if(Auth::user()->hasRole('hotel'))
@@ -58,7 +100,7 @@
           @endif
         </div>
       </div>
-      <div class="card secondaryColor text-white">
+      <div class="card secondaryColor text-white mb-3">
           <div class="card-header">Your Bookings</div>
   
           <div class="card-body">
@@ -109,6 +151,10 @@
 
             @if(Auth::user()->hasRole('hotel'))
               @include('inc.hoteldashmenu')
+            @endif
+
+            @if(Auth::user()->hasRole('guest'))
+              @include('inc.guestdashmenu')
             @endif
 
           </div>

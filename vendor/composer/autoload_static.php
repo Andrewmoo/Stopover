@@ -1208,6 +1208,8 @@ class ComposerStaticInit734d09aa3217062b87241ae946d6c46f
         'Hamcrest\\Type\\IsString' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+        'HotelImageTableSeeder' => __DIR__ . '/../..' . '/database/seeds/HotelImageTableSeeder.php',
+        'HotelReviewSeeder' => __DIR__ . '/../..' . '/database/seeds/HotelReviewSeeder.php',
         'HotelTableSeeder' => __DIR__ . '/../..' . '/database/seeds/HotelTableSeeder.php',
         'Http\\Adapter\\Guzzle6\\Client' => __DIR__ . '/..' . '/php-http/guzzle6-adapter/src/Client.php',
         'Http\\Adapter\\Guzzle6\\Promise' => __DIR__ . '/..' . '/php-http/guzzle6-adapter/src/Promise.php',

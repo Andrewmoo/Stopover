@@ -207,9 +207,17 @@
                             </div>
                         </div>
                         <div class="form-row justify-content-center">
-                            {{Form::submit('POST', ['class' => 'btn btn-lg btn-primary tertiaryColor'])}}
-                        </div>
+                            {{Form::submit(
+                                (null !== ($reviews->where('guest_id', $guest->id)->first()) ? 'UPDATE' : 'POST')
+                                , ['class' => 'btn btn-lg btn-primary tertiaryColor'])}}
                     {!!Form::close()!!}
+                    @if(!empty($reviews->where('guest_id', $guest->id)->first()))
+                    {!!Form::open(['action' => ['HotelReviewsController@destroy', $reviews->where('guest_id', $guest->id)->first()->id], 'method' => 'POST'])!!}
+                    {{Form::hidden('_method', 'DELETE')}}
+                    {{Form::submit('DELETE', ['class' => 'btn btn-lg btn-danger text-white ml-2'])}}
+                    {!!Form::close()!!}
+                    @endif
+                    </div>
                 </div>
                 @else
                     @if(!Auth::guest() && Auth::user()->hasRole('guest'))

@@ -20,7 +20,7 @@ class RoomsController extends Controller
    */
   public function __construct()
   {
-      $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
+      $this->middleware('auth', ['except' => ['show', 'search']]);
   }
 
     /**
@@ -30,7 +30,12 @@ class RoomsController extends Controller
      */
     public function index()
     {
-        $rooms = Room::orderBy('created_at','desc')->paginate(10);
+        if(!Auth::user()->hasRole('hotel'))
+        {
+          return redirect()->back()->with('error', 'Invalid request.');
+        }
+        $hotel = Hotel::where('user_id', Auth::user()->id)->first();
+        $rooms = Room::where('hotel_id', $hotel->id)->orderBy('created_at','desc')->paginate(10);
         return view('rooms.index')->with('rooms', $rooms);
     }
 
@@ -41,7 +46,7 @@ class RoomsController extends Controller
      */
     public function create()
     {
-        if(Auth::guest() || !Auth::user()->hasRole('hotel'))
+        if(!Auth::user()->hasRole('hotel'))
         {
             return redirect()->back()->with('error', 'Invalid Request');
         }
@@ -78,10 +83,9 @@ class RoomsController extends Controller
         $room->breakfast = $request->input('breakfast');
         $room->price = $request->input('price');
         $room->hotel_id = $request->input('hotel_id');
-        $room->room_image = $fileNameToStore;
         $room->save();
 
-        return redirect('/dashboard')->with('success', 'Room Listed');
+        return redirect('/rooms')->with('success', 'Room listing added successfully.');
     }
     /**
      * Display the specified resource.
@@ -119,7 +123,14 @@ class RoomsController extends Controller
     public function edit($id)
     {
       $room = Room::find($id);
-      return view('rooms.edit')->with('room', $room);
+      $hotel = Hotel::find($room->hotel_id);
+      if(!Auth::user()->hasRole('hotel') || $hotel->user_id != Auth::user()->id) {
+        return redirect()->back()->with('error', 'Invalid request.');
+      }
+      return view('rooms.edit')->with([
+        'room' => $room,
+        'hotel' => $hotel
+      ]);
      }
 
     /**
@@ -131,19 +142,32 @@ class RoomsController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $hotel = Hotel::find($request->input('hotel_id'));
+        if(Auth::guest() || !Auth::user()->hasRole('hotel') || $hotel->user_id != Auth::user()->id) {
+            return redirect()->back()->with('error', 'Invalid request.');
+      }
       $this->validate($request,[
-        'description' => 'required',
-        'facilities' => 'required',
-        'noBeds' => 'required'
+        'singleBeds' => 'numeric',
+        'doubleBeds' => 'numeric',
+        'bathroom' => 'required|numeric|min:0|max:1',
+        'wifi' => 'required|numeric|min:0|max:1',
+        'parking' => 'required|numeric|min:0|max:1',
+        'breakfast' => 'required|numeric|min:0|max:1',
+        'price' => 'required|numeric',
       ]);
 
-      // update Room
+      // create room
       $room = Room::find($id);
-      $room->description = $request->input('description');
-      $room->facilities = $request->input('facilities');
+      $room->singleBeds = $request->input('singleBeds');
+      $room->doubleBeds = $request->input('doubleBeds');
+      $room->bathroom = $request->input('bathroom');
+      $room->wifi = $request->input('wifi');
+      $room->parking = $request->input('parking');
+      $room->breakfast = $request->input('breakfast');
+      $room->price = $request->input('price');
       $room->save();
 
-      return redirect('/rooms')->with('success', 'Room Updated');
+      return redirect('/rooms')->with('success', 'Room listing modified successfully.');
     }
 
     /**
