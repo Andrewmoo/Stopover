@@ -21,8 +21,8 @@
                                     <option value="1" selected>Guest</option>
                                     <option value="3">Hotel</option>
                                 </select> --}}
-                                <a id="role_guest" class="text-white btn btn-primary">Guest</a>
-                                <a id="role_hotel" class="text-white btn btn-secondary">Hotel</a>
+                                <a id="role_guest" class="text-white btn btn-lg btn-outline-dark">GUEST</a>
+                                <a id="role_hotel" class="text-white btn btn-lg btn-outline-dark">HOTEL</a>
                                 @if(empty(old('role_id')))
                                     {{Form::hidden('role_id', '1')}}
                                 @else
@@ -197,8 +197,8 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-secondary">
-                                    {{ __('Register') }}
+                                <button type="submit" class="btn btn-lg btn-primary tertiaryColor">
+                                    {{ __('REGISTER') }}
                                 </button>
                             </div>
                         </div>

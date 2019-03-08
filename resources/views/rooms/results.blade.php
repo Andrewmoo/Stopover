@@ -161,7 +161,7 @@
                           <p>€{{$room->price}}</p>
                     </div>
                     <div class="card-header text-white px-3 py-3 d-flex h-100">
-                        <a class="btn btn-success btn-lg align-self-center" href="/rooms/{{$room->id}}/{{$from}}/{{$to}}">Select Room</a>
+                        <a class="btn btn-outline-light btn-lg align-self-center" href="/rooms/{{$room->id}}/{{$from}}/{{$to}}">SELECT ROOM</a>
                     </div>
                   </div>
                 @endforeach
