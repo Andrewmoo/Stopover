@@ -21,8 +21,8 @@
                                     <option value="1" selected>Guest</option>
                                     <option value="3">Hotel</option>
                                 </select> --}}
-                                <a id="role_guest" class="text-white btn btn-lg btn-outline-dark">GUEST</a>
-                                <a id="role_hotel" class="text-white btn btn-lg btn-outline-dark">HOTEL</a>
+                                <a id="role_guest" class="text-white btn btn-lg btn-outline-dark bg-dark">GUEST</a>
+                                <a id="role_hotel" class="text-white btn btn-lg btn-outline-dark bg-light">HOTEL</a>
                                 @if(empty(old('role_id')))
                                     {{Form::hidden('role_id', '1')}}
                                 @else
@@ -215,11 +215,11 @@
 
         // click event for Guest button
         $( '#role_guest' ).click(function () {
-            if($('#role_guest').hasClass('btn-secondary')) {
+            if($('#role_guest').hasClass('bg-light')) {
 
                 // swap classes on buttons
-                $(this).removeClass('btn-secondary').addClass('btn-primary');
-                $('#role_hotel').removeClass('btn-primary').addClass('btn-secondary');
+                $(this).removeClass('bg-light').addClass('bg-dark');
+                $('#role_hotel').removeClass('bg-dark').addClass('bg-light');
 
                 // change hidden role_id field value
                 $("input[name=role_id]").val('1');
@@ -232,11 +232,11 @@
 
         // click event for Hotel button
         $( '#role_hotel' ).click(function () {
-            if($('#role_hotel').hasClass('btn-secondary')) {
+            if($('#role_hotel').hasClass('bg-light')) {
 
                 // swap classes on buttons
-                $(this).removeClass('btn-secondary').addClass('btn-primary');
-                $('#role_guest').removeClass('btn-primary').addClass('btn-secondary');
+                $(this).removeClass('bg-light').addClass('bg-dark');
+                $('#role_guest').removeClass('bg-dark').addClass('bg-light');
 
                 // change hidden role_id field value
                 $("input[name=role_id]").val('3');

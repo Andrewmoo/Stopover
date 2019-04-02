@@ -7,6 +7,10 @@ input[type=date]::-webkit-inner-spin-button {
   display: none !important;
 }
 
+.btn-success a {
+  color: #fff !important;
+}
+
 .J-margin{
   margin-top: 80px;
 }
@@ -35,10 +39,10 @@ input[type=date]::-webkit-inner-spin-button {
   background-color: #00ADB5;
   border-color: #00ADB5 !important;
 }
-a:not(.nav-link, .navbar-brand, .dropdown-item), .text-tertiary {
+a:not(.nav-link, .navbar-brand, .dropdown-item, .btn-success), .text-tertiary {
   color: #00ADB5 !important;
 }
-a:hover:not(.nav-link, .navbar-brand, .dropdown-item) {
+a:hover:not(.nav-link, .navbar-brand, .dropdown-item, .btn-success) {
   color: rgb(1, 144, 151) !important;
 }
 

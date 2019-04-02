@@ -12010,6 +12010,10 @@ input[type=date]::-webkit-inner-spin-button {
   display: none !important;
 }
 
+.btn-success a {
+  color: #fff !important;
+}
+
 .J-margin {
   margin-top: 80px;
 }
@@ -12047,12 +12051,12 @@ input[type=date]::-webkit-inner-spin-button {
   border-color: #00ADB5 !important;
 }
 
-a:not(.nav-link):not(.navbar-brand):not(.dropdown-item),
+a:not(.nav-link):not(.navbar-brand):not(.dropdown-item):not(.btn-success),
 .text-tertiary {
   color: #00ADB5 !important;
 }
 
-a:hover:not(.nav-link):not(.navbar-brand):not(.dropdown-item) {
+a:hover:not(.nav-link):not(.navbar-brand):not(.dropdown-item):not(.btn-success) {
   color: #019097 !important;
 }
 

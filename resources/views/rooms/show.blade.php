@@ -21,10 +21,14 @@
                 </div>
                 <div class="col-md-4">
                     <!-- Single beds -->
-                    @if($room->singleBeds > 0) <p>{{$room->singleBeds}} single bed(s)</p> @endif
+                    @if($room->singleBeds > 0 && $room->singleBeds == 1) <p>{{$room->singleBeds}} single bed.</p>
+                    @else @if($room->singleBeds > 0) <p>{{$room->singleBeds}} single beds.</p> @endif
+                    @endif
 
                     <!-- Double beds -->
-                    @if($room->doubleBeds > 0) <p>{{$room->doubleBeds}} double bed(s)</p> @endif
+                    @if($room->doubleBeds > 0) <p>{{$room->doubleBeds}} double bed.</p>
+                    @else @if($room->doubleBeds > 0) <p>{{$room->doubleBeds}} double beds.</p> @endif
+                    @endif
 
                     <!-- Bathroom/en-suite -->
                     <p>@if($room->bathroom =! 0) En-suite. @endif</p>
@@ -33,7 +37,7 @@
                     <p>@if($room->wifi != 0) Wi-Fi. @endif</p>
 
                     <!-- Wi-Fi -->
-                    <p>@if($room->parking == 0) No free parking. @else Free parking. @endif</p>
+                    <p>@if($room->parking == 1) Free parking. @endif</p>
 
                     <!-- Wi-Fi -->
                     <p>@if($room->breakfast != 0) Breakfast included. @endif</p>
@@ -61,8 +65,8 @@
         <div class="card-body">
             <div class="row">
                 @forelse($hotelimages as $hotelimage)
-                <div class="col-md-4">
-                    <a href="/{{$hotelimage->image}}" target="_blank"><img src="/{{$hotelimage->thumbnail}}"></a>
+                <div class="col-md-4 mb-3">
+                    <a href="/{{$hotelimage->image}}" target="_blank"><img src="/{{$hotelimage->thumbnail}}" class="img-fluid"></a>
                 </div>
                 @empty
                 <div class="col-md-12">No available images for this hotel.</div>
