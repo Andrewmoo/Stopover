@@ -36,10 +36,10 @@
                     <!-- Wi-Fi -->
                     <p>@if($room->wifi != 0) Wi-Fi. @endif</p>
 
-                    <!-- Wi-Fi -->
+                    <!-- Parking -->
                     <p>@if($room->parking == 1) Free parking. @endif</p>
 
-                    <!-- Wi-Fi -->
+                    <!-- Breakfast -->
                     <p>@if($room->breakfast != 0) Breakfast included. @endif</p>
 
                     @if((!Auth::guest() && Auth::user()->hasRole('admin')) ||

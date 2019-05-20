@@ -1,4 +1,4 @@
-<nav @if(Request::is('/*')) class="navbar navbar-expand-md navbar-dark fixed-top nav-margin" @else class="navbar navbar-expand-md navbar-dark fixed-top nav-margin tertiaryColor" @endif>
+<nav @if(Request::is('/*')) class="navbar navbar-expand-md navbar-dark fixed-top nav-margin" @else class="navbar navbar-expand-md navbar-dark fixed-top nav-margin" @endif>
     @if(!Request::is('/*'))
     <div class="container">
     @endif
@@ -36,7 +36,7 @@
                     <div class="form-row align-items-center">
                         <div class="col-auto">
                             <div class="input-group">
-                                <input id="email" type="text" class="home-login form-control form-control-sm text-white" name="email" placeholder="Username or e-mail" style="background-color:rgba(0,0,0,0) !important;" required autofocus>
+                                <input id="email" type="text" class="form-control form-control-sm" name="email" placeholder="Username or e-mail" required autofocus>
                             </div>
                         </div>
                         <div class="col-auto">
@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-auto">
                             <div class="input-group">
-                                <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-alt-circle-right" style="font-size: 1rem; padding: 0.1rem 0.5rem;"></button>
+                                <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-alt-circle-right navbar-submit"></button>
                             </div>
                         </div>
                         <a class="nav-item nav-link mr-1" href="{{ route('register') }}">

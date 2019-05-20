@@ -23,7 +23,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     {{-- <link href="/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet"> --}}
 </head>
-<body class="primaryColor">
+<body class="primaryColor bg-image darken-overlay">
   @include('inc.navbar')
   <div class="container J-margin">
       @include('inc.messages')

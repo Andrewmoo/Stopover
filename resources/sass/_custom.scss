@@ -1,5 +1,30 @@
-* {
-  border-radius: 0 !important;
+* {border-radius: 0 !important;}
+
+body::-webkit-scrollbar {width: 0.5em;}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+input {
+  color: #fff !important;
+  background: rgba(0,0,0,0) !important;
+}
+
+select {
+  color: #fff !important;
+  background: rgba(0,0,0,0) !important;
+}
+
+select option {
+  background-color: rgba(0,0,0,1) !important;
+  color:#fff !important;
 }
 
 input[type=date]::-webkit-inner-spin-button {
@@ -7,63 +32,43 @@ input[type=date]::-webkit-inner-spin-button {
   display: none !important;
 }
 
-.btn-success a {
-  color: #fff !important;
-}
+.btn-success a    {color: #fff !important;}
+.btn-submit:hover {color: #00ADB5 !important;}
+.J-margin         {margin-top: 80px;}
+.ml-notAuto       {margin-left: 40px;}
+.noPadding        {padding: 0px;}
+.cardMargin       {margin-bottom: 20px;}
+.primaryColor     {background-color: #393E46;}
+.PCO              {background-color: rgba(57,62,70, 0.5);}
+.secondaryColor   {background-color: rgba(43, 46, 53, 0.5);}
+.SCO              {background-color: rgba(0,0,0, 0.7);}
+.SOColour         {color: #00ADB5;}
+.hpMargin         {margin-top: 7rem;}
+.TCO              {background-color: rgba(0, 173, 181, 0.5);}
 
-.J-margin{
-  margin-top: 80px;
-}
-.ml-notAuto{
-  margin-left: 40px;
-}
-.noPadding{
-  padding:0px;
-}
-.cardMargin{
-  margin-bottom: 20px;
-}
-.primaryColor{
-  background-color: #393E46;
-}
-.PCO{
-  background-color: rgba(57,62,70, 0.5);
-}
-.secondaryColor{
-  background-color: #2b2e35;
-}
-.SCO{
-  background-color: rgba(0,0,0, 0.7);
-}
 .tertiaryColor{
   background-color: #00ADB5;
   border-color: #00ADB5 !important;
 }
+
 a:not(.nav-link, .navbar-brand, .dropdown-item, .btn-success), .text-tertiary {
   color: #00ADB5 !important;
 }
+
 a:hover:not(.nav-link, .navbar-brand, .dropdown-item, .btn-success) {
   color: rgb(1, 144, 151) !important;
 }
 
-a:hover.text-white {
-  color: #fff !important;
-}
-.TCO{
-  background-color: rgba(0,173,181, 0.5);
-
-}
-h1{
+a:hover.text-white {color: #fff !important;}
+h1 {
   color: #636b6f;
   font-family: 'Nunito', sans-serif;
   font-weight: 200;
   margin-bottom: 40px;
 }
 
-.borderLeft{
-  border-left: 2px solid #636b6f;
-}
-.bg-image{
+.borderLeft {border-left: 2px solid #636b6f;}
+.bg-image {
   background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url("/storage/images/bg-images/bg.jpg");
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -72,25 +77,22 @@ h1{
   width: 100%;
   background-attachment: fixed;
 }
-.SOColour{
-  color: #00ADB5;
-}
-.DSN{
+
+.DSN {
   font-size: 2rem;
   color: rgb(204, 204, 204);
   display: inline-block;
 }
-.StopoverHeading{
+
+.StopoverHeading {
     font-size: 3rem;
     color: white;
     margin-bottom: 40px !important;
     margin-left: 10px;
     display: inline-block;
 }
-.hpMargin{
-    margin-top: 7rem;
-}
-.inner-form{
+
+.inner-form {
   background: rgba(0,0,0,.5);
   padding: 50px 47px;
   display: -ms-flexbox;
@@ -101,19 +103,39 @@ h1{
   -ms-flex-align: center;
   align-items: center;
 }
-.homeLabels{
+.homeLabels {
   font-size: 1.1rem;
   line-height: 1;
   margin-right: 15px;
 }
 
-.dropdown-menu {
-  background-color: rgba(0, 0, 0, 0.7) !important;
-}
-.dropdown-item:hover{
+.dropdown-menu {background-color: rgba(0, 0, 0, 0.7) !important;}
+.dropdown-item {color: white;}
+.dropdown-item:hover {
   background-color: rgba(255, 255, 255, 0.5);
   color: black;
 }
-.dropdown-item{
-  color: white;
+
+nav input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #ced4da !important;
+  opacity: 1; /* Firefox */
+}
+
+nav input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #ced4da !important;
+}
+
+nav input::-ms-input-placeholder { /* Microsoft Edge */
+  color: #ced4da !important;
+}
+
+.navbar-submit {
+  border-color: #ced4da !important;
+  color: #ced4da !important;
+  font-size: 1rem !important;
+  padding: 0.1rem 0.5rem !important;
+}
+
+.navbar-submit:hover {
+  color: #00ADB5 !important;
 }

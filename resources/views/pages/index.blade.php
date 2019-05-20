@@ -20,15 +20,20 @@
         <div class="form-row form-group text-white justify-content-center">
           <div class="col-md-2">
             {{Form::label('from', 'Check-in:',  ['class' => 'homeLabels'])}}
-            {{Form::date('from', '', ['class' => 'form-control text-white', 'style' => "background-color: rgba(0,0,0,0) !important"])}}
+            {{Form::date('from', '', ['class' => 'form-control text-white'])}}
           </div>
           <div class="col-md-2">
             {{Form::label('to', 'Check-out:',  ['class' => 'homeLabels'])}}
-            {{Form::date('to', '', ['class' => 'form-control text-white', 'style' => "background-color: rgba(0,0,0,0) !important"])}}
+            {{Form::date('to', '', ['class' => 'form-control text-white'])}}
           </div>
           <div class="col-md-2">
             {{Form::label('county', 'County:',  ['class' => 'homeLabels'])}}
-            {{Form::text('county', '', ['class' => 'form-control text-white', 'placeholder' => 'e.g. Antrim', 'style' => "background-color: rgba(0,0,0,0) !important"])}}
+            {{-- {{Form::text('county', '', ['class' => 'form-control text-white', 'placeholder' => 'e.g. Antrim', 'style' => "background-color: rgba(0,0,0,0) !important"])}} --}}
+            <select class="form-control" name="county" id="county">
+              @foreach ($counties as $county)
+                <option value="{{$county}}">{{$county}}</option>
+              @endforeach
+            </select>
           </div>
           <div class="col-md-2">
             {{Form::label('people', 'For:',  ['class' => 'homeLabels'])}}
@@ -46,7 +51,7 @@
         </div>
         <div class="form-row">
           <div class="col-md-12 text-center">
-            {{Form::submit('SEARCH  ', ['class'=>'btn btn-lg btn-outline-light'])}}
+            {{Form::submit('SEARCH  ', ['class'=>'btn btn-lg btn-outline-light btn-submit'])}}
           </div>
         </div>
         {!! Form::close() !!}
