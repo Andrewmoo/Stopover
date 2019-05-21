@@ -84,3 +84,9 @@
     </div>
     @endif
 </nav>
+
+<script>
+    $(window).scroll(function(){
+        $('nav').toggleClass('primaryColor', $(this).scrollTop() > 25);
+    });
+</script>

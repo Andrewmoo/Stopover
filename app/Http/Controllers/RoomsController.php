@@ -235,6 +235,10 @@ class RoomsController extends Controller
           return 'WHOOP';
         }
 
+        $roomsColl = collect($rooms);
+        $rooms = $roomsColl->sortBy('price');
+        $rooms->values()->all();
+
         return view('rooms.results')->with([
           'rooms' => $rooms,
           'from' => $from,

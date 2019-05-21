@@ -117,9 +117,24 @@
                 </tr>
                 @foreach($bookings as $booking)
                   <tr>
-                    <td><a href="/rooms/{{$booking->room_id}}">{{$booking->name}}, room {{$booking->room_id}}</a></td>
+                    <td><a href="/rooms/{{$booking->room_id}}">#{{$booking->room_id}}</a></td>
                     @if(Auth::user()->hasRole('hotel'))
-                    <td>{{$booking->guest_id}}</td>
+                    <td><a href="" data-toggle="modal" data-target="#show-guest" id="b-guest-{{$booking->id}}">{{$booking->firstName}} {{$booking->lastName}}</a></td>
+                    <script>
+                        $(document).ready(function() {
+                      
+                          $(document).on("click", "#b-guest-{{ $booking->id }}", function() {
+
+                              $('.modal-header').html("{{ $booking->firstName }} {{ $booking->lastName }}");
+                              $('#g-first-name').html("{{ $booking->firstName }}");
+                              $('#g-last-name').html("{{ $booking->lastName }}");
+                              $('#g-email').html("{{ $booking->email }}");
+                              $('#g-phone').html("{{ $booking->phone }}");
+
+                          });
+
+                        });
+                      </script>
                     @endif
                     <td>{{date('d/m/Y', strtotime($booking->from))}}</td>
                     <td>{{date('d/m/Y', strtotime($booking->to))}}</td>
@@ -130,7 +145,7 @@
                             @if(Auth::user()->hasRole('guest'))
                             <a href="/bookings/edit/{{$booking->id}}/{{$booking->guest_id}}" class="btn btn-success text-white">Edit</a>
                             @endif
-                            {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                            {{Form::submit('DELETE', ['class' => 'btn btn-danger'])}}
   
                         {!!Form::close()!!}
                     </td>
@@ -162,5 +177,26 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="show-guest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-white">
+        <div class="modal-content" style="background-color: rgba(0,0,0, 0)">
+            <div class="modal-header" style="background-color: rgba(0,0,0, 0.7)">
+                
+            </div>
+            <div class="modal-body" style="background-color: rgba(0,173,181, 0.7)">
+                <div class="row justify-content-md-center">
+                    <p class="col-12">Name: <span id="g-first-name"></span> <span id="g-last-name"></span></p>
+                    <p class="col-12">Email: <span id="g-email"></span></p>
+                    <p class="col-12">Phone no.: <span id="g-phone"></span></p>
+                </div>
+            </div>
+
+            <div class="modal-footer border-0" style="background-color: rgba(0,173,181, 0.7)">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

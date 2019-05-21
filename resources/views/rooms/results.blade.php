@@ -68,7 +68,7 @@
               </div>
             </div>
             <div class="col-auto">
-              {{Form::submit('Search', ['class'=>'btn btn-primary btn-sm mb-2'])}}
+              {{Form::submit('SEARCH', ['class'=>'btn btn-sm btn-outline-light btn-submit navbar-submit mb-2'])}}
             </div>
           </div>
           <div class="form-row">
