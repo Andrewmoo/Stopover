@@ -12,35 +12,61 @@
         <h5 class="card-header"><a href="/hotels/{{$hotel->id}}">{{$hotel->name}}, Co. {{$hotel->county}}</a></h5>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-4">
-                    <img class="img-fluid"
-                    @if(!empty($hotelimages->where('hotel_id', $room->hotel_id)->first()->thumbnail))
-                        src="/{{$hotelimages->first()->thumbnail}}"
-                    @endif
-                    >
-                </div>
-                <div class="col-md-4">
+                <div class="col-12">
                     <!-- Single beds -->
-                    @if($room->singleBeds > 0 && $room->singleBeds == 1) <p>{{$room->singleBeds}} single bed.</p>
-                    @else @if($room->singleBeds > 0) <p>{{$room->singleBeds}} single beds.</p> @endif
+                    @if($room->singleBeds > 0)
+                        <p>
+                            <i class="fas fa-bed align-middle" style="font-size: 1.125rem">
+                            </i>
+                            <span class="align-middle">
+                                @if($room->singleBeds > 1) {{$room->singleBeds}} single beds
+                                @else {{$room->singleBeds}} single bed @endif
+                            </span>
+                        </p>
                     @endif
 
                     <!-- Double beds -->
-                    @if($room->doubleBeds > 0) <p>{{$room->doubleBeds}} double bed.</p>
-                    @else @if($room->doubleBeds > 0) <p>{{$room->doubleBeds}} double beds.</p> @endif
+                    @if($room->doubleBeds > 0)
+                        <p>
+                        <i class="fas fa-bed align-middle" style="font-size: 1.125rem"></i>
+                        <span class="align-middle">
+                            @if($room->doubleBeds > 1) {{$room->doubleBeds}} double beds
+                            @else {{$room->doubleBeds}} double bed @endif
+                        </span>
+                        </p>
                     @endif
 
                     <!-- Bathroom/en-suite -->
-                    <p>@if($room->bathroom =! 0) En-suite. @endif</p>
+                    <p>@if($room->bathroom == 1)
+                        <p>
+                        <i class="fas fa-shower align-middle" style="font-size: 1.125rem"></i>
+                        <span class="align-middle">En-suite.</span>
+                        </p>@endif
+                    </p>
 
                     <!-- Wi-Fi -->
-                    <p>@if($room->wifi != 0) Wi-Fi. @endif</p>
+                    <p>@if($room->wifi == 1)
+                        <p>
+                        <i class="fas fa-wifi align-middle" style="font-size: 1.125rem"></i>
+                        <span class="align-middle">Wi-Fi.</span>
+                        </p>@endif
+                    </p>
 
                     <!-- Parking -->
-                    <p>@if($room->parking == 1) Free parking. @endif</p>
+                    <p>@if($room->parking == 1)
+                        <p>
+                        <i class="fas fa-car align-middle" style="font-size: 1.125rem"></i>
+                        <span class="align-middle">Free parking.</span>
+                        </p>@endif
+                    </p>
 
                     <!-- Breakfast -->
-                    <p>@if($room->breakfast != 0) Breakfast included. @endif</p>
+                    <p>@if($room->breakfast == 1)
+                        <p>
+                        <i class="fas fa-utensils align-middle" style="font-size: 1.125rem"></i>
+                        <span class="align-middle">Breakfast.</span>
+                        </p>@endif
+                    </p>
 
                     @if((!Auth::guest() && Auth::user()->hasRole('admin')) ||
                         (!Auth::guest() && Auth::user()->hasRole('hotel') && Auth::user()->id == $hotel->user_id))
@@ -53,10 +79,10 @@
                         {{-- <a class="btn btn-primary" href="/bookings/create/{{$room->id}}">Book</a> --}}
                     @endif
                 </div>
-                <div class="col-md-4">
+                {{-- <div class="col-md-4">
                     <!-- Price -->
                     <h1 class="text-tertiary">€{{$room->price}}</h1>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -66,8 +92,21 @@
             <div class="row">
                 @forelse($hotelimages as $hotelimage)
                 <div class="col-md-4 mb-3">
-                    <a href="/{{$hotelimage->image}}" target="_blank"><img src="/{{$hotelimage->thumbnail}}" class="img-fluid"></a>
+                    <a href="/{{$hotelimage->image}}" id="photoid_{{$hotelimage->id}}" data-toggle="modal" data-target="#enlarge-photo"><img src="/{{$hotelimage->thumbnail}}" class="img-fluid"></a>
                 </div>
+
+                <script>
+
+                    $(document).ready(function() {
+
+                        $(document).on("click", "#photoid_{{$hotelimage->id}}", function() {
+
+                            $('#enlImg').attr('src', '/{{$hotelimage->image}}');
+
+                        });
+
+                    });
+                </script>
                 @empty
                 <div class="col-md-12">No available images for this hotel.</div>
                 @endforelse
@@ -80,6 +119,9 @@
     <div class="card secondaryColor text-white mt-3 mb-3">
         <h5 class="card-header">Make a booking</h5>
         <div class="card-body">
+            <!-- Price -->
+            <h1 class="text-tertiary">€{{$room->price}}</h1>
+
             {!! Form::open(['action' => 'BookingsController@store', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{Form::label('from', 'Date of check-in:')}}
@@ -99,5 +141,17 @@
     </div>
 </div>
 @endif
+</div>
+
+<div class="modal fade" id="enlarge-photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered text-white">
+        <div class="modal-content" style="background-color: rgba(0,0,0, 0.7)">
+            <div class="modal-body">
+                <div class="row justify-content-md-center">
+                    <img data-dismiss="modal" class="img-fluid" id="enlImg" style="height: auto">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

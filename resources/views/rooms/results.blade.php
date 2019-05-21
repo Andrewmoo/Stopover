@@ -81,7 +81,7 @@
           @foreach ($rooms as $room)
             <div class="mb-3 card PCO text-white flex-row flex-wrap h-100">
               <div class="card-header my-2 border-0 bg-transparent">
-                <a href="/hotels/{{$room->hotel_id}}" style="margin: 0 0 0 0; padding: 0 0 0 0;">
+                <a href="/rooms/{{$room->id}}" style="margin: 0 0 0 0; padding: 0 0 0 0;">
                   <img
                   @if(!empty($hotelimages->where('hotel_id', $room->hotel_id)->first()->thumbnail))
                     src="/{{$hotelimages->where('hotel_id', $room->hotel_id)->first()->thumbnail}}"

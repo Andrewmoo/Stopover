@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-8 mb-4">
-        <div class="card secondaryColor text-white">
+        <div class="card secondaryColor text-white mb-3">
             <h2 class="card-header">{{$hotel->name}}</h2>
             <div class="card-body mx-3">
                 <div class="row">
@@ -60,65 +60,77 @@
             </div>
         </div>
 
-
         <!-- Room listings -->
         @foreach ($rooms as $room)
-            @if($room->booked == 0)
-            <div class="card secondaryColor text-white mt-3 mb-3">
-                <h5 class="card-header"><a href="/rooms/{{$room->id}}">Listing {{$room->id}}</a></h5>
-                <div class="card-body">
-                    <!-- Single beds -->
-                    @if($room->singleBeds > 0)
-                        <p>
-                            {{$room->singleBeds}} single bed(s)
+            <div class="mb-3 card PCO text-white">
+                <div class="card-body px-3 pt-3">
+                <div class="row mx-2 my-0 py-0">
+                    <div class="col-md-8">
+                        <!-- Single beds -->
+                        @if($room->singleBeds > 0)
+                            <p>
+                                <i class="fas fa-bed align-middle" style="font-size: 1.125rem">
+                                </i>
+                                <span class="align-middle">
+                                    @if($room->singleBeds > 1) {{$room->singleBeds}} single beds
+                                    @else {{$room->singleBeds}} single bed @endif
+                                </span>
+                            </p>
+                        @endif
+
+                        <!-- Double beds -->
+                        @if($room->doubleBeds > 0)
+                            <p>
+                            <i class="fas fa-bed align-middle" style="font-size: 1.125rem"></i>
+                            <span class="align-middle">
+                                @if($room->doubleBeds > 1) {{$room->doubleBeds}} double beds
+                                @else {{$room->doubleBeds}} double bed @endif
+                            </span>
+                            </p>
+                        @endif
+
+                        <!-- Bathroom/en-suite -->
+                        <p>@if($room->bathroom == 1)
+                            <p>
+                            <i class="fas fa-shower align-middle" style="font-size: 1.125rem"></i>
+                            <span class="align-middle">En-suite.</span>
+                            </p>@endif
                         </p>
-                    @endif
 
-                    <!-- Double beds -->
-                    @if($room->doubleBeds > 0)
-                        <p>
-                            {{$room->doubleBeds}} double bed(s)
+                        <!-- Wi-Fi -->
+                        <p>@if($room->wifi == 1)
+                            <p>
+                            <i class="fas fa-wifi align-middle" style="font-size: 1.125rem"></i>
+                            <span class="align-middle">Wi-Fi.</span>
+                            </p>@endif
                         </p>
-                    @endif
 
-                    <!-- Bathroom/en-suite -->
-                    <p>
-                        @if($room->bathroom == 0)
-                            No bathroom in room.
-                        @else
-                            En-suite.
-                        @endif
-                    </p>
+                        <!-- Parking -->
+                        <p>@if($room->parking == 1)
+                            <p>
+                            <i class="fas fa-car align-middle" style="font-size: 1.125rem"></i>
+                            <span class="align-middle">Free parking.</span>
+                            </p>@endif
+                        </p>
 
-                    <!-- Wi-Fi -->
-                    <p>
-                        @if($room->wifi == 0)
-                            No free Wi-Fi.
-                        @else
-                            Free Wi-Fi.
-                        @endif
-                    </p>
-
-                    <!-- Parking -->
-                    <p>
-                        @if($room->parking == 0)
-                            No free parking.
-                        @else
-                            Free parking.
-                        @endif
-                    </p>
-
-                    <!-- Breakfast -->
-                    <p>
-                        @if($room->breakfast == 0)
-                            Breakfast not included.
-                        @else
-                            Breakfast included.
-                        @endif
-                    </p>
+                        <!-- Breakfast -->
+                        <p>@if($room->breakfast == 1)
+                            <p>
+                            <i class="fas fa-utensils align-middle" style="font-size: 1.125rem"></i>
+                            <span class="align-middle">Breakfast.</span>
+                            </p>@endif
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                    <!-- Price -->
+                    <p class="text-warning h1">€{{$room->price}}</p>
+                    </div>
+                    <div class="card-header text-white px-3 py-3">
+                        <a class="btn btn-outline-light btn-lg align-self-center" href="/rooms/{{$room->id}}">SELECT ROOM</a>
+                    </div>
+                </div>
                 </div>
             </div>
-            @endif
         @endforeach
         <p>{{$rooms->links()}}</p>
     </div>

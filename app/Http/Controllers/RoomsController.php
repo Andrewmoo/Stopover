@@ -36,7 +36,8 @@ class RoomsController extends Controller
         }
         $hotel = Hotel::where('user_id', Auth::user()->id)->first();
         $rooms = Room::where('hotel_id', $hotel->id)->orderBy('created_at','desc')->paginate(10);
-        return view('rooms.index')->with('rooms', $rooms);
+        $hotelimages = HotelImage::all();
+        return view('rooms.index')->with(['rooms' => $rooms, 'hotelimages' => $hotelimages, 'hotel' => $hotel]);
     }
 
     /**

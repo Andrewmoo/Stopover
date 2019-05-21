@@ -11,6 +11,7 @@ use App\Hotel;
 use App\Guest;
 use App\Room;
 use App\HotelReview;
+use App\HotelImage;
 
 class HotelsController extends Controller
 {  
@@ -73,6 +74,7 @@ class HotelsController extends Controller
         $hotel = Hotel::find($id);
         $guests = Guest::all();
         $reviews = HotelReview::where('hotel_id', $hotel->id)->orderby('created_at','desc')->limit(5)->get();
+        $hotelimages = HotelImage::all();
         $rooms = Room::where('hotel_id', $id)->orderBy('created_at','desc')->paginate(10);
 
         if(!Auth::guest() && Auth::user()->hasRole('guest')) {
@@ -89,7 +91,8 @@ class HotelsController extends Controller
                 'hotel' => $hotel,
                 'rooms' => $rooms,
                 'reviews' => $reviews,
-                'guests' => $guests
+                'guests' => $guests,
+                'hotelimages' => $hotelimages
             ]);
         }
     }
